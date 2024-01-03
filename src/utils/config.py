@@ -1,34 +1,63 @@
-from typing import NamedTuple
+from typing import NamedTuple, Union
 
-from attr import define
+from attr import define, field
 
 from .colors import TokyoNightNight
 
+PADDING = 20
+
 
 class Size(NamedTuple):
-    width: int
-    height: int
+    width: int | float
+    height: int | float
+
+    def add(self, other: Union["Size", int, float]) -> "Size":
+        if isinstance(other, Size):
+            return Size(self.width + other.width, self.height + other.height)
+        return Size(self.width + other, self.height + other)
+
+    def sub(self, other: Union["Size", int, float]) -> "Size":
+        if isinstance(other, Size):
+            return Size(self.width - other.width, self.height - other.height)
+        return Size(self.width - other, self.height - other)
+
+
+class Position(NamedTuple):
+    x: int | float
+    y: int | float
+
+    def add(self, other: Union["Position", int, float]) -> "Position":
+        if isinstance(other, Position):
+            return Position(self.x + other.x, self.y + other.y)
+        return Position(self.x + other, self.y + other)
+
+    def sub(self, other: Union["Position", int, float]) -> "Position":
+        if isinstance(other, Position):
+            return Position(self.x - other.x, self.y - other.y)
+        return Position(self.x - other, self.y - other)
 
 
 @define
 class Game:
     columns: int = 10
     rows: int = 20
+    padding: int = PADDING
     cell_size: int = 40
     size: Size = Size(columns * cell_size, rows * cell_size)
+    pos: Position = Position(padding, padding)
 
 
 @define
 class SideBar:
     size: Size = Size(200, Game().size.height)
-    preview_height_fraction: float = 0.7
-    score_height_fraction: float = 1 - preview_height_fraction
+    score: Size = Size(size.width, size.height * 0.3)
+    preview: Size = Size(size.width, size.height * 0.7)
 
 
 @define
 class Window:
     title = "Tetris"
-    padding: int = 20
+    padding: int = PADDING
     size: Size = Size(
         Game().size.width + SideBar().size.width + padding * 3,
         Game().size.height + padding * 2,
