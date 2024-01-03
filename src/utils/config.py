@@ -1,40 +1,10 @@
-from typing import NamedTuple, Union
-
 from attr import define, field
 
 from .colors import TokyoNightNight
+from .position import Position
+from .size import Size
 
 PADDING = 20
-
-
-class Size(NamedTuple):
-    width: int | float
-    height: int | float
-
-    def add(self, other: Union["Size", int, float]) -> "Size":
-        if isinstance(other, Size):
-            return Size(self.width + other.width, self.height + other.height)
-        return Size(self.width + other, self.height + other)
-
-    def sub(self, other: Union["Size", int, float]) -> "Size":
-        if isinstance(other, Size):
-            return Size(self.width - other.width, self.height - other.height)
-        return Size(self.width - other, self.height - other)
-
-
-class Position(NamedTuple):
-    x: int | float
-    y: int | float
-
-    def add(self, other: Union["Position", int, float]) -> "Position":
-        if isinstance(other, Position):
-            return Position(self.x + other.x, self.y + other.y)
-        return Position(self.x + other, self.y + other)
-
-    def sub(self, other: Union["Position", int, float]) -> "Position":
-        if isinstance(other, Position):
-            return Position(self.x - other.x, self.y - other.y)
-        return Position(self.x - other, self.y - other)
 
 
 @define
@@ -44,8 +14,8 @@ class Game:
     line_width: int = 1
     border_radius: int = 2
     padding: int = PADDING
-    cell_size: int = 40
-    size: Size = Size(columns * cell_size, rows * cell_size)
+    cell: Size = Size(40, 40)
+    size: Size = Size(columns * cell.width, rows * cell.width)
     pos: Position = Position(padding, padding)
 
 
