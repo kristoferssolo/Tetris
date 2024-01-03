@@ -2,6 +2,8 @@ from typing import NamedTuple
 
 from attr import define
 
+from .colors import TokyoNightNight
+
 
 class Size(NamedTuple):
     width: int
@@ -25,6 +27,7 @@ class SideBar:
 
 @define
 class Window:
+    title = "Tetris"
     padding: int = 20
     size: Size = Size(
         Game().size.width + SideBar().size.width + padding * 3,
@@ -39,3 +42,8 @@ class Config:
     game: Game = Game()
     sidebar: SideBar = SideBar()
     window: Window = Window()
+    colors = TokyoNightNight()
+    fps: int = 60
+
+
+CONFIG = Config()

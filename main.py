@@ -2,7 +2,7 @@
 import argparse
 
 from loguru import logger
-from utils import BASE_PATH, Config
+from utils import BASE_PATH, CONFIG
 
 
 def pos_int(string: str) -> int:
@@ -61,9 +61,9 @@ logger.add(
 @logger.catch
 def main(args: argparse.ArgumentParser) -> None:
     if args.debug:
-        Config.log_level = "debug"
+        CONFIG.log_level = "debug"
     elif args.verbose:
-        Config.log_level = "info"
+        CONFIG.log_level = "info"
 
     import ai
     import game
@@ -72,6 +72,7 @@ def main(args: argparse.ArgumentParser) -> None:
         ai.log.debug("Training the AI")
     else:
         game.log.debug("Running the game")
+        game.Menu().run()
 
 
 if __name__ == "__main__":
