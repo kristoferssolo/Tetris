@@ -41,6 +41,8 @@ class Position(NamedTuple):
 class Game:
     columns: int = 10
     rows: int = 20
+    line_width: int = 1
+    border_radius: int = 2
     padding: int = PADDING
     cell_size: int = 40
     size: Size = Size(columns * cell_size, rows * cell_size)

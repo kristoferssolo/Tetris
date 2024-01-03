@@ -12,6 +12,7 @@ class Preview:
             )
         )
         self.dispaly_surface = pygame.display.get_surface()
+        self.surface.fill(CONFIG.colors.bg_sidebar)
 
     def run(self) -> None:
         self.dispaly_surface.blit(self.surface, self.rect)

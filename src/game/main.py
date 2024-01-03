@@ -13,6 +13,7 @@ class Main:
         pygame.init()
         pygame.display.set_caption(CONFIG.window.title)
         self.display_surface = pygame.display.set_mode(CONFIG.window.size)
+        self.display_surface.fill(CONFIG.colors.bg)
         self.clock = pygame.time.Clock()
 
         self.game = Game()
@@ -20,8 +21,8 @@ class Main:
         self.preview = Preview()
 
     def draw(self) -> None:
-        self.display_surface.fill(CONFIG.colors.bg)
         pygame.display.update()
+        self.game.draw()
 
     def run(self) -> None:
         while True:
