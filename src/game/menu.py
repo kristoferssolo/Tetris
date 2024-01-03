@@ -3,22 +3,29 @@ import sys
 import pygame
 from utils import CONFIG
 
+from .game import Game
+
 
 class Menu:
     def __init__(self) -> None:
         pygame.init()
         pygame.display.set_caption(CONFIG.window.title)
-        self.surface = pygame.display.set_mode(CONFIG.window.size)
+        self.display_surface = pygame.display.set_mode(CONFIG.window.size)
         self.clock = pygame.time.Clock()
 
+        self.game = Game()
+
     def draw(self) -> None:
-        self.surface.fill(CONFIG.colors.bg)
+        self.display_surface.fill(CONFIG.colors.bg)
         pygame.display.update()
 
     def run(self) -> None:
         while True:
             self.draw()
             self.handle_events()
+
+            self.game.run()
+
             pygame.display.update()
             self.clock.tick(CONFIG.fps)
 
