@@ -1,5 +1,6 @@
 from .game import Game
 from .log import log
-from .menu import Menu
+from .main import Main
+from .score import Score
 
-__all__ = ["log", "Menu", "Game"]
+__all__ = ["log", "Main", "Game", "Score"]

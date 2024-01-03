@@ -4,9 +4,10 @@ import pygame
 from utils import CONFIG
 
 from .game import Game
+from .score import Score
 
 
-class Menu:
+class Main:
     def __init__(self) -> None:
         pygame.init()
         pygame.display.set_caption(CONFIG.window.title)
@@ -14,6 +15,7 @@ class Menu:
         self.clock = pygame.time.Clock()
 
         self.game = Game()
+        self.score = Score()
 
     def draw(self) -> None:
         self.display_surface.fill(CONFIG.colors.bg)
@@ -25,6 +27,7 @@ class Menu:
             self.handle_events()
 
             self.game.run()
+            self.score.run()
 
             pygame.display.update()
             self.clock.tick(CONFIG.fps)

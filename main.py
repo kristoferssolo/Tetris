@@ -72,7 +72,7 @@ def main(args: argparse.ArgumentParser) -> None:
         ai.log.debug("Training the AI")
     else:
         game.log.debug("Running the game")
-        game.Menu().run()
+        game.Main().run()
 
 
 if __name__ == "__main__":
