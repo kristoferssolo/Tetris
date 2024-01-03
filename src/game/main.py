@@ -4,6 +4,7 @@ import pygame
 from utils import CONFIG
 
 from .game import Game
+from .preview import Preview
 from .score import Score
 
 
@@ -16,6 +17,7 @@ class Main:
 
         self.game = Game()
         self.score = Score()
+        self.preview = Preview()
 
     def draw(self) -> None:
         self.display_surface.fill(CONFIG.colors.bg)
@@ -28,6 +30,7 @@ class Main:
 
             self.game.run()
             self.score.run()
+            self.preview.run()
 
             pygame.display.update()
             self.clock.tick(CONFIG.fps)

@@ -49,8 +49,9 @@ class Game:
 
 @define
 class SideBar:
+    padding: int = PADDING
     size: Size = Size(200, Game().size.height)
-    score: Size = Size(size.width, size.height * 0.3)
+    score: Size = Size(size.width, size.height * 0.3 - padding)
     preview: Size = Size(size.width, size.height * 0.7)
 
 
