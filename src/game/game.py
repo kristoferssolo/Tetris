@@ -8,6 +8,4 @@ class Game:
         self.dispaly_surface = pygame.display.get_surface()
 
     def run(self) -> None:
-        self.dispaly_surface.blit(
-            self.surface, (CONFIG.window.padding, CONFIG.window.padding)
-        )
+        self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
