@@ -9,16 +9,19 @@ class Game:
         self.rect = self.surface.get_rect(topleft=CONFIG.game.pos)
         self.surface.fill(CONFIG.colors.bg_float)
 
+        self.sprites = pygame.sprite.Group()
+
     def run(self) -> None:
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
 
     def draw(self) -> None:
         self._draw_grid()
         self._draw_border()
+        self.sprites.draw(self.surface)
 
     def _draw_grid(self) -> None:
         for col in range(1, CONFIG.game.columns):
-            x = col * CONFIG.game.cell_size
+            x = col * CONFIG.game.cell.width
             pygame.draw.line(
                 self.surface,
                 CONFIG.colors.border_highlight,
@@ -27,7 +30,7 @@ class Game:
                 CONFIG.game.line_width,
             )
             for row in range(1, CONFIG.game.rows):
-                y = row * CONFIG.game.cell_size
+                y = row * CONFIG.game.cell.width
                 pygame.draw.line(
                     self.surface,
                     CONFIG.colors.border_highlight,
