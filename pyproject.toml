@@ -1,0 +1,42 @@
+[project]
+name = "tetris"
+version = "0.1.0"
+description = "Tetris game with AI"
+authors = [{ name = "Kristofers Solo", email = "dev@kristofers.xyz" }]
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "GPLv3" }
+dependencies = [
+  "loguru==0.7.2",
+  "attrs==23.1.0",
+  "neat-python==0.92",
+  "pygame-ce==2.4.0",
+]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = true
+no_implicit_optional = true
+no_implicit_reexport = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["I"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = 40
