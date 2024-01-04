@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from attr import define, field
 from pygame import Vector2 as Vec2
 
 from .colors import TokyoNightNight
+from .path import BASE_PATH
 from .size import Size
 
 PADDING = 20
@@ -32,8 +35,14 @@ class SideBar:
 
 
 @define
+class Font:
+    family: Path = BASE_PATH / "assets" / "fonts" / "ChakraPetch" / "Regular.ttf"
+    size: int = 32
+
+
+@define
 class Window:
-    title = "Tetris"
+    title: str = "Tetris"
     padding: int = PADDING
     size: Size = Size(
         Game().size.width + SideBar().size.width + padding * 3,
@@ -48,6 +57,7 @@ class Config:
     game: Game = Game()
     sidebar: SideBar = SideBar()
     window: Window = Window()
+    font: Font = Font()
     colors = TokyoNightNight()
     fps: int = 60
 
