@@ -9,7 +9,7 @@ from .colors import TokyoNightNight
 
 
 class FigureConfig(NamedTuple):
-    shape: list[Vec2, Vec2, Vec2, Vec2]
+    shape: list[Vec2]
     color: str
 
 

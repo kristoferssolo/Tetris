@@ -6,3 +6,8 @@ class Direction(Enum):
     RIGHT = 1
     DOWN = 1
     UP = -1
+
+
+class Field(Enum):
+    EMPTY = None
+    FILLED = "Block"

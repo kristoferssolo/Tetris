@@ -1,6 +1,10 @@
-import pygame
-from utils import CONFIG, Direction, Figure
+from typing import Optional
 
+import numpy as np
+import pygame
+from utils import CONFIG, Direction, Field, Figure
+
+from .block import Block
 from .log import log
 from .tetromino import Tetromino
 from .timer import Timer, Timers
@@ -12,10 +16,17 @@ class Game:
         self.dispaly_surface = pygame.display.get_surface()
         self.rect = self.surface.get_rect(topleft=CONFIG.game.pos)
 
+        self.sprites: pygame.sprite.Group[Block] = pygame.sprite.Group()
+
         self._create_grid_surface()
 
-        self.sprites = pygame.sprite.Group()
-        self.tetromino = Tetromino(self.sprites, self.create_new_tetromino)
+        self.field = np.full((CONFIG.game.rows, CONFIG.game.columns), None, dtype=Field)
+
+        self.tetromino = Tetromino(
+            self.sprites,
+            self.create_new_tetromino,
+            self.field,
+        )
 
         self.timers = Timers(
             Timer(CONFIG.game.initial_speed, True, self.move_down),
@@ -63,7 +74,11 @@ class Game:
         self.tetromino.move_horizontal(Direction.RIGHT)
 
     def create_new_tetromino(self) -> None:
-        self.tetromino = Tetromino(self.sprites, self.create_new_tetromino)
+        self.tetromino = Tetromino(
+            self.sprites,
+            self.create_new_tetromino,
+            self.field,
+        )
 
     def _create_grid_surface(self) -> None:
         self.grid_surface = self.surface.copy()

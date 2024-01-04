@@ -7,9 +7,10 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "GPLv3" }
 dependencies = [
-  "loguru==0.7.2",
   "attrs==23.1.0",
+  "loguru==0.7.2",
   "neat-python==0.92",
+  "numpy==1.26.3",
   "pygame-ce==2.4.0",
 ]
 

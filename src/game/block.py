@@ -1,10 +1,16 @@
+import numpy as np
 import pygame
 from utils import CONFIG, Size
 
 
 class Block(pygame.sprite.Sprite):
     def __init__(
-        self, /, *, group: pygame.sprite.Group, pos: pygame.Vector2, color: str
+        self,
+        /,
+        *,
+        group: pygame.sprite.Group,
+        pos: pygame.Vector2,
+        color: str,
     ) -> None:
         super().__init__(group)
         self.image = pygame.Surface(CONFIG.game.cell)
@@ -16,8 +22,8 @@ class Block(pygame.sprite.Sprite):
     def update(self) -> None:
         self.rect.topleft = self.pos * CONFIG.game.cell.width
 
-    def vertical_collision(self, x: int) -> bool:
-        return not 0 <= x < CONFIG.game.columns
+    def vertical_collision(self, x: int, field: np.ndarray) -> bool:
+        return not 0 <= x < CONFIG.game.columns or field[int(self.pos.y), x]
 
     def horizontal_collision(self, y: int) -> bool:
         return y >= CONFIG.game.rows

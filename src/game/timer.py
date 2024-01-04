@@ -8,7 +8,7 @@ from attrs import define, field
 class Timer:
     duration: int = field(converter=int)
     repeated: bool = field(default=False)
-    func: Optional[Callable[[None], None]] = field(default=None)
+    func: Optional[Callable[[], None]] = field(default=None)
     start_time: int = 0
     active: bool = False
 
