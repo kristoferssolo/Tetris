@@ -22,7 +22,6 @@ class Main:
 
     def draw(self) -> None:
         pygame.display.update()
-        self.game.draw()
 
     def run(self) -> None:
         while True:

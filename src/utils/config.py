@@ -12,12 +12,12 @@ class Game:
     columns: int = 10
     rows: int = 20
     line_width: int = 1
-    border_radius: int = 2
+    border_radius: int = 5
     padding: int = PADDING
     cell: Size = Size(40, 40)
     size: Size = Size(columns * cell.width, rows * cell.width)
     pos: Vec2 = Vec2(padding, padding)
-    offset: Vec2 = Vec2(columns // 2, -1)
+    offset: Vec2 = Vec2(columns // 2, 5)
 
 
 @define
