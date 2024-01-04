@@ -20,7 +20,7 @@ class Game:
 
         self._create_grid_surface()
 
-        self.field = np.full((CONFIG.game.rows, CONFIG.game.columns), None, dtype=Field)
+        self.field = self._generate_empty_field()
 
         self.tetromino = Tetromino(
             self.sprites,
@@ -74,6 +74,7 @@ class Game:
         self.tetromino.move_horizontal(Direction.RIGHT)
 
     def create_new_tetromino(self) -> None:
+        self._check_finished_rows()
         self.tetromino = Tetromino(
             self.sprites,
             self.create_new_tetromino,
@@ -120,3 +121,35 @@ class Game:
     def _timer_update(self) -> None:
         for timer in self.timers:
             timer.update()
+
+    def _check_finished_rows(self) -> None:
+        delete_rows: list[int] = []
+        for idx, row in enumerate(self.field):
+            if all(row):
+                delete_rows.append(idx)
+
+        self._delete_rows(delete_rows)
+
+    def _delete_rows(self, delete_rows: list[int]) -> None:
+        if delete_rows:
+            for row in delete_rows:
+                for block in self.field[row]:
+                    block.kill()
+
+                self._move_rows_down(row)
+            self._rebuild_field()
+
+    def _move_rows_down(self, deleted_row: int) -> None:
+        for row in self.field:
+            for block in row:
+                if block and block.pos.y < deleted_row:
+                    block.pos.y += 1
+
+    def _rebuild_field(self) -> None:
+        self.field = self._generate_empty_field()
+
+        for block in self.sprites:
+            self.field[int(block.pos.y), int(block.pos.x)] = block
+
+    def _generate_empty_field(self) -> np.ndarray:
+        return np.full((CONFIG.game.rows, CONFIG.game.columns), None, dtype=Field)
