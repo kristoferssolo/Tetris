@@ -1,11 +1,13 @@
 import sys
 
 import pygame
-from utils import CONFIG
+from utils import CONFIG, Figure
 
 from .game import Game
+from .log import log
 from .preview import Preview
 from .score import Score
+from .tetromino import Tetromino
 
 
 class Main:
@@ -16,7 +18,9 @@ class Main:
         self.display_surface.fill(CONFIG.colors.bg)
         self.clock = pygame.time.Clock()
 
-        self.game = Game()
+        self.next_shapes = self._generate_next_shapes()
+
+        self.game = Game(self._get_next_shape)
         self.score = Score()
         self.preview = Preview()
 
@@ -46,3 +50,11 @@ class Main:
     def exit(self) -> None:
         pygame.quit()
         sys.exit()
+
+    def _generate_next_shapes(self, amount: int = 3) -> list[Figure]:
+        return [Figure.random() for _ in range(amount)]
+
+    def _get_next_shape(self) -> Figure:
+        next_shape = self.next_shapes.pop(0)
+        self.next_shapes.append(Figure.random())
+        return next_shape
