@@ -97,6 +97,18 @@ class Game:
         """Move the current tetromino to the right."""
         self.tetromino.move_horizontal(Direction.RIGHT)
 
+    def rotate(self) -> None:
+        """Rotate the current tetromino clockwise."""
+        self.tetromino.rotate()
+
+    def rotate_reverse(self) -> None:
+        """Rotate the current tetromino counter-clockwise."""
+        self.tetromino.rotate(Rotation.COUNTER_CLOCKWISE)
+
+    def drop(self) -> None:
+        """Drop the current tetromino."""
+        self.tetromino.drop()
+
     def create_new_tetromino(self) -> None:
         """Create a new tetromino and perform necessary actions."""
         self._play_landing_sound()
@@ -324,11 +336,11 @@ class Game:
         )
         if not self.timers.rotation.active:
             if clockwise_keys:
-                self.tetromino.rotate()
+                self.rotate()
                 self.timers.rotation.activate()
 
             if counter_clockwise_keys:
-                self.tetromino.rotate(Rotation.COUNTER_CLOCKWISE)
+                self.rotate_reverse()
                 self.timers.rotation.activate()
 
     def _handle_down_key(self, keys: list[bool]) -> None:
@@ -347,7 +359,7 @@ class Game:
         drop_keys = keys[pygame.K_SPACE]
 
         if drop_keys:
-            self.tetromino.drop()
+            self.drop()
 
     def _reset_game_state(self) -> None:
         """Reset the game state."""
