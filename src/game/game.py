@@ -11,14 +11,14 @@ from .timer import Timer, Timers
 
 
 class Game:
-    def __init__(self, get_next_shape: Callable[[], Figure]) -> None:
+    def __init__(self, get_next_figure: Callable[[], Figure]) -> None:
         self.surface = pygame.Surface(CONFIG.game.size)
         self.dispaly_surface = pygame.display.get_surface()
         self.rect = self.surface.get_rect(topleft=CONFIG.game.pos)
 
         self.sprites: pygame.sprite.Group[Block] = pygame.sprite.Group()
 
-        self.get_next_shape = get_next_shape
+        self.get_next_shape = get_next_figure
 
         self._create_grid_surface()
 

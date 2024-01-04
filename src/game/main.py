@@ -18,9 +18,9 @@ class Main:
         self.display_surface.fill(CONFIG.colors.bg)
         self.clock = pygame.time.Clock()
 
-        self.next_shapes = self._generate_next_shapes()
+        self.next_figures = self._generate_next_figures()
 
-        self.game = Game(self._get_next_shape)
+        self.game = Game(self._get_next_figure)
         self.score = Score()
         self.preview = Preview()
 
@@ -51,10 +51,10 @@ class Main:
         pygame.quit()
         sys.exit()
 
-    def _generate_next_shapes(self, amount: int = 3) -> list[Figure]:
+    def _generate_next_figures(self, amount: int = 3) -> list[Figure]:
         return [Figure.random() for _ in range(amount)]
 
-    def _get_next_shape(self) -> Figure:
-        next_shape = self.next_shapes.pop(0)
-        self.next_shapes.append(Figure.random())
+    def _get_next_figure(self) -> Figure:
+        next_shape = self.next_figures.pop(0)
+        self.next_figures.append(Figure.random())
         return next_shape
