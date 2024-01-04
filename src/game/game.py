@@ -1,5 +1,7 @@
 import pygame
-from utils import CONFIG
+from utils import CONFIG, Figure
+
+from .tetromino import Tetromino
 
 
 class Game:
@@ -10,6 +12,7 @@ class Game:
         self.surface.fill(CONFIG.colors.bg_float)
 
         self.sprites = pygame.sprite.Group()
+        self.tetromino = Tetromino(None, group=self.sprites)
 
     def run(self) -> None:
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
