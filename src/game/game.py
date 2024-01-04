@@ -110,6 +110,9 @@ class Game:
         self.tetromino.move_horizontal(Direction.RIGHT)
 
     def create_new_tetromino(self) -> None:
+        if self.game_over():
+            self.restart()
+
         self._check_finished_rows()
         self.tetromino = Tetromino(
             self.sprites,
@@ -117,6 +120,26 @@ class Game:
             self.field,
             self.get_next_shape(),
         )
+
+    def game_over(self) -> bool:
+        for block in self.sprites:
+            if block.pos.y < 0:
+                log.info("Game over!")
+                return True
+
+    def restart(self) -> None:
+        self.sprites.empty()
+        self.field = self._generate_empty_field()
+        self.tetromino = Tetromino(
+            self.sprites,
+            self.create_new_tetromino,
+            self.field,
+            self.get_next_shape(),
+        )
+        self.level = 1
+        self.score = 0
+        self.lines = 0
+        self.update_score(self.lines, self.score, self.level)
 
     def _create_grid_surface(self) -> None:
         self.grid_surface = self.surface.copy()
