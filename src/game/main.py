@@ -26,7 +26,7 @@ class Main:
 
         self.music = pygame.mixer.Sound(CONFIG.music.background)
         self.music.set_volume(CONFIG.music.volume)
-        self.music.play()
+        self.music.play(-1)
 
     def draw(self) -> None:
         pygame.display.update()

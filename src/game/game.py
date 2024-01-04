@@ -49,6 +49,9 @@ class Game:
         self.score = 0
         self.lines = 0
 
+        self.landing_sound = pygame.mixer.Sound(CONFIG.music.landing)
+        self.landing_sound.set_volume(CONFIG.music.volume)
+
     def run(self) -> None:
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
         self.draw()
@@ -110,6 +113,7 @@ class Game:
         self.tetromino.move_horizontal(Direction.RIGHT)
 
     def create_new_tetromino(self) -> None:
+        self.landing_sound.play()
         if self.game_over():
             self.restart()
 

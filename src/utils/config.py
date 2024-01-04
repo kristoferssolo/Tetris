@@ -54,7 +54,7 @@ class Window:
 @define
 class Music:
     background: Path = BASE_PATH / "assets" / "music" / "background.wav"
-    langing: Path = BASE_PATH / "assets" / "music" / "landing.wav"
+    landing: Path = BASE_PATH / "assets" / "music" / "landing.wav"
     volume: float = 0.01
 
 
