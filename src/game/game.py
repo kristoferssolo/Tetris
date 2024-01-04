@@ -30,8 +30,11 @@ class Game:
             self.field,
         )
 
+        self.initial_block_speed = CONFIG.game.initial_speed
+        self.increased_block_speed = self.initial_block_speed * 0.3
+        self.down_pressed = False
         self.timers = Timers(
-            Timer(CONFIG.game.initial_speed, True, self.move_down),
+            Timer(self.initial_block_speed, True, self.move_down),
             Timer(CONFIG.game.movment_delay),
             Timer(CONFIG.game.rotation_delay),
         )
@@ -57,26 +60,37 @@ class Game:
     def handle_event(self) -> None:
         keys = pygame.key.get_pressed()
 
+        left_keys = keys[pygame.K_LEFT] or keys[pygame.K_a] or keys[pygame.K_h]
+        right_keys = keys[pygame.K_RIGHT] or keys[pygame.K_d] or keys[pygame.K_l]
+        down_keys = keys[pygame.K_DOWN] or keys[pygame.K_s] or keys[pygame.K_j]
+        rotate_keys = (
+            keys[pygame.K_SPACE]
+            or keys[pygame.K_r]
+            or keys[pygame.K_UP]
+            or keys[pygame.K_w]
+            or keys[pygame.K_k]
+        )
+
         if not self.timers.horizontal.active:
-            if keys[pygame.K_LEFT] or keys[pygame.K_a] or keys[pygame.K_h]:
+            if left_keys:
                 self.move_left()
                 self.timers.horizontal.activate()
-            elif keys[pygame.K_DOWN] or keys[pygame.K_s] or keys[pygame.K_j]:
-                self.move_down()
-            elif keys[pygame.K_RIGHT] or keys[pygame.K_d] or keys[pygame.K_l]:
+            elif right_keys:
                 self.move_right()
                 self.timers.horizontal.activate()
 
         if not self.timers.rotation.active:
-            if (
-                keys[pygame.K_SPACE]
-                or keys[pygame.K_r]
-                or keys[pygame.K_UP]
-                or keys[pygame.K_w]
-                or keys[pygame.K_k]
-            ):
+            if rotate_keys:
                 self.tetromino.rotate()
                 self.timers.rotation.activate()
+
+        if not self.down_pressed and down_keys:
+            self.down_pressed = True
+            self.timers.vertical.duration = self.increased_block_speed
+
+        if self.down_pressed and not down_keys:
+            self.down_pressed = False
+            self.timers.vertical.duration = self.initial_block_speed
 
     def move_down(self) -> None:
         self.tetromino.move_down()

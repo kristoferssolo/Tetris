@@ -6,7 +6,7 @@ from attrs import define, field
 
 @define
 class Timer:
-    duration: int = field(converter=int)
+    duration: float = field(converter=float)
     repeated: bool = field(default=False)
     func: Optional[Callable[[], None]] = field(default=None)
     start_time: int = 0
