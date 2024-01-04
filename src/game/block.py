@@ -25,5 +25,5 @@ class Block(pygame.sprite.Sprite):
     def vertical_collision(self, x: int, field: np.ndarray) -> bool:
         return not 0 <= x < CONFIG.game.columns or field[int(self.pos.y), x]
 
-    def horizontal_collision(self, y: int) -> bool:
-        return y >= CONFIG.game.rows
+    def horizontal_collision(self, y: int, field: np.ndarray) -> bool:
+        return y >= CONFIG.game.rows or (y >= 0 and field[y, int(self.pos.x)])

@@ -53,6 +53,6 @@ class Tetromino:
         self, blocks: list[Block], direction: Direction
     ) -> bool:
         return any(
-            block.horizontal_collision(int(block.pos.y + direction.value))
+            block.horizontal_collision(int(block.pos.y + direction.value), self.field)
             for block in self.blocks
         )
