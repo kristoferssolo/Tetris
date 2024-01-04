@@ -27,3 +27,6 @@ class Block(pygame.sprite.Sprite):
 
     def horizontal_collision(self, y: int, field: np.ndarray) -> bool:
         return y >= CONFIG.game.rows or (y >= 0 and field[y, int(self.pos.x)])
+
+    def rotate(self, pivot: pygame.Vector2) -> pygame.Vector2:
+        return pivot + (self.pos - pivot).rotate(90)

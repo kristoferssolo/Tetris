@@ -31,6 +31,7 @@ class Game:
         self.timers = Timers(
             Timer(CONFIG.game.initial_speed, True, self.move_down),
             Timer(CONFIG.game.movment_delay),
+            Timer(CONFIG.game.rotation_delay),
         )
 
         self.timers.vertical.activate()
@@ -63,6 +64,17 @@ class Game:
             elif keys[pygame.K_RIGHT] or keys[pygame.K_d] or keys[pygame.K_l]:
                 self.move_right()
                 self.timers.horizontal.activate()
+
+        if not self.timers.rotation.active:
+            if (
+                keys[pygame.K_SPACE]
+                or keys[pygame.K_r]
+                or keys[pygame.K_UP]
+                or keys[pygame.K_w]
+                or keys[pygame.K_k]
+            ):
+                self.tetromino.rotate()
+                self.timers.rotation.activate()
 
     def move_down(self) -> None:
         self.tetromino.move_down()
@@ -131,13 +143,15 @@ class Game:
         self._delete_rows(delete_rows)
 
     def _delete_rows(self, delete_rows: list[int]) -> None:
-        if delete_rows:
-            for row in delete_rows:
-                for block in self.field[row]:
-                    block.kill()
+        if not delete_rows:
+            return
 
-                self._move_rows_down(row)
-            self._rebuild_field()
+        for row in delete_rows:
+            for block in self.field[row]:
+                block.kill()
+
+            self._move_rows_down(row)
+        self._rebuild_field()
 
     def _move_rows_down(self, deleted_row: int) -> None:
         for row in self.field:
