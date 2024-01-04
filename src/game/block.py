@@ -10,7 +10,7 @@ class Block(pygame.sprite.Sprite):
         self.image = pygame.Surface(CONFIG.game.cell)
         self.image.fill(color)
 
-        self.pos = pygame.Vector2(pos)
+        self.pos = pygame.Vector2(pos) + CONFIG.game.offset
         x = self.pos.x * CONFIG.game.cell.width
         y = self.pos.y * CONFIG.game.cell.height
         self.rect = self.image.get_rect(topleft=(x, y))

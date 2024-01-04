@@ -17,6 +17,7 @@ class Game:
     cell: Size = Size(40, 40)
     size: Size = Size(columns * cell.width, rows * cell.width)
     pos: Vec2 = Vec2(padding, padding)
+    offset: Vec2 = Vec2(columns // 2, -1)
 
 
 @define
