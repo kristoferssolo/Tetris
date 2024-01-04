@@ -54,6 +54,11 @@ class Main:
         pygame.quit()
         sys.exit()
 
+    def mute(self) -> None:
+        """Mute the game."""
+        self.music.set_volume(0)
+        self.game.mute()
+
     def _update_score(self, lines: int, score: int, level: int) -> None:
         """
         Update the game score.

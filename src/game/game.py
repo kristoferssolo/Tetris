@@ -142,6 +142,10 @@ class Game:
         self._reset_game_state()
         self._initialize_field_and_tetromino()
 
+    def mute(self) -> None:
+        """Mute the game."""
+        self.landing_sound.set_volume(0)
+
     def _draw_grid(self) -> None:
         """Draw the grid on the game surface."""
         for col in range(1, CONFIG.game.columns):
