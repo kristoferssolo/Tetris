@@ -24,9 +24,14 @@ class Tetromino:
             block.pos.y += 1
 
     def move_horizontal(self, direction: Direction) -> None:
-        for block in self.blocks:
-            block.pos.x += direction.value
+        if not self._check_vertical_collision(self.blocks, direction):
+            for block in self.blocks:
+                block.pos.x += direction.value
 
-    def next_move_horizontal_collide(self, block: Block, direction: Direction) -> None:
-        for block in self.blocks:
-            block.pos.x += direction.value
+    def _check_vertical_collision(
+        self, blocks: list[Block], direction: Direction
+    ) -> bool:
+        return any(
+            block.vertical_collision(int(block.pos.x + direction.value))
+            for block in self.blocks
+        )

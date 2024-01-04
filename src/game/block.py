@@ -15,3 +15,6 @@ class Block(pygame.sprite.Sprite):
 
     def update(self) -> None:
         self.rect.topleft = self.pos * CONFIG.game.cell.width
+
+    def vertical_collision(self, x: int) -> bool:
+        return not 0 <= x < CONFIG.game.columns
