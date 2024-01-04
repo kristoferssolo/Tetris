@@ -70,6 +70,7 @@ def main(args: argparse.ArgumentParser) -> None:
 
     if args.train is not None:
         ai.log.debug("Training the AI")
+        ai.train(args.train)
     else:
         game.log.debug("Running the game")
         game.Main().run()
