@@ -1,7 +1,9 @@
 import pygame
 from utils import CONFIG, Figure
 
+from .log import log
 from .tetromino import Tetromino
+from .timer import Timer
 
 
 class Game:
@@ -9,21 +11,35 @@ class Game:
         self.surface = pygame.Surface(CONFIG.game.size)
         self.dispaly_surface = pygame.display.get_surface()
         self.rect = self.surface.get_rect(topleft=CONFIG.game.pos)
-        self.surface.fill(CONFIG.colors.bg_float)
 
         self._create_grid_surface()
 
         self.sprites = pygame.sprite.Group()
-        self.tetromino = Tetromino(None, group=self.sprites)
+        self.tetromino = Tetromino(group=self.sprites)
+
+        self.timers = {
+            "vertical move": Timer(CONFIG.game.initial_speed, True, self.move_down),
+        }
+
+        self.timers["vertical move"].activate()
 
     def run(self) -> None:
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
         self.draw()
+        self._timer_update()
 
     def draw(self) -> None:
+        self.surface.fill(CONFIG.colors.bg_float)
+        self.update()
         self.sprites.draw(self.surface)
         self._draw_border()
         self._draw_grid()
+
+    def update(self) -> None:
+        self.sprites.update()
+
+    def move_down(self) -> None:
+        self.tetromino.move_down()
 
     def _create_grid_surface(self) -> None:
         self.grid_surface = self.surface.copy()
@@ -61,3 +77,7 @@ class Game:
             CONFIG.game.line_width * 2,
             CONFIG.game.border_radius,
         )
+
+    def _timer_update(self) -> None:
+        for timer in self.timers.values():
+            timer.update()

@@ -11,6 +11,7 @@ class Block(pygame.sprite.Sprite):
         self.image.fill(color)
 
         self.pos = pygame.Vector2(pos) + CONFIG.game.offset
-        x = self.pos.x * CONFIG.game.cell.width
-        y = self.pos.y * CONFIG.game.cell.height
-        self.rect = self.image.get_rect(topleft=(x, y))
+        self.rect = self.image.get_rect(topleft=self.pos * CONFIG.game.cell.width)
+
+    def update(self) -> None:
+        self.rect.topleft = self.pos * CONFIG.game.cell.width

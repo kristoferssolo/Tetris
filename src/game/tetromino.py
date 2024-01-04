@@ -7,7 +7,9 @@ from .block import Block
 
 
 class Tetromino:
-    def __init__(self, shape: Optional[Figure], /, group: pygame.sprite.Group) -> None:
+    def __init__(
+        self, group: pygame.sprite.Group, shape: Optional[Figure] = None
+    ) -> None:
         self.figure: FigureConfig = shape.value if shape else Figure.random().value
         self.block_positions: list[pygame.Vector2] = self.figure.shape
         self.color: str = self.figure.color
@@ -16,3 +18,7 @@ class Tetromino:
             Block(group=group, pos=pos, color=self.color)
             for pos in self.block_positions
         ]
+
+    def move_down(self) -> None:
+        for block in self.blocks:
+            block.pos.y += 1
