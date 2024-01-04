@@ -24,6 +24,7 @@ class Game:
     initial_speed: int = 400
     movment_delay: int = 200
     rotation_delay: int = 200
+    score: dict[int, int] = {1: 40, 2: 100, 3: 300, 4: 1200}
 
 
 @define

@@ -20,7 +20,7 @@ class Main:
 
         self.next_figures = self._generate_next_figures()
 
-        self.game = Game(self._get_next_figure)
+        self.game = Game(self._get_next_figure, self._update_score)
         self.score = Score()
         self.preview = Preview()
 
@@ -38,6 +38,9 @@ class Main:
 
             pygame.display.update()
             self.clock.tick(CONFIG.fps)
+
+    def _update_score(self, lines: int, score: int, level: int) -> None:
+        self.score.update(lines, score, level)
 
     def handle_events(self) -> None:
         for event in pygame.event.get():

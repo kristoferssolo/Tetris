@@ -11,7 +11,11 @@ from .timer import Timer, Timers
 
 
 class Game:
-    def __init__(self, get_next_figure: Callable[[], Figure]) -> None:
+    def __init__(
+        self,
+        get_next_figure: Callable[[], Figure],
+        update_score: Callable[[int, int, int], None],
+    ) -> None:
         self.surface = pygame.Surface(CONFIG.game.size)
         self.dispaly_surface = pygame.display.get_surface()
         self.rect = self.surface.get_rect(topleft=CONFIG.game.pos)
@@ -19,6 +23,7 @@ class Game:
         self.sprites: pygame.sprite.Group[Block] = pygame.sprite.Group()
 
         self.get_next_shape = get_next_figure
+        self.update_score = update_score
 
         self._create_grid_surface()
 
@@ -38,8 +43,11 @@ class Game:
             Timer(CONFIG.game.movment_delay),
             Timer(CONFIG.game.rotation_delay),
         )
-
         self.timers.vertical.activate()
+
+        self.level = 1
+        self.score = 0
+        self.lines = 0
 
     def run(self) -> None:
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
@@ -162,6 +170,7 @@ class Game:
     def _delete_rows(self, delete_rows: list[int]) -> None:
         if not delete_rows:
             return
+        self._calculate_score(len(delete_rows))
 
         for row in delete_rows:
             for block in self.field[row]:
@@ -184,3 +193,16 @@ class Game:
 
     def _generate_empty_field(self) -> np.ndarray:
         return np.full((CONFIG.game.rows, CONFIG.game.columns), None, dtype=Field)
+
+    def _calculate_score(self, rows_deleted: int) -> None:
+        self.lines += rows_deleted
+        self.score += CONFIG.game.score.get(rows_deleted, 0) * self.level
+
+        # every 10 lines increase level
+        if self.lines // 10 + 1 > self.level:
+            self.level += 1
+            self.initial_block_speed *= 0.75
+            self.increased_block_speed *= 0.75
+            self.timers.vertical.duration = self.initial_block_speed
+
+        self.update_score(self.lines, self.score, self.level)
