@@ -22,3 +22,11 @@ class Tetromino:
     def move_down(self) -> None:
         for block in self.blocks:
             block.pos.y += 1
+
+    def move_left(self) -> None:
+        for block in self.blocks:
+            block.pos.x -= 1
+
+    def move_right(self) -> None:
+        for block in self.blocks:
+            block.pos.x += 1

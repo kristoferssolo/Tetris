@@ -3,7 +3,7 @@ from utils import CONFIG, Figure
 
 from .log import log
 from .tetromino import Tetromino
-from .timer import Timer
+from .timer import Timer, Timers
 
 
 class Game:
@@ -17,16 +17,18 @@ class Game:
         self.sprites = pygame.sprite.Group()
         self.tetromino = Tetromino(group=self.sprites)
 
-        self.timers = {
-            "vertical move": Timer(CONFIG.game.initial_speed, True, self.move_down),
-        }
+        self.timers = Timers(
+            Timer(CONFIG.game.initial_speed, True, self.move_down),
+            Timer(CONFIG.game.movment_delay),
+        )
 
-        self.timers["vertical move"].activate()
+        self.timers.vertical.activate()
 
     def run(self) -> None:
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
         self.draw()
         self._timer_update()
+        self.handle_event()
 
     def draw(self) -> None:
         self.surface.fill(CONFIG.colors.bg_float)
@@ -38,8 +40,27 @@ class Game:
     def update(self) -> None:
         self.sprites.update()
 
+    def handle_event(self) -> None:
+        keys = pygame.key.get_pressed()
+
+        if not self.timers.horizontal.active:
+            if keys[pygame.K_LEFT] or keys[pygame.K_a] or keys[pygame.K_h]:
+                self.move_left()
+                self.timers.horizontal.activate()
+            elif keys[pygame.K_DOWN] or keys[pygame.K_s] or keys[pygame.K_j]:
+                self.move_down()
+            elif keys[pygame.K_RIGHT] or keys[pygame.K_d] or keys[pygame.K_l]:
+                self.move_right()
+                self.timers.horizontal.activate()
+
     def move_down(self) -> None:
         self.tetromino.move_down()
+
+    def move_left(self) -> None:
+        self.tetromino.move_left()
+
+    def move_right(self) -> None:
+        self.tetromino.move_right()
 
     def _create_grid_surface(self) -> None:
         self.grid_surface = self.surface.copy()

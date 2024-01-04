@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from typing import Callable, NamedTuple, Optional
 
 import pygame
 from attrs import define, field
@@ -30,3 +30,8 @@ class Timer:
 
             if self.repeated:
                 self.activate()
+
+
+class Timers(NamedTuple):
+    vertical: Timer
+    horizontal: Timer
