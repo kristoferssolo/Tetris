@@ -16,7 +16,6 @@ class Preview:
     def __init__(self) -> None:
         self._initialize_surface()
         self._initialize_rect()
-
         self._initialize_increment_height()
 
     def run(self, next_figures: list[Figure]) -> None:

@@ -84,6 +84,12 @@ class Tetromino:
         if self._are_new_positions_valid(new_positions):
             self._update_block_positions(new_positions)
 
+    def drop(self) -> None:
+        """Drops the Tetromino to the bottom of the game field."""
+        while not self._check_horizontal_collision(self.blocks, Direction.DOWN):
+            for block in self.blocks:
+                block.pos.y += 1
+
     def _check_vertical_collision(
         self, blocks: list[Block], direction: Direction
     ) -> bool:

@@ -56,6 +56,7 @@ class Game:
         self._initialize_game_state()
         self._initialize_timers()
         self.timers: Timers
+        self._initialize_sound()
 
     def run(self) -> None:
         """Run a single iteration of the game loop."""
@@ -82,6 +83,7 @@ class Game:
         self._handle_movement_keys(keys)
         self._handle_rotation_keys(keys)
         self._handle_down_key(keys)
+        self._handle_drop_key(keys)
 
     def move_down(self) -> None:
         """Move the current tetromino down."""
@@ -266,7 +268,6 @@ class Game:
         self.level = 1
         self.score = 0
         self.lines = 0
-        self._initialize_sound()
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
@@ -299,10 +300,9 @@ class Game:
                 self.timers.horizontal.activate()
 
     def _handle_rotation_keys(self, keys: list[bool]) -> None:
-        """Handle rotation keys [K_SPACE, K_r, K_UP, K_w, K_k]."""
+        """Handle rotation keys [K_r, K_UP, K_w, K_k]."""
         rotate_keys = (
-            keys[pygame.K_SPACE]
-            or keys[pygame.K_r]
+            keys[pygame.K_r]
             or keys[pygame.K_UP]
             or keys[pygame.K_w]
             or keys[pygame.K_k]
@@ -322,6 +322,13 @@ class Game:
         if self.down_pressed and not down_keys:
             self.down_pressed = False
             self.timers.vertical.duration = self.initial_block_speed
+
+    def _handle_drop_key(self, keys: list[bool]) -> None:
+        """Handle the drop key [K_SPACE]."""
+        drop_keys = keys[pygame.K_SPACE]
+
+        if drop_keys:
+            self.tetromino.drop()
 
     def _reset_game_state(self) -> None:
         """Reset the game state."""
