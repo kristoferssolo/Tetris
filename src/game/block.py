@@ -18,3 +18,6 @@ class Block(pygame.sprite.Sprite):
 
     def vertical_collision(self, x: int) -> bool:
         return not 0 <= x < CONFIG.game.columns
+
+    def horizontal_collision(self, y: int) -> bool:
+        return y >= CONFIG.game.rows
