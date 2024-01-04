@@ -13,6 +13,8 @@ class Preview:
         )
         self.dispaly_surface = pygame.display.get_surface()
 
+        self.increment_height = self.surface.get_height() / 3
+
     def run(self, next_figures: list[Figure]) -> None:
         self.dispaly_surface.blit(self.surface, self.rect)
         self.draw(next_figures)
@@ -32,6 +34,9 @@ class Preview:
         )
 
     def _draw_figures(self, figures: list[Figure]) -> None:
-        for figure in figures:
+        for idx, figure in enumerate(figures):
             figure_surface = figure.value.image
-            self.surface.blit(figure_surface, (0, 0))
+            x = self.surface.get_width() / 2
+            y = self.increment_height / 2 + idx * self.increment_height
+            rect = figure_surface.get_rect(center=(x, y))
+            self.surface.blit(figure_surface, rect)
