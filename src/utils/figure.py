@@ -94,6 +94,6 @@ class Figure(Enum):
         _load_image("L.png"),
     )
 
-    @staticmethod
-    def random() -> "Figure":
+    @classmethod
+    def random(cls) -> "Figure":
         return random.choice(list(Figure))

@@ -34,7 +34,7 @@ class Main:
 
             self.game.run()
             self.score.run()
-            self.preview.run()
+            self.preview.run(self.next_figures)
 
             pygame.display.update()
             self.clock.tick(CONFIG.fps)

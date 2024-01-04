@@ -1,5 +1,5 @@
 import pygame
-from utils import CONFIG, Size
+from utils import CONFIG, Figure, Size
 
 
 class Preview:
@@ -12,7 +12,26 @@ class Preview:
             )
         )
         self.dispaly_surface = pygame.display.get_surface()
-        self.surface.fill(CONFIG.colors.bg_sidebar)
 
-    def run(self) -> None:
+    def run(self, next_figures: list[Figure]) -> None:
         self.dispaly_surface.blit(self.surface, self.rect)
+        self.draw(next_figures)
+
+    def draw(self, next_figures: list[Figure]) -> None:
+        self.surface.fill(CONFIG.colors.bg_sidebar)
+        self._draw_border()
+        self._draw_figures(next_figures)
+
+    def _draw_border(self) -> None:
+        pygame.draw.rect(
+            self.dispaly_surface,
+            CONFIG.colors.border_highlight,
+            self.rect,
+            CONFIG.game.line_width * 2,
+            CONFIG.game.border_radius,
+        )
+
+    def _draw_figures(self, figures: list[Figure]) -> None:
+        for figure in figures:
+            figure_surface = figure.value.image
+            self.surface.blit(figure_surface, (0, 0))
