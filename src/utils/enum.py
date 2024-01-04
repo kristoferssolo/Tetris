@@ -8,6 +8,11 @@ class Direction(Enum):
     UP = -1
 
 
+class Rotation(Enum):
+    CLOCKWISE = 90
+    COUNTER_CLOCKWISE = -90
+
+
 class Field(Enum):
     EMPTY = None
     FILLED = "Block"

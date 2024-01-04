@@ -1,5 +1,5 @@
 from .config import CONFIG
-from .enum import Direction, Field
+from .enum import Direction, Field, Rotation
 from .figure import Figure, FigureConfig
 from .log import log
 from .path import BASE_PATH
@@ -14,4 +14,5 @@ __all__ = [
     "FigureConfig",
     "Direction",
     "Field",
+    "Rotation",
 ]

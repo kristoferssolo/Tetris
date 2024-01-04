@@ -2,7 +2,7 @@ from typing import Callable, Optional
 
 import numpy as np
 import pygame
-from utils import CONFIG, Direction, Field, Figure
+from utils import CONFIG, Direction, Field, Figure, Rotation
 
 from .block import Block
 from .log import log
@@ -287,9 +287,14 @@ class Game:
         self.surface.fill(CONFIG.colors.bg_float)
 
     def _handle_movement_keys(self, keys: list[bool]) -> None:
-        """Handle movement keys [K_LEFT, K_RIGHT, K_a, K_d, K_h, K_l]."""
-        left_keys = keys[pygame.K_LEFT] or keys[pygame.K_a] or keys[pygame.K_h]
-        right_keys = keys[pygame.K_RIGHT] or keys[pygame.K_d] or keys[pygame.K_l]
+        """
+        Handle movement keys.
+
+        Move right [K_d, K_l].
+        Move left [K_a, K_h].
+        """
+        right_keys = keys[pygame.K_d] or keys[pygame.K_l]
+        left_keys = keys[pygame.K_a] or keys[pygame.K_h]
 
         if not self.timers.horizontal.active:
             if left_keys:
@@ -300,16 +305,30 @@ class Game:
                 self.timers.horizontal.activate()
 
     def _handle_rotation_keys(self, keys: list[bool]) -> None:
-        """Handle rotation keys [K_r, K_UP, K_w, K_k]."""
-        rotate_keys = (
+        """
+        Handle rotation keys.
+
+        Rotation clockwise [K_RIGHT, K_UP, K_r, K_w, K_k].
+        Rotation counter-clockwise [K_LEFT, K_e, K_i].
+        """
+        clockwise_keys = (
             keys[pygame.K_r]
             or keys[pygame.K_UP]
             or keys[pygame.K_w]
             or keys[pygame.K_k]
+            or keys[pygame.K_RIGHT]
+        )
+
+        counter_clockwise_keys = (
+            keys[pygame.K_e] or keys[pygame.K_i] or keys[pygame.K_LEFT]
         )
         if not self.timers.rotation.active:
-            if rotate_keys:
+            if clockwise_keys:
                 self.tetromino.rotate()
+                self.timers.rotation.activate()
+
+            if counter_clockwise_keys:
+                self.tetromino.rotate(Rotation.COUNTER_CLOCKWISE)
                 self.timers.rotation.activate()
 
     def _handle_down_key(self, keys: list[bool]) -> None:

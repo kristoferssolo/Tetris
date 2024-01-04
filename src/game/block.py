@@ -1,6 +1,6 @@
 import numpy as np
 import pygame
-from utils import CONFIG, Size
+from utils import CONFIG, Rotation, Size
 
 
 class Block(pygame.sprite.Sprite):
@@ -60,17 +60,18 @@ class Block(pygame.sprite.Sprite):
         """
         return y >= CONFIG.game.rows or (y >= 0 and field[y, int(self.pos.x)])
 
-    def rotate(self, pivot: pygame.Vector2) -> pygame.Vector2:
+    def rotate(self, pivot: pygame.Vector2, rotation: Rotation) -> pygame.Vector2:
         """
         Rotates the block around a given pivot point.
 
         Args:
             pivot: The pivot point for rotation.
+            rotation: The rotation direction.
 
         Returns:
             The new position of the block after rotation.
         """
-        return pivot + (self.pos - pivot).rotate(90)
+        return pivot + (self.pos - pivot).rotate(rotation.value)
 
     def _initialize_image(self, color: str) -> None:
         """

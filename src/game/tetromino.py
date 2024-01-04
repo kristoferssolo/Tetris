@@ -2,7 +2,7 @@ from typing import Callable, Optional
 
 import numpy as np
 import pygame
-from utils import CONFIG, Direction, Figure, Size
+from utils import CONFIG, Direction, Figure, Rotation, Size
 
 from .block import Block
 from .log import log
@@ -66,11 +66,14 @@ class Tetromino:
             for block in self.blocks:
                 block.pos.x += direction.value
 
-    def rotate(self) -> None:
+    def rotate(self, rotation: Rotation = Rotation.CLOCKWISE) -> None:
         """
         Rotates the Tetromino clockwise.
 
         Does not rotate if the Tetromino is an O-shaped (square) figure.
+
+        Args:
+            rotation: Rotation to perform (CLOCKWISE or COUNTER_CLOCKWISE).
         """
         if self.figure == Figure.O:
             return
@@ -78,7 +81,7 @@ class Tetromino:
         pivot: pygame.Vector2 = self.blocks[0].pos
 
         new_positions: list[pygame.Vector2] = [
-            block.rotate(pivot) for block in self.blocks
+            block.rotate(pivot, rotation) for block in self.blocks
         ]
 
         if self._are_new_positions_valid(new_positions):
