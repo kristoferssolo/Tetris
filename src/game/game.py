@@ -60,20 +60,20 @@ class Game:
 
     def run(self) -> None:
         """Run a single iteration of the game loop."""
-        self._update_display_surface()
         self.draw()
         self._timer_update()
         self.handle_event()
 
     def draw(self) -> None:
         """Draw the game surface and its components."""
-        self._fill_game_surface()
         self.update()
+        self._fill_game_surface()
         self.sprites.draw(self.surface)
         self._draw_border()
         self._draw_grid()
 
     def update(self) -> None:
+        self._update_display_surface()
         self.sprites.update()
 
     def handle_event(self) -> None:
@@ -130,7 +130,7 @@ class Game:
         Returns:
             True if the game is over, False otherwise.
         """
-        for block in self.sprites:
+        for block in self.tetromino.blocks:
             if block.pos.y < 0:
                 log.info("Game over!")
                 return True
@@ -138,6 +138,7 @@ class Game:
 
     def restart(self) -> None:
         """Restart the game."""
+        log.info("Restarting the game")
         self._reset_game_state()
         self._initialize_field_and_tetromino()
 
@@ -277,9 +278,9 @@ class Game:
         self.initial_block_speed = CONFIG.game.initial_speed
         self.increased_block_speed = self.initial_block_speed * 0.4
         self.down_pressed = False
-        self.level = 1
-        self.score = 0
-        self.lines = 0
+        self.level: int = 1
+        self.score: int = 0
+        self.lines: int = 0
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
@@ -363,13 +364,10 @@ class Game:
 
     def _reset_game_state(self) -> None:
         """Reset the game state."""
+        log.debug("Resetting game state")
         self.sprites.empty()
-        self.field = self._generate_empty_field()
-
-        self.level = 1
-        self.score = 0
-        self.lines = 0
-
+        self._initialize_field_and_tetromino()
+        self._initialize_game_state()
         self.update_score(self.lines, self.score, self.level)
 
     def _draw_vertical_grid_line(self, x: int | float) -> None:
