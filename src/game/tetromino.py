@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Callable, Optional
 
 import pygame
 from utils import CONFIG, Direction, Figure, FigureConfig, Size
@@ -8,11 +8,15 @@ from .block import Block
 
 class Tetromino:
     def __init__(
-        self, group: pygame.sprite.Group, shape: Optional[Figure] = None
+        self,
+        group: pygame.sprite.Group,
+        func: Callable[[None], None],
+        shape: Optional[Figure] = None,
     ) -> None:
         self.figure: FigureConfig = shape.value if shape else Figure.random().value
         self.block_positions: list[pygame.Vector2] = self.figure.shape
         self.color: str = self.figure.color
+        self.create_new = func
 
         self.blocks = [
             Block(group=group, pos=pos, color=self.color)
@@ -23,6 +27,8 @@ class Tetromino:
         if not self._check_horizontal_collision(self.blocks, Direction.DOWN):
             for block in self.blocks:
                 block.pos.y += 1
+        else:
+            self.create_new()
 
     def move_horizontal(self, direction: Direction) -> None:
         if not self._check_vertical_collision(self.blocks, direction):

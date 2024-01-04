@@ -15,7 +15,7 @@ class Game:
         self._create_grid_surface()
 
         self.sprites = pygame.sprite.Group()
-        self.tetromino = Tetromino(group=self.sprites)
+        self.tetromino = Tetromino(self.sprites, self.create_new_tetromino)
 
         self.timers = Timers(
             Timer(CONFIG.game.initial_speed, True, self.move_down),
@@ -61,6 +61,9 @@ class Game:
 
     def move_right(self) -> None:
         self.tetromino.move_horizontal(Direction.RIGHT)
+
+    def create_new_tetromino(self) -> None:
+        self.tetromino = Tetromino(self.sprites, self.create_new_tetromino)
 
     def _create_grid_surface(self) -> None:
         self.grid_surface = self.surface.copy()
