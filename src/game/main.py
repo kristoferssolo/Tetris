@@ -24,6 +24,10 @@ class Main:
         self.score = Score()
         self.preview = Preview()
 
+        self.music = pygame.mixer.Sound(CONFIG.music.background)
+        self.music.set_volume(CONFIG.music.volume)
+        self.music.play()
+
     def draw(self) -> None:
         pygame.display.update()
 

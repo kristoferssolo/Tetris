@@ -52,6 +52,13 @@ class Window:
 
 
 @define
+class Music:
+    background: Path = BASE_PATH / "assets" / "music" / "background.wav"
+    langing: Path = BASE_PATH / "assets" / "music" / "landing.wav"
+    volume: float = 0.01
+
+
+@define
 class Config:
     log_level: str = "warning"
 
@@ -59,6 +66,7 @@ class Config:
     sidebar: SideBar = SideBar()
     window: Window = Window()
     font: Font = Font()
+    music: Music = Music()
     colors = TokyoNightNight()
     fps: int = 60
 
