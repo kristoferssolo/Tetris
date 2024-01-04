@@ -18,7 +18,7 @@ class Game:
     size: Size = Size(columns * cell.width, rows * cell.width)
     pos: Vec2 = Vec2(padding, padding)
     offset: Vec2 = Vec2(columns // 2, -1)
-    initial_speed: int = 200
+    initial_speed: int = 400
     movment_delay: int = 200
     rotation_delay: int = 200
 

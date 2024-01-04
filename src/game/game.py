@@ -1,5 +1,5 @@
 import pygame
-from utils import CONFIG, Figure
+from utils import CONFIG, Direction, Figure
 
 from .log import log
 from .tetromino import Tetromino
@@ -57,10 +57,10 @@ class Game:
         self.tetromino.move_down()
 
     def move_left(self) -> None:
-        self.tetromino.move_left()
+        self.tetromino.move_horizontal(Direction.LEFT)
 
     def move_right(self) -> None:
-        self.tetromino.move_right()
+        self.tetromino.move_horizontal(Direction.RIGHT)
 
     def _create_grid_surface(self) -> None:
         self.grid_surface = self.surface.copy()
@@ -100,5 +100,5 @@ class Game:
         )
 
     def _timer_update(self) -> None:
-        for timer in self.timers.values():
+        for timer in self.timers:
             timer.update()

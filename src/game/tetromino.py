@@ -1,7 +1,7 @@
 from typing import Optional
 
 import pygame
-from utils import CONFIG, Figure, FigureConfig, Size
+from utils import CONFIG, Direction, Figure, FigureConfig, Size
 
 from .block import Block
 
@@ -23,10 +23,10 @@ class Tetromino:
         for block in self.blocks:
             block.pos.y += 1
 
-    def move_left(self) -> None:
+    def move_horizontal(self, direction: Direction) -> None:
         for block in self.blocks:
-            block.pos.x -= 1
+            block.pos.x += direction.value
 
-    def move_right(self) -> None:
+    def next_move_horizontal_collide(self, block: Block, direction: Direction) -> None:
         for block in self.blocks:
-            block.pos.x += 1
+            block.pos.x += direction.value
