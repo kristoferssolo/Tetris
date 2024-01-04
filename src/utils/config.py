@@ -1,7 +1,7 @@
 from attr import define, field
+from pygame import Vector2 as Vec2
 
 from .colors import TokyoNightNight
-from .position import Position
 from .size import Size
 
 PADDING = 20
@@ -16,7 +16,7 @@ class Game:
     padding: int = PADDING
     cell: Size = Size(40, 40)
     size: Size = Size(columns * cell.width, rows * cell.width)
-    pos: Position = Position(padding, padding)
+    pos: Vec2 = Vec2(padding, padding)
 
 
 @define
