@@ -26,7 +26,7 @@ class Main:
     """
 
     def __init__(self) -> None:
-        log.info("Initializing the game")
+        # log.info("Initializing the game")
         self._initialize_pygeme()
         self._initialize_game_components()
         self._start_background_music()
@@ -38,7 +38,19 @@ class Main:
     def run(self) -> None:
         """Run the main game loop."""
         while True:
-            self._run_game_loop()
+            self.run_game_loop()
+
+    def run_game_loop(self) -> None:
+        """Run a single iteration of the game loop."""
+        self.draw()
+        self.handle_events()
+
+        self.game.run()
+        self.score.run()
+        self.preview.run(self.next_figures)
+
+        pygame.display.update()
+        self.clock.tick(CONFIG.fps)
 
     def handle_events(self) -> None:
         """Handle Pygame events."""
@@ -103,7 +115,7 @@ class Main:
 
     def _initialize_game_components(self) -> None:
         """Initialize game-related components."""
-        self.next_figures = self._generate_next_figures()
+        self.next_figures: list[Figure] = self._generate_next_figures()
 
         self.game = Game(self._get_next_figure, self._update_score)
         self.score = Score()
@@ -114,15 +126,3 @@ class Main:
         self.music = pygame.mixer.Sound(CONFIG.music.background)
         self.music.set_volume(CONFIG.music.volume)
         self.music.play(-1)
-
-    def _run_game_loop(self) -> None:
-        """Run a single iteration of the game loop."""
-        self.draw()
-        self.handle_events()
-
-        self.game.run()
-        self.score.run()
-        self.preview.run(self.next_figures)
-
-        pygame.display.update()
-        self.clock.tick(CONFIG.fps)

@@ -6,13 +6,10 @@ from utils import BASE_PATH, CONFIG
 
 
 def pos_int(string: str) -> int:
-    try:
-        value = int(string)
-    except ValueError:
-        raise argparse.ArgumentTypeError(f"Expected integer, got {string!r}")
-    if value < 0:
-        raise argparse.ArgumentTypeError(f"Expected non negative number, got {value}")
-    return value
+    ivalue = int(string)
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError(f"{ivalue} is not a positive integer")
+    return ivalue
 
 
 parser = argparse.ArgumentParser(description="Tetris game with AI")
@@ -36,9 +33,8 @@ parser.add_argument(
     "-t",
     "--train",
     type=pos_int,
-    nargs="?",
-    const=100,
-    metavar="int",
+    nargs=2,
+    metavar=("generations", "parallels"),
     help="Trains the AI",
 )
 
@@ -70,7 +66,7 @@ def main(args: argparse.ArgumentParser) -> None:
 
     if args.train is not None:
         ai.log.debug("Training the AI")
-        ai.train(args.train)
+        ai.train(*args.train)
     else:
         game.log.debug("Running the game")
         game.Main().run()

@@ -35,6 +35,7 @@ class Game:
         level: Current game level.
         score: Current game score.
         lines: Number of lines cleared.
+        game_over: True if the game is over, False otherwise.
         landing_sound: Sound effect for landing blocks.
     """
 
@@ -112,10 +113,12 @@ class Game:
     def create_new_tetromino(self) -> None:
         """Create a new tetromino and perform necessary actions."""
         self._play_landing_sound()
-        if self.game_over():
-            self.restart()
-
         self._check_finished_rows()
+
+        self.game_over = self._check_game_over()
+        # if self.game_over:
+        #     self.restart()
+
         self.tetromino = Tetromino(
             self.sprites,
             self.create_new_tetromino,
@@ -123,7 +126,7 @@ class Game:
             self.get_next_figure(),
         )
 
-    def game_over(self) -> bool:
+    def _check_game_over(self) -> bool:
         """
         Check if the game is over.
 
@@ -131,16 +134,17 @@ class Game:
             True if the game is over, False otherwise.
         """
         for block in self.tetromino.blocks:
-            if block.pos.y < 0:
-                log.info("Game over!")
+            if block.pos.y <= 0:
+                # log.info("Game over!")
                 return True
         return False
 
     def restart(self) -> None:
         """Restart the game."""
-        log.info("Restarting the game")
+        # log.info("Restarting the game")
         self._reset_game_state()
         self._initialize_field_and_tetromino()
+        self.game_over = False
 
     def mute(self) -> None:
         """Mute the game."""
@@ -285,6 +289,7 @@ class Game:
         self.level: int = 1
         self.score: int = 0
         self.lines: int = 0
+        self.game_over: bool = False
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
@@ -368,7 +373,6 @@ class Game:
 
     def _reset_game_state(self) -> None:
         """Reset the game state."""
-        log.debug("Resetting game state")
         self.sprites.empty()
         self._initialize_field_and_tetromino()
         self._initialize_game_state()
