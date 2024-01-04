@@ -18,7 +18,10 @@ class FigureConfig(NamedTuple):
 
 
 def _load_image(filename: str) -> pygame.Surface:
-    return pygame.image.load(BASE_PATH / "assets" / "figures" / filename)
+    return pygame.image.load(
+        BASE_PATH / "assets" / "figures" / filename
+    )  # TODO: add `.convert_alpha()``
+    # TODO: change colors of images
 
 
 class Figure(Enum):
