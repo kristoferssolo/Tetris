@@ -10,6 +10,19 @@ from .peaks import get_peaks
 def get_wells(
     *, peaks: Optional[np.ndarray] = None, field: Optional[np.ndarray] = None
 ) -> np.ndarray:
+    """
+    Calculate the well depths in each column of the given field.
+
+    Args:
+        peaks: Array containing the indices of the peaks in each column. If not provided, it will be computed from the field.
+        field: The signal field. Required if peaks is not provided.
+
+    Returns:
+        Array containing the well depths in each column.
+
+    Raises:
+        ValueError: If both `peaks` and `field` are `None`.
+    """
     if peaks is None and field is None:
         raise ValueError("peaks and field cannot both be None")
     elif peaks is None:
@@ -38,6 +51,19 @@ def get_wells(
 def get_wells_max(
     *, wells: Optional[np.ndarray] = None, field: Optional[np.ndarray] = None
 ) -> int:
+    """
+    Get the maximum well depth from the provided wells or compute wells from the field.
+
+    Args:
+        wells: Array containing the well depths in each column. If not provided, it will be computed from the field.
+        field: The signal field. Required if wells is not provided.
+
+    Returns:
+        The maximum well depth.
+
+    Raises:
+        ValueError: If both `wells` and `field` are `None`.
+    """
     if wells is None and field is None:
         raise ValueError("wells and field cannot both be None")
     elif wells is None:

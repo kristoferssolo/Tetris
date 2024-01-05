@@ -6,6 +6,16 @@ from .peaks import get_peaks, get_peaks_max
 
 
 def get_row_transition(field: np.ndarray, highest_peak: Optional[int] = None) -> int:
+    """
+    Calculate the number of transitions in the rows of the given field.
+
+    Args:
+        field: The signal field.
+        highest_peak: The highest peak value. If not provided, it will be computed from the field.
+
+    Returns:
+        The total number of transitions in the rows.
+    """
     if highest_peak is None:
         highest_peak = get_peaks_max(field=field)
 
@@ -16,6 +26,16 @@ def get_row_transition(field: np.ndarray, highest_peak: Optional[int] = None) ->
 
 
 def get_col_transition(field: np.ndarray, peaks: Optional[np.ndarray] = None) -> int:
+    """
+    Calculate the number of transitions in the columns of the given field.
+
+    Args:
+        field: The signal field.
+        peaks: Array containing the indices of the peaks in each column. If not provided, it will be computed from the field.
+
+    Returns:
+        The total number of transitions in the columns.
+    """
     if peaks is None:
         peaks = get_peaks(field)
 

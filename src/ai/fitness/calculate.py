@@ -12,6 +12,15 @@ from .wells import get_wells, get_wells_max
 
 
 def calculate_fitness(field: np.ndarray) -> float:
+    """
+    Calculate the fitness value for the given field.
+
+    Args:
+        field: The game field.
+
+    Returns:
+        The fitness value.
+    """
     peaks = get_peaks(field=field)
     holes = get_holes(field=field)
     highest_peak = get_peaks_max(peaks=peaks)
