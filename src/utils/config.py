@@ -65,6 +65,7 @@ class AI:
     winner_path: Path = BASE_PATH / "winner"
     plot_path: Path = BASE_PATH / "plots"
     checkpoint_path: Path = BASE_PATH / "checkpoints"
+    config_path: Path = BASE_PATH / "config"
 
 
 @define

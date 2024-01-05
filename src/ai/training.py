@@ -5,9 +5,8 @@ import pygame
 from game import Main
 from utils import BASE_PATH, CONFIG
 
-from .config import get_config
 from .evaluations import eval_genome
-from .io import save_genome
+from .io import get_config, save_genome
 from .log import log
 from .visualize import plot_progress, plot_species, plot_stats
 
