@@ -9,7 +9,7 @@ from utils import BASE_PATH, CONFIG
 from .evaluations import eval_genome
 from .io import get_config, save_genome
 from .log import log
-from .visualize import plot_progress, plot_species, plot_stats
+from .visualize import draw_net, plot_species, plot_stats
 
 
 def train(
@@ -52,6 +52,14 @@ def train(
         filename=CONFIG.ai.plot_path / "avg_fitness.png",
     )
     plot_species(stats, view=False, filename=CONFIG.ai.plot_path / "speciation.png")
+    draw_net(config, winner, view=False, filename=CONFIG.ai.plot_path / "network.gv")
+    draw_net(
+        config,
+        winner,
+        view=False,
+        filename=CONFIG.ai.plot_path / "network-pruned.gv",
+        prune_unused=True,
+    )
 
     log.info("Saving best genome")
     save_genome(winner)
