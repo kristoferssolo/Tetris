@@ -32,9 +32,8 @@ group.add_argument(
 parser.add_argument(
     "-t",
     "--train",
-    type=pos_int,
-    nargs=2,
-    metavar=("generations", "parallels"),
+    nargs=3,
+    metavar=("n generations", "n parallels", "checkpoint"),
     help="Trains the AI",
 )
 

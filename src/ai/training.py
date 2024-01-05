@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 
 import neat
 import pygame
@@ -12,7 +13,9 @@ from .visualize import plot_progress, plot_species, plot_stats
 
 
 def train(
-    gen_count: int = CONFIG.ai.generations, parallel: int = CONFIG.ai.parallels
+    gen_count: int = CONFIG.ai.generations,
+    parallel: int = CONFIG.ai.parallels,
+    checkpoint_path: Optional[str] = None,
 ) -> None:
     """
     Train the AI
@@ -22,18 +25,19 @@ def train(
     """
     config = get_config()
 
-    # population = neat.Checkpointer().restore_checkpoint(
-    #     CONFIG.ai.checkpoint_path / "neat-checkpoint-199"
-    # )
-    population = neat.Population(config)
+    population = (
+        neat.Checkpointer().restore_checkpoint(checkpoint_path)
+        if checkpoint_path
+        else neat.Population(config)
+    )
     population.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
     population.add_reporter(neat.Checkpointer(5, 900))
 
-    pe = neat.ParallelEvaluator(parallel, eval_genome)
+    pe = neat.ParallelEvaluator(int(parallel), eval_genome)
 
-    winner = population.run(pe.evaluate, gen_count)
+    winner = population.run(pe.evaluate, int(gen_count))
     plot_stats(
         stats,
         ylog=False,

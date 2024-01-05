@@ -53,7 +53,7 @@ def _calc_holes(field: np.ndarray) -> float:
     return penalty
 
 
-def _calc_height_penalty(field: np.ndarray) -> float:
+def _calc_height_penalty(field: np.ndarray) -> tuple[float, float]:
     column_heights = np.max(
         np.where(field == 1, field.shape[0] - np.arange(field.shape[0])[:, None], 0),
         axis=0,
