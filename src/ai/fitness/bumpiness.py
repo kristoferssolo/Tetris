@@ -6,7 +6,7 @@ from .peaks import get_peaks
 
 
 def get_bumpiness(
-    peaks: Optional[np.ndarray], field: Optional[np.ndarray] = None
+    *, peaks: Optional[np.ndarray] = None, field: Optional[np.ndarray] = None
 ) -> int:
     if peaks is None and field is None:
         raise ValueError("peaks and field cannot both be None")

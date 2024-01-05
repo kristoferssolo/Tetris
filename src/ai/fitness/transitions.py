@@ -7,7 +7,7 @@ from .peaks import get_peaks, get_peaks_max
 
 def get_row_transition(field: np.ndarray, highest_peak: Optional[int] = None) -> int:
     if highest_peak is None:
-        highest_peak = get_peaks_max(None, field)
+        highest_peak = get_peaks_max(field=field)
 
     rows_to_check = slice(int(field.shape[0] - highest_peak), field.shape[0])
     transitions = np.sum(field[rows_to_check, 1:] != field[rows_to_check, :-1])

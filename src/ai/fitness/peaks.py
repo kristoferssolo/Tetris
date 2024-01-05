@@ -11,7 +11,7 @@ def get_peaks(field: np.ndarray) -> np.ndarray:
 
 
 def get_peaks_max(
-    peaks: Optional[np.ndarray], field: Optional[np.ndarray] = None
+    *, peaks: Optional[np.ndarray] = None, field: Optional[np.ndarray] = None
 ) -> int:
     if peaks is None and field is None:
         raise ValueError("peaks and field cannot both be None")
@@ -21,7 +21,7 @@ def get_peaks_max(
 
 
 def get_peaks_sum(
-    peaks: Optional[np.ndarray], field: Optional[np.ndarray] = None
+    *, peaks: Optional[np.ndarray] = None, field: Optional[np.ndarray] = None
 ) -> int:
     if peaks is None and field is None:
         raise ValueError("peaks and field cannot both be None")
