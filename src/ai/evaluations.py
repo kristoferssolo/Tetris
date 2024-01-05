@@ -29,7 +29,7 @@ def eval_genome(genome: neat.DefaultGenome, config: neat.Config) -> float:
 
         next_figure: list[int] = [
             vec
-            for vec in app.game.get_next_figure().value.shape
+            for vec in app.next_figures[0].value.shape
             for vec in (int(vec.x), int(vec.y))
         ]
 
