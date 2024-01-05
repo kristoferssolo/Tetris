@@ -66,6 +66,8 @@ class AI:
     plot_path: Path = BASE_PATH / "plots"
     checkpoint_path: Path = BASE_PATH / "checkpoints"
     config_path: Path = BASE_PATH / "config"
+    checkpoint_interval: int = 10
+    checkpoint_delay: int = 900
 
 
 @define

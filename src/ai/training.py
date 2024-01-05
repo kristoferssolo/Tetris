@@ -33,7 +33,9 @@ def train(
     population.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
-    population.add_reporter(neat.Checkpointer(5, 900))
+    population.add_reporter(
+        neat.Checkpointer(CONFIG.ai.checkpoint_interval, CONFIG.ai.checkpoint_delay)
+    )
 
     pe = neat.ParallelEvaluator(int(parallel), eval_genome)
 
