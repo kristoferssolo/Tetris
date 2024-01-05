@@ -2,8 +2,6 @@ from typing import Optional
 
 import numpy as np
 
-from ai.log import log
-
 
 def get_peaks(field: np.ndarray) -> np.ndarray:
     peaks = np.where(field == 1, field.shape[0] - np.argmax(field, axis=0), 0)

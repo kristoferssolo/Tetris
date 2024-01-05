@@ -18,7 +18,6 @@ def eval_genome(genome: neat.DefaultGenome, config: neat.Config) -> float:
     game = app.game
     net = neat.nn.FeedForwardNetwork.create(genome, config)
     genome.fitness = 0
-    moves = 0
 
     while not game.game_over:
         current_figure: list[int] = [
@@ -50,10 +49,8 @@ def eval_genome(genome: neat.DefaultGenome, config: neat.Config) -> float:
 
         decisions[decision]()
         app.run_game_loop()
-        moves += 1
 
-    fitness = calculate_fitness(game)
-    genome.fitness = fitness - fitness / moves
+    genome.fitness = calculate_fitness(field)
     score, lines, level = app.game.score, app.game.lines, app.game.level
 
     log.debug(f"{genome.fitness=:<+6.6}\t{score=:<6} {lines=:<6} {level=:<6}")

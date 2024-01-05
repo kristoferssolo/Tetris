@@ -1,3 +1,3 @@
-from .fitness import calculate_fitness
+from .calculate import calculate_fitness
 
 __all__ = ["calculate_fitness"]

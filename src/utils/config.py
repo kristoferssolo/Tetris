@@ -59,15 +59,20 @@ class Music:
 
 
 @define
+class Checkpoint:
+    generation_interval: int = 10
+    time_interval: float = 900
+    filename_prefix: str = str(BASE_PATH / "checkpoints" / "neat-checkpoint-")
+
+
+@define
 class AI:
     generations: int = 200
     parallels: int = 1
     winner_path: Path = BASE_PATH / "winner"
     plot_path: Path = BASE_PATH / "plots"
-    checkpoint_path: Path = BASE_PATH / "checkpoints"
     config_path: Path = BASE_PATH / "config"
-    checkpoint_interval: int = 10
-    checkpoint_delay: int = 900
+    checkpoint: Checkpoint = Checkpoint()
 
 
 @define

@@ -22,6 +22,7 @@ def train(
     Args:
         gen_count: Number of generations to train (default is 200).
         threads: Number of threads to use (default is 1).
+        checkpoint_path: Path to a checkpoint file to resume training from.
     """
     config = get_config()
 
@@ -34,12 +35,16 @@ def train(
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
     population.add_reporter(
-        neat.Checkpointer(CONFIG.ai.checkpoint_interval, CONFIG.ai.checkpoint_delay)
+        neat.Checkpointer(
+            CONFIG.ai.checkpoint.generation_interval,
+            CONFIG.ai.checkpoint.time_interval,
+            CONFIG.ai.checkpoint.filename_prefix,
+        )
     )
 
-    pe = neat.ParallelEvaluator(int(parallel), eval_genome)
+    pe = neat.ParallelEvaluator(parallel, eval_genome)
 
-    winner = population.run(pe.evaluate, int(gen_count))
+    winner = population.run(pe.evaluate, gen_count)
     plot_stats(
         stats,
         ylog=False,

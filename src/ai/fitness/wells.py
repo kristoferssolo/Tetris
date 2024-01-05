@@ -16,7 +16,6 @@ def get_wells(
         peaks = get_peaks(field)
 
     wells = np.zeros_like(peaks)
-    log.debug(f"{peaks=}")
 
     first_well = peaks[1] - peaks[0]
     wells[0] = first_well if first_well > 0 else 0
@@ -33,5 +32,14 @@ def get_wells(
 
         wells[idx] = well_l if well_l >= well_r else well_r
 
-    log.debug(f"{wells=}")
     return wells
+
+
+def get_wells_max(
+    *, wells: Optional[np.ndarray] = None, field: Optional[np.ndarray] = None
+) -> int:
+    if wells is None and field is None:
+        raise ValueError("wells and field cannot both be None")
+    elif wells is None:
+        wells = get_wells(field)
+    return int(np.max(wells))
