@@ -2,7 +2,11 @@ import unittest
 
 import numpy as np
 from ai.fitness.peaks import get_peaks_sum
-from ai.fitness.transitions import get_row_transitions
+from ai.fitness.transitions import (
+    get_col_transition,
+    get_col_transitions2,
+    get_row_transition,
+)
 
 
 class TestFitness(unittest.TestCase):
@@ -33,4 +37,9 @@ class TestFitness(unittest.TestCase):
     def test_get_row_transistions(self):
         answers = (8, 0, 2)
         for field, answer in zip(self.fields, answers):
-            self.assertEqual(get_row_transitions(field), answer)
+            self.assertEqual(get_row_transition(field), answer)
+
+    def test_get_col_transistions2(self):
+        answers = (5, 0, 1)
+        for field, answer in zip(self.fields, answers):
+            self.assertEqual(get_col_transition(field), answer)
