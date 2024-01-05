@@ -20,3 +20,14 @@ def get_holes(
             holes[col] = np.count_nonzero(field[int(start) :, col] == 0)
 
     return holes
+
+
+def get_holes_sum(
+    *, holes: Optional[np.ndarray] = None, field: Optional[np.ndarray] = None
+) -> int:
+    if holes is None and field is None:
+        raise ValueError("holes and field cannot both be None")
+    elif holes is None:
+        holes = get_holes(field)
+
+    return int(np.sum(holes))
