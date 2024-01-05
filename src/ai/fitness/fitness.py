@@ -5,18 +5,12 @@ import numpy as np
 from game import Game
 from utils import CONFIG
 
-from .log import log
-
 
 def calculate_fitness(game: Game) -> float:
     field = np.where(game.field != None, 1, 0)
     reward, penalty = _calc_height_penalty(field)
     fitness = game.score * 100 - _calc_holes(field) - penalty + reward
     return fitness
-
-
-def get_peaks(field: np.ndarray) -> int:
-    pass
 
 
 def get_row_transitions(field: np.ndarray) -> int:
