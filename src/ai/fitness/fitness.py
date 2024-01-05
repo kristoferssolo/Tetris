@@ -13,10 +13,6 @@ def calculate_fitness(game: Game) -> float:
     return fitness
 
 
-def get_wells(field: np.ndarray) -> int:
-    pass
-
-
 def _calc_holes(field: np.ndarray) -> float:
     height, width = field.shape
     penalty = 0

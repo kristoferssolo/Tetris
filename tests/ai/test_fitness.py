@@ -8,6 +8,7 @@ from ai.fitness.transitions import (
     get_col_transition,
     get_row_transition,
 )
+from ai.fitness.wells import get_wells
 
 
 class TestFitness(unittest.TestCase):
@@ -58,3 +59,12 @@ class TestFitness(unittest.TestCase):
         )
         for field, answer in zip(self.fields, answers):
             self.assertTrue(np.array_equal(get_holes(field), answer))
+
+    def test_get_wells(self):
+        answers = (
+            np.array([1, 0, 2, 1, 0]),
+            np.array([0, 0, 0, 0, 0]),
+            np.array([2, 0, 2, 0, 0]),
+        )
+        for field, answer in zip(self.fields, answers):
+            self.assertTrue(np.array_equal(get_wells(field=field), answer))
