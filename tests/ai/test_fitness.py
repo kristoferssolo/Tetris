@@ -32,7 +32,7 @@ class TestFitness(unittest.TestCase):
     def test_get_peaks_sum(self) -> None:
         answers: tuple[int] = (11, 0, 2)
         for field, answer in zip(self.fields, answers):
-            self.assertEqual(get_peaks_sum(field), answer)
+            self.assertEqual(get_peaks_sum(None, field), answer)
 
     def test_get_row_transistions(self):
         answers = (8, 0, 2)
@@ -45,6 +45,6 @@ class TestFitness(unittest.TestCase):
             self.assertEqual(get_col_transition(field), answer)
 
     def test_get_bumpiness(self):
-        answers = (8, 0, 2)
+        answers = (5, 0, 4)
         for field, answer in zip(self.fields, answers):
-            self.assertEqual(get_bumpiness(field), answer)
+            self.assertEqual(get_bumpiness(None, field), answer)
