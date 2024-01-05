@@ -48,3 +48,12 @@ class TestFitness(unittest.TestCase):
         answers = (5, 0, 4)
         for field, answer in zip(self.fields, answers):
             self.assertEqual(get_bumpiness(None, field), answer)
+
+    def test_get_holes(self):
+        answers = (
+            np.array([1, 1, 0, 1, 2]),
+            np.array([0, 0, 0, 0, 0]),
+            np.array([0, 1, 0, 0, 0]),
+        )
+        for field, answer in zip(self.fields, answers):
+            self.assertTrue(np.array_equal(get_holes(field), answer))
