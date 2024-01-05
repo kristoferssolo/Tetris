@@ -13,14 +13,6 @@ def calculate_fitness(game: Game) -> float:
     return fitness
 
 
-def get_row_transitions(field: np.ndarray) -> int:
-    pass
-
-
-def get_col_transitions(field: np.ndarray) -> int:
-    pass
-
-
 def get_bumpiness(field: np.ndarray) -> int:
     pass
 
