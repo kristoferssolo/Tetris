@@ -13,10 +13,6 @@ def calculate_fitness(game: Game) -> float:
     return fitness
 
 
-def get_bumpiness(field: np.ndarray) -> int:
-    pass
-
-
 def get_holes(field: np.ndarray) -> int:
     pass
 
