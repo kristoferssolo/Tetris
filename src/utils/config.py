@@ -59,6 +59,15 @@ class Music:
 
 
 @define
+class AI:
+    generations: int = 200
+    parallels: int = 1
+    winner_path: Path = BASE_PATH / "winner"
+    plot_path: Path = BASE_PATH / "plots"
+    checkpoint_path: Path = BASE_PATH / "checkpoints"
+
+
+@define
 class Config:
     log_level: str = "warning"
 
@@ -68,6 +77,7 @@ class Config:
     font: Font = Font()
     music: Music = Music()
     colors = TokyoNightNight()
+    ai = AI()
     fps: int = 60
 
 
