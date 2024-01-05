@@ -1,7 +1,7 @@
 import unittest
 
 import numpy as np
-from ai.fitness.peaks import get_peaks
+from ai.fitness.peaks import get_peaks_sum
 
 
 class TestFitness(unittest.TestCase):
@@ -13,11 +13,11 @@ class TestFitness(unittest.TestCase):
                 [0, 1, 1, 0, 0],
             ]
         )
-        self.assertEqual(get_peaks(field), 11)
+        self.assertEqual(get_peaks_sum(field), 11)
 
     def test_get_peaks_zeros(self) -> None:
         field = np.zeros((3, 5))
-        self.assertEqual(get_peaks(field), 0)
+        self.assertEqual(get_peaks_sum(field), 0)
 
     def test_single_peak(self):
         field = np.array(
@@ -28,4 +28,4 @@ class TestFitness(unittest.TestCase):
             ]
         )
 
-        self.assertEqual(get_peaks(field), 2)
+        self.assertEqual(get_peaks_sum(field), 2)
