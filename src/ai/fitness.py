@@ -15,6 +15,30 @@ def calculate_fitness(game: Game) -> float:
     return fitness
 
 
+def get_peaks(field: np.ndarray) -> int:
+    pass
+
+
+def get_row_transitions(field: np.ndarray) -> int:
+    pass
+
+
+def get_col_transitions(field: np.ndarray) -> int:
+    pass
+
+
+def get_bumpiness(field: np.ndarray) -> int:
+    pass
+
+
+def get_holes(field: np.ndarray) -> int:
+    pass
+
+
+def get_wells(field: np.ndarray) -> int:
+    pass
+
+
 def _calc_holes(field: np.ndarray) -> float:
     height, width = field.shape
     penalty = 0
