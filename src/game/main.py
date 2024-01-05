@@ -101,9 +101,9 @@ class Main:
         Returns:
             The next figure in the sequence.
         """
-        next_shape = self.next_figures.pop(0)
+        next_figure = self.next_figures.pop(0)
         self.next_figures.append(Figure.random())
-        return next_shape
+        return next_figure
 
     def _initialize_pygeme(self) -> None:
         """Initialize Pygame and set up the display."""

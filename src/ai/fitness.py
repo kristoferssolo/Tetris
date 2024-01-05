@@ -8,26 +8,32 @@ from utils import CONFIG
 from .log import log
 
 
-def calculate_fitness(game: Game, field: Optional[np.ndarray] = None) -> float:
-    line_values = _calc_line_values(field)
-    return game.score * 10.0 + line_values
+def calculate_fitness(game: Game) -> float:
+    field = np.where(game.field != None, 1, 0)
+    reward, penalty = _calc_height_penalty(field)
+    fitness = game.score * 100 - _calc_holes(field) - penalty + reward
+    return fitness
 
 
-def _calc_line_values(field: Optional[np.ndarray]) -> int:
-    if field is None:
-        return 0
+def _calc_holes(field: np.ndarray) -> float:
+    height, width = field.shape
+    penalty = 0
 
-    line_values = 0
-    for idx, line in enumerate(np.flipud(field), start=1):
-        if idx <= 4:
-            line_values += int(line.sum()) * 5
-        elif idx <= 8:
-            line_values += int(line.sum()) * 3
-        elif idx <= 12:
-            line_values += int(line.sum()) * 0
-        elif idx <= 16:
-            line_values += int(line.sum()) * -5
-        else:
-            line_values += int(line.sum()) * -10
+    for col in range(width):
+        column = field[:, col]
+        holde_indices = np.where(column == 0)[0]
 
-    return line_values
+        if len(holde_indices) > 0:
+            highest_hole = holde_indices[0]
+            penalty += np.sum(field[highest_hole:, col]) * (height - highest_hole)
+    return penalty
+
+
+def _calc_height_penalty(field: np.ndarray) -> float:
+    column_heights = np.max(
+        np.where(field == 1, field.shape[0] - np.arange(field.shape[0])[:, None], 0),
+        axis=0,
+    )
+    reward = np.mean(1 / (column_heights + 1))
+    penalty = np.mean(column_heights * np.arange(1, field.shape[1] + 1))
+    return reward, penalty

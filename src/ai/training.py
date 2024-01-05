@@ -23,10 +23,10 @@ def train(gen_count: int, parallel: int = 1) -> None:
     chekpoint_path = BASE_PATH / "checkpoints"
     plots_path = BASE_PATH / "plots"
 
-    population = neat.Checkpointer().restore_checkpoint(
-        BASE_PATH / "checkpoints" / "neat-checkpoint-44"
-    )
-    # population = neat.Population(config)
+    # population = neat.Checkpointer().restore_checkpoint(
+    #     BASE_PATH / "checkpoints" / "neat-checkpoint-199"
+    # )
+    population = neat.Population(config)
     population.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
@@ -39,9 +39,9 @@ def train(gen_count: int, parallel: int = 1) -> None:
         stats,
         ylog=False,
         view=False,
-        filename=plots_path / "avg_fitness.svg",
+        filename=plots_path / "avg_fitness.png",
     )
-    plot_species(stats, view=False, filename=plots_path / "speciation.svg")
+    plot_species(stats, view=False, filename=plots_path / "speciation.png")
 
     log.info("Saving best genome")
     save_genome(winner)
