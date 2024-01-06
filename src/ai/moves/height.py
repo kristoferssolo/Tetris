@@ -1,9 +1,7 @@
-from typing import Any
-
 import numpy as np
 
 
-def aggregate_height(field: np.ndarray[int, Any]) -> int:
+def aggregate_height(field: np.ndarray[int, np.dtype[np.uint8]]) -> int:
     """
     Calculates the aggregate height of the field.
 
@@ -13,4 +11,4 @@ def aggregate_height(field: np.ndarray[int, Any]) -> int:
     Returns:
         The aggregate height of the field.
     """
-    return np.sum(field.shape[0] - np.argmax(field, axis=0))
+    return int(np.sum(field.shape[0] - np.argmax(field, axis=0)))

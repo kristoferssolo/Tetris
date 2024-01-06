@@ -2,6 +2,7 @@ import unittest
 
 import numpy as np
 from ai.moves.height import aggregate_height
+from ai.moves.holes import holes
 from ai.moves.lines import complete_lines
 
 
@@ -23,3 +24,6 @@ class TestFitness(unittest.TestCase):
 
     def test_complete_lines(self) -> None:
         self.assertEqual(complete_lines(self.field), 2)
+
+    def test_holes(self) -> None:
+        self.assertEqual(holes(self.field), 2)

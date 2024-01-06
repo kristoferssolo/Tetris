@@ -1,9 +1,7 @@
-from typing import Any
-
 import numpy as np
 
 
-def complete_lines(field: np.ndarray[int, Any]) -> int:
+def complete_lines(field: np.ndarray[int, np.dtype[np.uint8]]) -> int:
     """
     Calculates the number of complete lines in the field.
 
@@ -13,4 +11,4 @@ def complete_lines(field: np.ndarray[int, Any]) -> int:
     Returns:
         The number of complete lines in the field.
     """
-    return np.sum(np.all(field, axis=1))
+    return int(np.sum(np.all(field, axis=1)))
