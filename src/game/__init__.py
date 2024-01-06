@@ -1,9 +1,4 @@
 from .log import log
-from .screens import Game, Main, Tetris
+from .screens import Game, Main, Preview, Score, Tetris
 
-__all__ = [
-    "log",
-    "Main",
-    "Game",
-    "Preview",
-]
+__all__ = ["Main", "Game", "Preview", "Score", "Tetris", "log"]

@@ -4,7 +4,7 @@ import pygame
 from utils import CONFIG, Figure, GameMode
 
 from game.log import log
-from game.sprites.tetromino import Tetromino
+from game.sprites import Tetromino
 
 from .base import BaseScreen
 from .preview import Preview
@@ -24,7 +24,7 @@ class Game(BaseScreen):
         score: Score object.
         preview: Preview object.
         next_figures: List of upcoming figures.
-        music: Pygame music that plays in the background.
+        music: Music that plays in the background.
     """
 
     def __init__(self, game_mode: GameMode) -> None:

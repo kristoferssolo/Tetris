@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 from ai.fitness.bumpiness import get_bumpiness
-from ai.fitness.holes import get_holes
+from ai.fitness.holes import holes
 from ai.fitness.peaks import get_peaks_sum
 from ai.fitness.transitions import (
     get_col_transition,
@@ -58,7 +58,7 @@ class TestFitness(unittest.TestCase):
             np.array([0, 1, 0, 0, 0]),
         )
         for field, answer in zip(self.fields, answers):
-            self.assertTrue(np.array_equal(get_holes(field), answer))
+            self.assertTrue(np.array_equal(holes(field), answer))
 
     def test_get_wells(self) -> None:
         answers = (

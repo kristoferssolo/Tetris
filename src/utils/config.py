@@ -5,7 +5,7 @@ from pygame import Vector2 as Vec2
 
 from .colors import TokyoNightNight
 from .path import BASE_PATH
-from .size import Size
+from .tuples import Size
 
 PADDING = 20
 

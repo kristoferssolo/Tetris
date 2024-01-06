@@ -31,7 +31,7 @@ class Tetromino:
     def __init__(
         self,
         group: pygame.sprite.Group,
-        create_new: Callable[[], None],
+        create_new: Callable[[Optional[Figure]], "Tetromino"],
         field: np.ndarray[Optional[Block], Any],
         shape: Optional[Figure] = None,
     ) -> None:
@@ -42,32 +42,44 @@ class Tetromino:
         self.field = field
         self.blocks = self._initialize_blocks(group)
 
-    def move_down(self) -> None:
+    def move_down(self) -> bool:
         """
         Moves the Tetromino down.
 
         If there is a collision, the Tetromino is placed on the field, and a new one is created.
+
+        Returns:
+            True if the movement was successful, False otherwise.
         """
         if not self._check_horizontal_collision(self.blocks, Direction.DOWN):
             for block in self.blocks:
                 block.pos.y += 1
-        else:
-            for block in self.blocks:
-                self.field[int(block.pos.y), int(block.pos.x)] = block
-            self.create_new()
+            return True
 
-    def move_horizontal(self, direction: Direction) -> None:
+        for block in self.blocks:
+            self.field[int(block.pos.y), int(block.pos.x)] = block
+
+        self.create_new(None)
+
+        return False
+
+    def move_horizontal(self, direction: Direction) -> bool:
         """
         Moves the Tetromino horizontally.
 
         Args:
             direction: Direction to move (LEFT or RIGHT).
+
+        Returns:
+            True if the movement was successful, False otherwise.
         """
         if not self._check_vertical_collision(self.blocks, direction):
             for block in self.blocks:
                 block.pos.x += direction.value
+            return True
+        return False
 
-    def rotate(self, rotation: Rotation = Rotation.CLOCKWISE) -> None:
+    def rotate(self, rotation: Rotation = Rotation.CLOCKWISE) -> bool:
         """
         Rotates the Tetromino.
 
@@ -75,9 +87,12 @@ class Tetromino:
 
         Args:
             rotation: Rotation to perform (CLOCKWISE or COUNTER_CLOCKWISE).
+
+        Returns:
+            True if the rotation was successful, False otherwise.
         """
         if self.figure == Figure.O:
-            return
+            return False
 
         pivot: pygame.Vector2 = self.blocks[0].pos
 
@@ -88,18 +103,47 @@ class Tetromino:
 
             if self._are_new_positions_valid(new_positions):
                 self._update_block_positions(new_positions)
-                return
+                return True
 
             if any(pos.x < 0 for pos in new_positions):
                 self.move_horizontal(Direction.RIGHT)
             else:
                 self.move_horizontal(Direction.LEFT)
 
-    def drop(self) -> None:
-        """Drops the Tetromino to the bottom of the game field."""
+        return False
+
+    def next_rotation(self) -> "Tetromino":
+        self.rotate()
+        return self
+
+    def drop(self) -> bool:
+        """
+        Drops the Tetromino to the bottom of the game field.
+
+        Returns:
+            True if the drop was successful, False otherwise.
+        """
+
         while not self._check_horizontal_collision(self.blocks, Direction.DOWN):
             for block in self.blocks:
                 block.pos.y += 1
+
+        return True
+
+    def check_collision(self, direction: Direction) -> bool:
+        """
+        Checks if there is a collision in the given direction.
+
+        Args:
+            direction: Direction to check (UP, DOWN, LEFT, or RIGHT).
+
+        Returns:
+            True if there is a collision, False otherwise.
+        """
+
+        return self._check_horizontal_collision(
+            self.blocks, direction
+        ) or self._check_vertical_collision(self.blocks, direction)
 
     def _check_vertical_collision(
         self, blocks: list[Block], direction: Direction

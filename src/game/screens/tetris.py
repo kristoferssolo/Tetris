@@ -5,8 +5,7 @@ import pygame
 from utils import CONFIG, Direction, Figure, GameMode, Rotation
 
 from game.log import log
-from game.sprites.block import Block
-from game.sprites.tetromino import Tetromino
+from game.sprites import Block, Tetromino
 from game.timer import Timer, Timers
 
 from .base import BaseScreen, SceenElement
@@ -91,31 +90,61 @@ class Tetris(BaseScreen):
         self._handle_down_key(keys)
         self._handle_drop_key(keys)
 
-    def move_down(self) -> None:
-        """Move the current tetromino down."""
-        self.tetromino.move_down()
+    def move_down(self) -> bool:
+        """
+        Move the current tetromino down.
 
-    def move_left(self) -> None:
-        """Move the current tetromino to the left."""
-        self.tetromino.move_horizontal(Direction.LEFT)
+        Returns:
+            True if the movement was successful, False otherwise.
+        """
+        return self.tetromino.move_down()
 
-    def move_right(self) -> None:
-        """Move the current tetromino to the right."""
-        self.tetromino.move_horizontal(Direction.RIGHT)
+    def move_left(self) -> bool:
+        """
+        Move the current tetromino to the left.
 
-    def rotate(self) -> None:
-        """Rotate the current tetromino clockwise."""
-        self.tetromino.rotate()
+        Returns:
+            True if the movement was successful, False otherwise.
+        """
+        return self.tetromino.move_horizontal(Direction.LEFT)
 
-    def rotate_reverse(self) -> None:
-        """Rotate the current tetromino counter-clockwise."""
-        self.tetromino.rotate(Rotation.COUNTER_CLOCKWISE)
+    def move_right(self) -> bool:
+        """
+        Move the current tetromino to the right.
 
-    def drop(self) -> None:
-        """Drop the current tetromino."""
-        self.tetromino.drop()
+        Returns:
+            True if the movement was successful, False otherwise.
+        """
+        return self.tetromino.move_horizontal(Direction.RIGHT)
 
-    def create_new_tetromino(self) -> None:
+    def rotate(self) -> bool:
+        """
+        Rotate the current tetromino clockwise.
+
+        Returns:
+            True if the rotation was successful, False otherwise.
+        """
+        return self.tetromino.rotate()
+
+    def rotate_reverse(self) -> bool:
+        """
+        Rotate the current tetromino counter-clockwise.
+
+        Returns:
+            True if the rotation was successful, False otherwise.
+        """
+        return self.tetromino.rotate(Rotation.COUNTER_CLOCKWISE)
+
+    def drop(self) -> bool:
+        """
+        Drop the current tetromino.
+
+        Returns:
+            True if the movement was successful, False otherwise.
+        """
+        return self.tetromino.drop()
+
+    def create_new_tetromino(self, shape: Optional[Figure] = None) -> Tetromino:
         """Create a new tetromino and perform necessary actions."""
         self._play_landing_sound()
         self._check_finished_rows()
@@ -128,8 +157,10 @@ class Tetris(BaseScreen):
             self.sprites,
             self.create_new_tetromino,
             self.field,
-            self.get_next_figure(),
+            shape or self.get_next_figure(),
         )
+
+        return self.tetromino
 
     def _check_game_over(self) -> bool:
         """

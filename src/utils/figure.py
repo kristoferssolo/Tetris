@@ -99,4 +99,4 @@ class Figure(Enum):
 
     @classmethod
     def random(cls) -> "Figure":
-        return random.choice(list(Figure))
+        return random.choice(list(cls))

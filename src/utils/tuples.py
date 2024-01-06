@@ -1,5 +1,7 @@
 from typing import NamedTuple, Union
 
+from .enum import Direction
+
 
 class Size(NamedTuple):
     width: int | float
@@ -9,3 +11,8 @@ class Size(NamedTuple):
         if isinstance(other, Size):
             return Size(self.width - other.width, self.height - other.height)
         return Size(self.width - other, self.height - other)
+
+
+class BestMove(NamedTuple):
+    rotation: int
+    direction: Direction
