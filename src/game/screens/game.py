@@ -27,9 +27,10 @@ class Game(BaseScreen):
         music: Pygame music that plays in the background.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, game_mode: GameMode) -> None:
         self._initialize_game_components()
         self._start_background_music()
+        self.game_mode = game_mode  # TODO: use this
 
     def draw(self) -> None:
         """Update the display."""
@@ -40,7 +41,6 @@ class Game(BaseScreen):
     def run(self) -> None:
         """Run a single iteration of the game loop."""
         self.draw()
-        self.handle_events()  # FIX:
 
         self.tetris.run()
         self.score.run()

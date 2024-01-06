@@ -1,4 +1,5 @@
 import sys
+from typing import Optional
 
 import pygame
 from utils import CONFIG, GameMode
@@ -19,16 +20,16 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self._initialize_font()
         self._set_buttons()
         self._initialize_increment_height()
-        self.game_mode = mode  # TODO: use this
+        self.game_mode = mode
+        self.game: Optional[Game] = None
 
     def draw(self) -> None:
         """Update the display."""
         self._draw_background()
         self._draw_text()
-        pygame.display.update()
 
     def update(self) -> None:
-        pass
+        pygame.display.update()
 
     def handle_events(self) -> None:
         for event in pygame.event.get():
@@ -48,8 +49,15 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def run(self) -> None:
         while True:
-            self.draw()
+            if not self.game:
+                self.draw()
+
             self.handle_events()
+
+            if self.game:
+                self.game.run()
+
+            self.update()
 
     def exit(self) -> None:
         """Exit the game."""
@@ -57,8 +65,9 @@ class Main(BaseScreen, SceenElement, TextScreen):
         pygame.quit()
         sys.exit()
 
-    def play(self) -> None:
-        pass
+    def play(self) -> "Main":
+        self.game = Game(self.game_mode)
+        return self
 
     def _set_buttons(self) -> None:
         self.buttons: list[Button] = [
@@ -91,7 +100,7 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def _initialize_increment_height(self) -> None:
         """Initialize the increment height for positioning text elements/buttons."""
-        self.increment_height = (
+        self.increment_height: float = (
             self.display_surface.get_height() - CONFIG.window.size.height / 2
         ) / len(self.buttons)
 
@@ -114,7 +123,8 @@ class Main(BaseScreen, SceenElement, TextScreen):
     def _draw_text(self) -> None:
         """Draw the text and buttons on the surface."""
 
-        x, y = self.display_surface.get_width() / 2, 100
+        x: float = self.display_surface.get_width() / 2
+        y: float = 100
         self._display_text("Tetris", (x, y))
 
         for idx, button in enumerate(self.buttons):

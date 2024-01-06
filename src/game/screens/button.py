@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 
 import pygame
 from utils import CONFIG
@@ -8,7 +8,9 @@ from .base_button import BaseButton
 
 
 class Button(BaseButton, BaseScreen, SceenElement, TextScreen):
-    def __init__(self, text: str, action: Optional[Callable[[], None]]) -> None:
+    def __init__(
+        self, text: str, action: Optional[Callable[[], Optional[Any]]]
+    ) -> None:
         super().__init__(text, action)
         self._initialize_surface()
         self._initialize_font()

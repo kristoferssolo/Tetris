@@ -13,11 +13,6 @@ class Rotation(Enum):
     COUNTER_CLOCKWISE = -90
 
 
-class Field(Enum):
-    EMPTY = None
-    FILLED = "Block"
-
-
 class GameMode(Enum):
     PLAYER = auto()
     AI_PLAYING = auto()

@@ -31,7 +31,7 @@ class SceenElement(ABC, metaclass=ABCMeta):
         """Initialize the surface."""
 
     @abstractmethod
-    def _initialize_rect(self) -> None:
+    def _initialize_rect(self, *args, **kwargs) -> None:
         """Initialize the rectangle."""
 
     @abstractmethod

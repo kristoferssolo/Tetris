@@ -1,8 +1,8 @@
-from typing import Any
+from typing import Any, Optional
 
 import numpy as np
 import pygame
-from utils import CONFIG, Field, Rotation, Size
+from utils import CONFIG, Rotation, Size
 
 
 class Block(pygame.sprite.Sprite):
@@ -40,7 +40,9 @@ class Block(pygame.sprite.Sprite):
                 self.pos.y * CONFIG.game.cell.width,
             )
 
-    def vertical_collision(self, x: int, field: np.ndarray[Field, Any]) -> bool:
+    def vertical_collision(
+        self, x: int, field: np.ndarray[Optional["Block"], Any]
+    ) -> bool:
         """
         Checks for vertical collision with the game field.
 
@@ -53,7 +55,9 @@ class Block(pygame.sprite.Sprite):
         """
         return not 0 <= x < CONFIG.game.columns or field[int(self.pos.y), x]
 
-    def horizontal_collision(self, y: int, field: np.ndarray[Field, Any]) -> bool:
+    def horizontal_collision(
+        self, y: int, field: np.ndarray[Optional["Block"], Any]
+    ) -> bool:
         """
         Checks for horizontal collision with the game field.
 

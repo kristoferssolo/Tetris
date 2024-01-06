@@ -2,7 +2,7 @@ from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
-from utils import CONFIG, Direction, Field, Figure, Rotation
+from utils import CONFIG, Direction, Figure, Rotation
 
 from game.log import log
 from game.sprites.block import Block
@@ -47,6 +47,7 @@ class Tetris(BaseScreen):
         update_score: Callable[[int, int, int], None],
     ) -> None:
         self._initialize_surface()
+        self._initialize_rect()
         self._initialize_sprites()
 
         self.get_next_figure = get_next_figure
@@ -201,7 +202,8 @@ class Tetris(BaseScreen):
     def _remove_blocks_in_row(self, row: int) -> None:
         """Remove blocks in the specified row."""
         for block in self.field[row]:
-            block.kill()
+            if block:
+                block.kill()
 
     def _move_rows_down(self, deleted_row: int) -> None:
         """Move rows down after deleting a row."""
@@ -217,11 +219,9 @@ class Tetris(BaseScreen):
         for block in self.sprites:
             self.field[int(block.pos.y), int(block.pos.x)] = block
 
-    def _generate_empty_field(self) -> np.ndarray[Field, Any]:
+    def _generate_empty_field(self) -> np.ndarray[Optional[Block], Any]:
         """Generate an empty game field."""
-        return np.full(
-            (CONFIG.game.rows, CONFIG.game.columns), Field.EMPTY, dtype=Field
-        )
+        return np.full((CONFIG.game.rows, CONFIG.game.columns), None)
 
     def _calculate_score(self, rows_deleted: int) -> None:
         """Calculate and update the game score."""
