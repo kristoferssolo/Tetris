@@ -12,6 +12,7 @@ class MenuButton(Button, BaseScreen, SceenElement, TextScreen):
         super().__init__(text, action)
         self._initialize_surface()
         self._initialize_font()
+        self.hover = False
 
     def on_click(self) -> None:
         """Handle click event."""
@@ -20,21 +21,23 @@ class MenuButton(Button, BaseScreen, SceenElement, TextScreen):
 
     def on_hover(self) -> None:
         """Handle hover event."""
-        self._draw_border()
+        self._draw_hover_background()
 
     def run(self) -> None:
-        """Display the button on the game surface."""
-        self.draw()
-
-    def update(self) -> None:
-        """Update the button."""
         pass
+
+    def update(self, hover: bool = False) -> None:
+        """Update the button."""
+        self.hover = hover
 
     def draw(self, surface: pygame.Surface, pos: tuple[float, float]) -> None:
         """Draw the button on the button surface."""
         self._initialize_rect(pos)
         self._update_display_surface()
-        self._draw_background()
+        if self.hover:
+            self.on_hover()
+        else:
+            self._draw_background()
         self._draw_text()
         self._draw_border()
 
@@ -72,6 +75,10 @@ class MenuButton(Button, BaseScreen, SceenElement, TextScreen):
     def _draw_background(self) -> None:
         """Fill the background of the button."""
         self.surface.fill(CONFIG.colors.bg_sidebar)
+
+    def _draw_hover_background(self) -> None:
+        """Fill the background of the button."""
+        self.surface.fill(CONFIG.colors.bg_visual)
 
     def _draw_border(self) -> None:
         """Draw the border of the button."""

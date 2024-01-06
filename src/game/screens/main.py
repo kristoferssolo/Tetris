@@ -25,7 +25,6 @@ class Main(BaseScreen, SceenElement, TextScreen):
         """Update the display."""
         self._draw_background()
         self._draw_text()
-        self._draw_border()
         pygame.display.update()
 
     def update(self) -> None:
@@ -38,6 +37,18 @@ class Main(BaseScreen, SceenElement, TextScreen):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     self.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                for button in self.buttons:
+                    if button.rect.collidepoint(mouse_pos):
+                        button.on_click()
+            elif event.type == pygame.MOUSEMOTION:
+                mouse_pos = pygame.mouse.get_pos()
+                for button in self.buttons:
+                    if button.rect.collidepoint(mouse_pos):
+                        button.update(True)
+                    else:
+                        button.update(False)
 
     def run(self) -> None:
         while True:
