@@ -115,9 +115,9 @@ class Game:
         self._play_landing_sound()
         self._check_finished_rows()
 
-        self.game_over = self._check_game_over()
-        # if self.game_over:
-        #     self.restart()
+        self.game_over: bool = self._check_game_over()
+        if self.game_over:
+            self.restart()
 
         self.tetromino = Tetromino(
             self.sprites,
@@ -135,13 +135,13 @@ class Game:
         """
         for block in self.tetromino.blocks:
             if block.pos.y <= 0:
-                # log.info("Game over!")
+                log.info("Game over!")
                 return True
         return False
 
     def restart(self) -> None:
         """Restart the game."""
-        # log.info("Restarting the game")
+        log.info("Restarting the game")
         self._reset_game_state()
         self._initialize_field_and_tetromino()
         self.game_over = False
@@ -289,7 +289,7 @@ class Game:
         self.level: int = 1
         self.score: int = 0
         self.lines: int = 0
-        self.game_over: bool = False
+        self.game_over = False
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
