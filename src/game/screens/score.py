@@ -1,6 +1,8 @@
 import pygame
 from utils import CONFIG, Size
 
+from game.log import log
+
 from .base import BaseScreen, SceenElement, TextScreen
 
 
@@ -37,10 +39,12 @@ class Score(BaseScreen, SceenElement, TextScreen):
             score (int): Current game score.
             level (int): Current game level.
         """
-        self.text: tuple[tuple[str, int], tuple[str, int], tuple[str, int]] = (
+        self.text: tuple[tuple[str, int], ...] = (
             ("Score", score),
             ("Level", level),
             ("Lines", lines),
+            ("High Score", CONFIG.game.highscore),
+            ("Generations", 0),
         )
 
     def draw(self) -> None:
@@ -55,19 +59,33 @@ class Score(BaseScreen, SceenElement, TextScreen):
         for idx, text in enumerate(self.text):
             x = self.surface.get_width() / 2
             y = self.increment_height / 2 + idx * self.increment_height
-            self._display_text(text, (x, y))
+            self._display_text(text, pygame.Vector2(x, y))
 
-    def _display_text(self, text: tuple[str, int], pos: tuple[float, float]) -> None:
+    def _display_text(self, text_value: tuple[str, int], pos: pygame.Vector2) -> None:
         """
         Display a single text element on the score surface.
 
         Args:
-            text: A tuple containing the label and value of the text element.
+            text_value: A tuple containing the label and value of the text element.
             pos: The position (x, y) where the text should be displayed.
         """
-        text_surface = self.font.render(
-            f"{text[0]}: {text[1]}", True, CONFIG.colors.fg_sidebar
-        )
+
+        text, value = text_value
+
+        if len(text) >= 10:
+            text_surface = self.font.render(f"{text}:", True, CONFIG.colors.fg_sidebar)
+
+            value_surface = self.font.render(f"{value}", True, CONFIG.colors.fg_sidebar)
+            value_rect = value_surface.get_rect(center=(pos.x, pos.y + 40))
+
+            self.surface.blit(value_surface, value_rect)
+        else:
+            text_surface = self.font.render(
+                f"{text}:{value}", True, CONFIG.colors.fg_sidebar
+            )
+            text_rect = text_surface.get_rect(center=pos)
+            self.surface.blit(text_surface, text_rect)
+
         text_rect = text_surface.get_rect(center=pos)
         self.surface.blit(text_surface, text_rect)
 
@@ -102,7 +120,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
 
     def _initialize_increment_height(self) -> None:
         """Initialize the increment height for positioning text elements."""
-        self.increment_height = self.surface.get_height() / 3
+        self.increment_height = self.surface.get_height() / len(self.text)
 
     def _update_display_surface(self) -> None:
         """Update the display surface."""

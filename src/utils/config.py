@@ -26,13 +26,14 @@ class Game:
     rotation_delay: int = 200
     drop_delay: int = 200
     score: dict[int, int] = {1: 40, 2: 100, 3: 300, 4: 1200}
+    highscore: int = 1_000_000  # TODO: read from file
 
 
 @define
 class SideBar:
     padding: int = PADDING
     size: Size = Size(200, Game().size.height)
-    score: Size = Size(size.width, size.height * 0.3 - padding)
+    score: Size = Size(size.width, size.height - size.width - padding)
     preview: Size = Size(size.width, size.width)
 
 
