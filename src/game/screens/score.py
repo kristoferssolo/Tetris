@@ -1,5 +1,5 @@
 import pygame
-from utils import CONFIG, Size
+from utils import CONFIG, GameMode, Size
 
 from game.log import log
 
@@ -19,7 +19,8 @@ class Score(BaseScreen, SceenElement, TextScreen):
         increment_height: Height of each text element in the score.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, game_mode: GameMode) -> None:
+        self.game_mode = game_mode
         self._initialize_surface()
         self._initialize_rect()
         self._initialize_font()
@@ -39,13 +40,14 @@ class Score(BaseScreen, SceenElement, TextScreen):
             score (int): Current game score.
             level (int): Current game level.
         """
-        self.text: tuple[tuple[str, int], ...] = (
+        self.text: list[tuple[str, int], ...] = [
             ("Score", score),
             ("Level", level),
             ("Lines", lines),
             ("High Score", CONFIG.game.highscore),
-            ("Generations", 0),
-        )
+        ]
+        if self.game_mode in (GameMode.AI_PLAYING, GameMode.AI_TRAINING):
+            self.text.append(("Generations", 0))
 
     def draw(self) -> None:
         """Draw the score on the score surface."""

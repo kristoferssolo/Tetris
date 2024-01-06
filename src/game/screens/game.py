@@ -28,9 +28,9 @@ class Game(BaseScreen):
     """
 
     def __init__(self, game_mode: GameMode) -> None:
+        self.game_mode = game_mode
         self._initialize_game_components()
         self._start_background_music()
-        self.game_mode = game_mode  # TODO: use this
 
     def draw(self) -> None:
         """Update the display."""
@@ -60,8 +60,8 @@ class Game(BaseScreen):
         self.clock = pygame.time.Clock()
         self.next_figure: Figure = self._generate_next_figure()
 
-        self.tetris = Tetris(self._get_next_figure, self._update_score)
-        self.score = Score()
+        self.tetris = Tetris(self._get_next_figure, self._update_score, self.game_mode)
+        self.score = Score(self.game_mode)
         self.preview = Preview()
 
     def _update_score(self, lines: int, score: int, level: int) -> None:
@@ -97,6 +97,7 @@ class Game(BaseScreen):
 
     def _start_background_music(self) -> None:
         """Start playing background music."""
-        self.music = pygame.mixer.Sound(CONFIG.music.background)
-        self.music.set_volume(CONFIG.music.volume)
-        self.music.play(-1)
+        if self.game_mode is GameMode.PLAYER:
+            self.music = pygame.mixer.Sound(CONFIG.music.background)
+            self.music.set_volume(CONFIG.music.volume)
+            self.music.play(-1)

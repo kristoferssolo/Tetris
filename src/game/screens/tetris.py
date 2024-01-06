@@ -2,7 +2,7 @@ from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
-from utils import CONFIG, Direction, Figure, Rotation
+from utils import CONFIG, Direction, Figure, GameMode, Rotation
 
 from game.log import log
 from game.sprites.block import Block
@@ -45,6 +45,7 @@ class Tetris(BaseScreen):
         self,
         get_next_figure: Callable[[], Figure],
         update_score: Callable[[int, int, int], None],
+        game_mode: GameMode,
     ) -> None:
         self._initialize_surface()
         self._initialize_rect()
@@ -52,6 +53,7 @@ class Tetris(BaseScreen):
 
         self.get_next_figure = get_next_figure
         self.update_score = update_score
+        self.game_mode = game_mode
 
         self._initialize_grid_surface()
         self._initialize_field_and_tetromino()
@@ -302,8 +304,9 @@ class Tetris(BaseScreen):
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
-        self.landing_sound = pygame.mixer.Sound(CONFIG.music.landing)
-        self.landing_sound.set_volume(CONFIG.music.volume * 2)
+        if self.game_mode is GameMode.PLAYER:
+            self.landing_sound = pygame.mixer.Sound(CONFIG.music.landing)
+            self.landing_sound.set_volume(CONFIG.music.volume * 2)
 
     def _play_landing_sound(self) -> None:
         """Play the landing sound effect."""
