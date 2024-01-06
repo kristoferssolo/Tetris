@@ -1,3 +1,5 @@
+from typing import Any
+
 import numpy as np
 import pygame
 from utils import CONFIG, Rotation, Size
@@ -22,7 +24,7 @@ class Block(pygame.sprite.Sprite):
         self,
         /,
         *,
-        group: pygame.sprite.Group,
+        group: pygame.sprite.Group[Any],
         pos: pygame.Vector2,
         color: str,
     ) -> None:
@@ -32,9 +34,13 @@ class Block(pygame.sprite.Sprite):
 
     def update(self) -> None:
         """Updates the block's position on the screen."""
-        self.rect.topleft = self.pos * CONFIG.game.cell.width
+        if self.rect:
+            self.rect.topleft = (
+                self.pos.x * CONFIG.game.cell.width,
+                self.pos.y * CONFIG.game.cell.width,
+            )
 
-    def vertical_collision(self, x: int, field: np.ndarray) -> bool:
+    def vertical_collision(self, x: int, field: np.ndarray[int, Any]) -> bool:
         """
         Checks for vertical collision with the game field.
 
@@ -47,7 +53,7 @@ class Block(pygame.sprite.Sprite):
         """
         return not 0 <= x < CONFIG.game.columns or field[int(self.pos.y), x]
 
-    def horizontal_collision(self, y: int, field: np.ndarray) -> bool:
+    def horizontal_collision(self, y: int, field: np.ndarray[int, Any]) -> bool:
         """
         Checks for horizontal collision with the game field.
 
@@ -91,4 +97,5 @@ class Block(pygame.sprite.Sprite):
             pos: Initial position of the block.
         """
         self.pos = pygame.Vector2(pos) + CONFIG.game.offset
-        self.rect = self.image.get_rect(topleft=self.pos * CONFIG.game.cell.width)
+        if self.image:
+            self.rect = self.image.get_rect(topleft=self.pos * CONFIG.game.cell.width)

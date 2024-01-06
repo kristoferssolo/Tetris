@@ -3,16 +3,18 @@ import sys
 import pygame
 from utils import CONFIG, Figure, GameMode
 
-from .game import Game
-from .log import log
+from game.log import log
+
+from .base import BaseScreen
 from .preview import Preview
 from .score import Score
+from .tetris import Tetris
 from .tetromino import Tetromino
 
 
-class Main:
+class Game(BaseScreen):
     """
-    Main class for the game.
+    Game class.
 
     Attributes:
         display_surface: Pygame display surface.
@@ -46,11 +48,12 @@ class Main:
         self.draw()
         self.handle_events()
 
-        self.game.run()
+        self.tetris.run()
         self.score.run()
-        self.preview.run(self.next_figure)
+        self.preview.update(self.next_figure)
+        self.preview.run()
 
-        pygame.display.update()
+        self.draw()
         self.clock.tick(CONFIG.fps)
 
     def handle_events(self) -> None:
@@ -71,14 +74,14 @@ class Main:
         """Initialize game-related components."""
         self.next_figure: Figure = self._generate_next_figure()
 
-        self.game = Game(self._get_next_figure, self._update_score)
+        self.tetris = Tetris(self._get_next_figure, self._update_score)
         self.score = Score()
         self.preview = Preview()
 
     def mute(self) -> None:
         """Mute the game."""
         self.music.set_volume(0)
-        self.game.mute()
+        self.tetris.mute()
 
     def _update_score(self, lines: int, score: int, level: int) -> None:
         """

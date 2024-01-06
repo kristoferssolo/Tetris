@@ -1,16 +1,18 @@
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
 from utils import CONFIG, Direction, Field, Figure, Rotation
 
-from .block import Block
-from .log import log
-from .tetromino import Tetromino
-from .timer import Timer, Timers
+from game.log import log
+from game.sprites.block import Block
+from game.sprites.tetromino import Tetromino
+from game.timer import Timer, Timers
+
+from .base import BaseScreen
 
 
-class Game:
+class Tetris(BaseScreen):
     """
     Game class for managing the game state.
 
@@ -79,7 +81,7 @@ class Game:
 
     def handle_event(self) -> None:
         """Handle player input events."""
-        keys: list[bool] = pygame.key.get_pressed()
+        keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
 
         self._handle_movement_keys(keys)
         self._handle_rotation_keys(keys)
@@ -215,9 +217,11 @@ class Game:
         for block in self.sprites:
             self.field[int(block.pos.y), int(block.pos.x)] = block
 
-    def _generate_empty_field(self) -> np.ndarray:
+    def _generate_empty_field(self) -> np.ndarray[Field, Any]:
         """Generate an empty game field."""
-        return np.full((CONFIG.game.rows, CONFIG.game.columns), None, dtype=Field)
+        return np.full(
+            (CONFIG.game.rows, CONFIG.game.columns), Field.EMPTY, dtype=Field
+        )
 
     def _calculate_score(self, rows_deleted: int) -> None:
         """Calculate and update the game score."""
@@ -308,7 +312,7 @@ class Game:
         """Fill the game surface with background color."""
         self.surface.fill(CONFIG.colors.bg_float)
 
-    def _handle_movement_keys(self, keys: list[bool]) -> None:
+    def _handle_movement_keys(self, keys: pygame.key.ScancodeWrapper) -> None:
         """
         Handle movement keys.
 
@@ -326,7 +330,7 @@ class Game:
                 self.move_right()
                 self.timers.horizontal.activate()
 
-    def _handle_rotation_keys(self, keys: list[bool]) -> None:
+    def _handle_rotation_keys(self, keys: pygame.key.ScancodeWrapper) -> None:
         """
         Handle rotation keys.
 
@@ -353,7 +357,7 @@ class Game:
                 self.rotate_reverse()
                 self.timers.rotation.activate()
 
-    def _handle_down_key(self, keys: list[bool]) -> None:
+    def _handle_down_key(self, keys: pygame.key.ScancodeWrapper) -> None:
         """Handle the down key [K_DOWN, K_s, K_j]."""
         down_keys = keys[pygame.K_DOWN] or keys[pygame.K_s] or keys[pygame.K_j]
         if not self.down_pressed and down_keys:
@@ -364,7 +368,7 @@ class Game:
             self.down_pressed = False
             self.timers.vertical.duration = self.initial_block_speed
 
-    def _handle_drop_key(self, keys: list[bool]) -> None:
+    def _handle_drop_key(self, keys: pygame.key.ScancodeWrapper) -> None:
         """Handle the drop key [K_SPACE]."""
         drop_keys = keys[pygame.K_SPACE]
 

@@ -1,8 +1,10 @@
 import pygame
 from utils import CONFIG, Size
 
+from .base import BaseScreen, SceenElement, TextScreen
 
-class Score:
+
+class Score(BaseScreen, SceenElement, TextScreen):
     """
     Class representing the score on the sidebar.
 
@@ -24,7 +26,7 @@ class Score:
 
     def run(self) -> None:
         """Display the score on the game surface."""
-        self.dispaly_surface.blit(self.surface, self.rect)
+        self._update_diplaysurface()
         self.draw()
 
     def update(self, lines: int, score: int, level: int) -> None:
@@ -55,7 +57,7 @@ class Score:
             y = self.increment_height / 2 + idx * self.increment_height
             self._display_text(text, (x, y))
 
-    def _display_text(self, text: tuple[str, int], pos: tuple[int, int]) -> None:
+    def _display_text(self, text: tuple[str, int], pos: tuple[float, float]) -> None:
         """
         Display a single text element on the score surface.
 
@@ -101,3 +103,7 @@ class Score:
     def _initialize_increment_height(self) -> None:
         """Initialize the increment height for positioning text elements."""
         self.increment_height = self.surface.get_height() / 3
+
+    def _update_diplaysurface(self) -> None:
+        """Update the display surface."""
+        self.dispaly_surface.blit(self.surface, self.rect)

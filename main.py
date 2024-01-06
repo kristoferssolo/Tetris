@@ -67,10 +67,10 @@ def main(args: argparse.ArgumentParser) -> None:
     if args.train is not None:
         ai.log.debug("Training the AI")
         # ai.train(*args.train)
-        game.Main(GameMode.AI_TRAINING).run()
+        game.Game(GameMode.AI_TRAINING).run()
     else:
         game.log.debug("Running the game")
-        game.Main(GameMode.PLAYER).run()
+        game.Game(GameMode.PLAYER).run()
 
 
 if __name__ == "__main__":

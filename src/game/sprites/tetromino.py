@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
@@ -29,9 +29,9 @@ class Tetromino:
 
     def __init__(
         self,
-        group: pygame.sprite.Group,
+        group: pygame.sprite.Group[Any],
         create_new: Callable[[], None],
-        field: np.ndarray,
+        field: np.ndarray[int, Any],
         shape: Optional[Figure] = None,
     ) -> None:
         self.figure: Figure = self._generate_figure(shape)
@@ -156,7 +156,7 @@ class Tetromino:
             for pos in new_positions
         )
 
-    def _initialize_blocks(self, group: pygame.sprite.Group) -> list[Block]:
+    def _initialize_blocks(self, group: pygame.sprite.Group[Any]) -> list[Block]:
         """
         Initializes Tetromino blocks.
 

@@ -1,8 +1,10 @@
 import pygame
 from utils import CONFIG, Figure, Size
 
+from .base import BaseScreen, SceenElement
 
-class Preview:
+
+class Preview(BaseScreen, SceenElement):
     """
     Class representing the preview of upcoming figures on the sidebar.
 
@@ -17,15 +19,25 @@ class Preview:
         self._initialize_surface()
         self._initialize_rect()
 
-    def run(self, next_figure: Figure) -> None:
+    def run(self) -> None:
+        """Run the preview by updating the display and drawing next figure."""
+        self.draw()
+
+    def update(self, next_figure: Figure) -> None:
         """
-        Run the preview by updating the display and drawing next figures.
+        Update the preview information.
 
         Args:
-            next_figures (list[Figure]): List of upcoming figures.
+            next_figures: Next figure.
         """
-        self.dispaly_surface.blit(self.surface, self.rect)
-        self._draw_preview(next_figure)
+        self.next_figure = next_figure
+
+    def draw(self) -> None:
+        """Draw the preview on the preview surface."""
+        self._update_diplaysurface()
+        self._draw_background()
+        self._draw_border()
+        self._draw_figure()
 
     def _draw_border(self) -> None:
         """Draw the border around the preview surface."""
@@ -37,7 +49,7 @@ class Preview:
             CONFIG.game.border_radius,
         )
 
-    def _draw_figure(self, figure: Figure) -> None:
+    def _draw_figure(self) -> None:
         """
         Draw a single upcoming figure on the preview surface.
 
@@ -45,22 +57,11 @@ class Preview:
             figure (Figure): The upcoming figure to draw.
             idx (int): Index of the figure in the list.
         """
-        figure_surface = figure.value.image
+        figure_surface = self.next_figure.value.image
         x = self.surface.get_width() / 2
         y = self.surface.get_height() / 2
         rect = figure_surface.get_rect(center=(x, y))
         self.surface.blit(figure_surface, rect)
-
-    def _draw_preview(self, next_figure: Figure) -> None:
-        """
-        Draw the preview with the background, border, and next figure.
-
-        Args:
-            next_figures (list[Figure]): List of upcoming figures.
-        """
-        self._draw_background()
-        self._draw_border()
-        self._draw_figure(next_figure)
 
     def _draw_background(self) -> None:
         """Draw the background of the preview."""
@@ -79,3 +80,7 @@ class Preview:
                 CONFIG.window.padding,
             )
         )
+
+    def _update_diplaysurface(self) -> None:
+        """Update the display surface."""
+        self.dispaly_surface.blit(self.surface, self.rect)
