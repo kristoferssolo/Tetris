@@ -2,7 +2,7 @@
 import argparse
 
 from loguru import logger
-from utils import BASE_PATH, CONFIG
+from utils import BASE_PATH, CONFIG, GameMode
 
 
 def pos_int(string: str) -> int:
@@ -66,10 +66,11 @@ def main(args: argparse.ArgumentParser) -> None:
 
     if args.train is not None:
         ai.log.debug("Training the AI")
-        ai.train(*args.train)
+        # ai.train(*args.train)
+        game.Main(GameMode.AI_TRAINING).run()
     else:
         game.log.debug("Running the game")
-        game.Main().run()
+        game.Main(GameMode.PLAYER).run()
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 
 
 class Direction(Enum):
@@ -16,3 +16,9 @@ class Rotation(Enum):
 class Field(Enum):
     EMPTY = None
     FILLED = "Block"
+
+
+class GameMode(Enum):
+    PLAYER = auto()
+    AI_PLAYING = auto()
+    AI_TRAINING = auto()

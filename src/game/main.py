@@ -1,7 +1,7 @@
 import sys
 
 import pygame
-from utils import CONFIG, Figure
+from utils import CONFIG, Figure, GameMode
 
 from .game import Game
 from .log import log
@@ -25,8 +25,9 @@ class Main:
         music: Pygame music that plays in the background.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, mode: GameMode) -> None:
         log.info("Initializing the game")
+        self.game_mode = mode
         self._initialize_pygeme()
         self._initialize_game_components()
         self._start_background_music()
