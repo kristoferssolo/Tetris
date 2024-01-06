@@ -38,13 +38,10 @@ class Main(BaseScreen, SceenElement, TextScreen):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     self.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
+
+            if not self.game:
                 for button in self.buttons:
-                    if button.rect.collidepoint(mouse_pos):
-                        button.on_click()
-            elif event.type == pygame.MOUSEMOTION:
-                for button in self.buttons:
+                    button.on_click(event)
                     button.on_hover(event)
 
     def run(self) -> None:
@@ -66,6 +63,7 @@ class Main(BaseScreen, SceenElement, TextScreen):
         sys.exit()
 
     def play(self) -> "Main":
+        self._draw_background()
         self.game = Game(self.game_mode)
         return self
 

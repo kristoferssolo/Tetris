@@ -17,14 +17,18 @@ class Button(BaseButton, BaseScreen, SceenElement, TextScreen):
         self._set_default_background_color()
         self._set_default_text_color()
 
-    def on_click(self) -> None:
+    def on_click(self, event: pygame.Event) -> None:
         """Handle click event."""
-        if self.action:
+        if (
+            event.type == pygame.MOUSEBUTTONDOWN
+            and self.rect.collidepoint(event.pos)
+            and self.action
+        ):
             self.action()
 
     def on_hover(self, event: pygame.Event) -> None:
         """Handle hover event."""
-        if self.rect.collidepoint(event.pos):
+        if event.type == pygame.MOUSEMOTION and self.rect.collidepoint(event.pos):
             self._set_background_color(CONFIG.colors.bg_visual)
         else:
             self._set_default_background_color()
