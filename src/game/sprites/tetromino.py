@@ -69,7 +69,7 @@ class Tetromino:
 
     def rotate(self, rotation: Rotation = Rotation.CLOCKWISE) -> None:
         """
-        Rotates the Tetromino clockwise.
+        Rotates the Tetromino.
 
         Does not rotate if the Tetromino is an O-shaped (square) figure.
 
@@ -81,12 +81,19 @@ class Tetromino:
 
         pivot: pygame.Vector2 = self.blocks[0].pos
 
-        new_positions: list[pygame.Vector2] = [
-            block.rotate(pivot, rotation) for block in self.blocks
-        ]
+        for _ in range(3):
+            new_positions: list[pygame.Vector2] = [
+                block.rotate(pivot, rotation) for block in self.blocks
+            ]
 
-        if self._are_new_positions_valid(new_positions):
-            self._update_block_positions(new_positions)
+            if self._are_new_positions_valid(new_positions):
+                self._update_block_positions(new_positions)
+                return
+
+            if any(pos.x < 0 for pos in new_positions):
+                self.move_horizontal(Direction.RIGHT)
+            else:
+                self.move_horizontal(Direction.LEFT)
 
     def drop(self) -> None:
         """Drops the Tetromino to the bottom of the game field."""
