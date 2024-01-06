@@ -36,12 +36,12 @@ class TestFitness(unittest.TestCase):
         for field, answer in zip(self.fields, answers):
             self.assertEqual(get_peaks_sum(field=field), answer)
 
-    def test_get_row_transistions(self):
+    def test_get_row_transistions(self) -> None:
         answers = (8, 0, 2)
         for field, answer in zip(self.fields, answers):
             self.assertEqual(get_row_transition(field), answer)
 
-    def test_get_col_transistions(self):
+    def test_get_col_transistions(self) -> None:
         answers = (5, 0, 1)
         for field, answer in zip(self.fields, answers):
             self.assertEqual(get_col_transition(field), answer)
@@ -51,7 +51,7 @@ class TestFitness(unittest.TestCase):
         for field, answer in zip(self.fields, answers):
             self.assertEqual(get_bumpiness(field=field), answer)
 
-    def test_get_holes(self):
+    def test_get_holes(self) -> None:
         answers = (
             np.array([1, 1, 0, 1, 2]),
             np.array([0, 0, 0, 0, 0]),
@@ -60,7 +60,7 @@ class TestFitness(unittest.TestCase):
         for field, answer in zip(self.fields, answers):
             self.assertTrue(np.array_equal(get_holes(field), answer))
 
-    def test_get_wells(self):
+    def test_get_wells(self) -> None:
         answers = (
             np.array([1, 0, 2, 1, 0]),
             np.array([0, 0, 0, 0, 0]),
