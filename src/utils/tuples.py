@@ -15,4 +15,4 @@ class Size(NamedTuple):
 
 class BestMove(NamedTuple):
     rotation: int
-    direction: Direction
+    x: int

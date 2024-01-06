@@ -17,4 +17,5 @@ __all__ = [
     "Rotation",
     "GameMode",
     "Weights",
+    "BestMove",
 ]

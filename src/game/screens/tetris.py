@@ -341,7 +341,8 @@ class Tetris(BaseScreen):
 
     def _play_landing_sound(self) -> None:
         """Play the landing sound effect."""
-        self.landing_sound.play()
+        if self.game_mode is GameMode.PLAYER:
+            self.landing_sound.play()
 
     def _update_display_surface(self) -> None:
         """Update the display surface."""

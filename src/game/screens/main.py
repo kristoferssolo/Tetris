@@ -46,15 +46,18 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def run(self) -> None:
         while True:
-            if not self.game:
-                self.draw()
+            self.run_game_loop()
 
-            self.handle_events()
+    def run_game_loop(self) -> None:
+        if not self.game:
+            self.draw()
 
-            if self.game:
-                self.game.run()
+        self.handle_events()
 
-            self.update()
+        if self.game:
+            self.game.run()
+
+        self.update()
 
     def exit(self) -> None:
         """Exit the game."""
