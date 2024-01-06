@@ -11,7 +11,7 @@ class Preview(BaseScreen, SceenElement):
     Attributes:
         surface: Pygame surface representing the preview.
         rect: Pygame rectangle representing the preview.
-        dispaly_surface: Pygame display surface.
+        display_surface: Pygame display surface.
         increment_height: Height of each figure in the preview.
     """
 
@@ -34,7 +34,7 @@ class Preview(BaseScreen, SceenElement):
 
     def draw(self) -> None:
         """Draw the preview on the preview surface."""
-        self._update_diplaysurface()
+        self._update_display_surface()
         self._draw_background()
         self._draw_border()
         self._draw_figure()
@@ -42,7 +42,7 @@ class Preview(BaseScreen, SceenElement):
     def _draw_border(self) -> None:
         """Draw the border around the preview surface."""
         pygame.draw.rect(
-            self.dispaly_surface,
+            self.display_surface,
             CONFIG.colors.border_highlight,
             self.rect,
             CONFIG.game.line_width * 2,
@@ -70,7 +70,7 @@ class Preview(BaseScreen, SceenElement):
     def _initialize_surface(self) -> None:
         """Initialize the preview surface."""
         self.surface = pygame.Surface(CONFIG.sidebar.preview)
-        self.dispaly_surface = pygame.display.get_surface()
+        self.display_surface = pygame.display.get_surface()
 
     def _initialize_rect(self) -> None:
         """Initialize the preview rectangle."""
@@ -81,6 +81,6 @@ class Preview(BaseScreen, SceenElement):
             )
         )
 
-    def _update_diplaysurface(self) -> None:
+    def _update_display_surface(self) -> None:
         """Update the display surface."""
-        self.dispaly_surface.blit(self.surface, self.rect)
+        self.display_surface.blit(self.surface, self.rect)

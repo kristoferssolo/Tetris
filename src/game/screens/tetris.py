@@ -9,7 +9,7 @@ from game.sprites.block import Block
 from game.sprites.tetromino import Tetromino
 from game.timer import Timer, Timers
 
-from .base import BaseScreen
+from .base import BaseScreen, SceenElement
 
 
 class Tetris(BaseScreen):
@@ -46,7 +46,7 @@ class Tetris(BaseScreen):
         get_next_figure: Callable[[], Figure],
         update_score: Callable[[int, int, int], None],
     ) -> None:
-        self._initialize_game_surface()
+        self._initialize_surface()
         self._initialize_sprites()
 
         self.get_next_figure = get_next_figure
@@ -70,7 +70,7 @@ class Tetris(BaseScreen):
     def draw(self) -> None:
         """Draw the game surface and its components."""
         self.update()
-        self._fill_game_surface()
+        self._draw_background()
         self.sprites.draw(self.surface)
         self._draw_border()
         self._draw_grid()
@@ -249,10 +249,13 @@ class Tetris(BaseScreen):
         self._draw_border()
         self._draw_grid()
 
-    def _initialize_game_surface(self) -> None:
+    def _initialize_surface(self) -> None:
         """Initialize the game surface."""
         self.surface = pygame.Surface(CONFIG.game.size)
         self.dispaly_surface = pygame.display.get_surface()
+
+    def _initialize_rect(self) -> None:
+        """Initialize the rectangle."""
         self.rect = self.surface.get_rect(topleft=CONFIG.game.pos)
 
     def _initialize_sprites(self) -> None:
@@ -308,7 +311,7 @@ class Tetris(BaseScreen):
         """Update the display surface."""
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
 
-    def _fill_game_surface(self) -> None:
+    def _draw_background(self) -> None:
         """Fill the game surface with background color."""
         self.surface.fill(CONFIG.colors.bg_float)
 

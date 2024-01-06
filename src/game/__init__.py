@@ -1,5 +1,5 @@
 from .log import log
-from .screens import Game, Menu, Tetris
+from .screens import Game, Main, Tetris
 
 __all__ = [
     "log",

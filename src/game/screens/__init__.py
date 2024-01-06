@@ -1,7 +1,7 @@
 from .game import Game
-from .menu import Menu
+from .main import Main
 from .preview import Preview
 from .score import Score
 from .tetris import Tetris
 
-__all__ = ["Tetris", "Game", "Preview", "Score", "Menu"]
+__all__ = ["Tetris", "Game", "Preview", "Score", "Main"]

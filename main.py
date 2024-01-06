@@ -61,16 +61,17 @@ def main(args: argparse.ArgumentParser) -> None:
     elif args.verbose:
         CONFIG.log_level = "info"
 
-    import ai
+    # import ai
     import game
 
     if args.train is not None:
-        ai.log.debug("Training the AI")
-        # ai.train(*args.train)
-        game.Game(GameMode.AI_TRAINING).run()
+        # ai.log.debug("Training the AI")
+        # # ai.train(*args.train)
+        # game.Menu(GameMode.AI_TRAINING).run()
+        pass
     else:
         game.log.debug("Running the game")
-        game.Game(GameMode.PLAYER).run()
+        game.Main(GameMode.PLAYER).run()
 
 
 if __name__ == "__main__":

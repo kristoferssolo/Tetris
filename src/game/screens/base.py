@@ -1,7 +1,5 @@
 from abc import ABC, ABCMeta, abstractmethod
 
-import pygame
-
 
 class BaseScreen(ABC, metaclass=ABCMeta):
     """Base screen class."""
@@ -37,7 +35,7 @@ class SceenElement(ABC, metaclass=ABCMeta):
         """Initialize the rectangle."""
 
     @abstractmethod
-    def _update_diplaysurface(self) -> None:
+    def _update_display_surface(self) -> None:
         """Update the display surface."""
 
 

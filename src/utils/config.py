@@ -42,6 +42,11 @@ class Font:
 
 
 @define
+class Button:
+    size: Size = Size(200, 50)
+
+
+@define
 class Window:
     title: str = "Tetris"
     padding: int = PADDING
@@ -49,6 +54,7 @@ class Window:
         Game().size.width + SideBar().size.width + padding * 3,
         Game().size.height + padding * 2,
     )
+    button: Button = Button()
 
 
 @define

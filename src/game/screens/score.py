@@ -10,7 +10,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
 
     Attributes:
         surface: Pygame surface representing the score.
-        dispaly_surface: Pygame display surface.
+        display_surface: Pygame display surface.
         rect: Pygame rectangle representing the score.
         font: Pygame font used to display the score.
         text: Text to be displayed on the score.
@@ -26,7 +26,6 @@ class Score(BaseScreen, SceenElement, TextScreen):
 
     def run(self) -> None:
         """Display the score on the game surface."""
-        self._update_diplaysurface()
         self.draw()
 
     def update(self, lines: int, score: int, level: int) -> None:
@@ -46,6 +45,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
 
     def draw(self) -> None:
         """Draw the score on the score surface."""
+        self._update_display_surface()
         self._draw_background()
         self._draw_text()
         self._draw_border()
@@ -62,8 +62,8 @@ class Score(BaseScreen, SceenElement, TextScreen):
         Display a single text element on the score surface.
 
         Args:
-            text (tuple[str, int]): A tuple containing the label and value of the text element.
-            pos (tuple[int, int]): The position (x, y) where the text should be displayed.
+            text: A tuple containing the label and value of the text element.
+            pos: The position (x, y) where the text should be displayed.
         """
         text_surface = self.font.render(
             f"{text[0]}: {text[1]}", True, CONFIG.colors.fg_sidebar
@@ -74,7 +74,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
     def _draw_border(self) -> None:
         """Draw the border of the score surface."""
         pygame.draw.rect(
-            self.dispaly_surface,
+            self.display_surface,
             CONFIG.colors.border_highlight,
             self.rect,
             CONFIG.game.line_width * 2,
@@ -88,12 +88,12 @@ class Score(BaseScreen, SceenElement, TextScreen):
     def _initialize_surface(self) -> None:
         """Initialize the score surface."""
         self.surface = pygame.Surface(CONFIG.sidebar.score)
-        self.dispaly_surface = pygame.display.get_surface()
+        self.display_surface = pygame.display.get_surface()
 
     def _initialize_rect(self) -> None:
         """Initialize the score rectangle."""
         self.rect = self.surface.get_rect(
-            bottomright=CONFIG.window.size.sub(CONFIG.window.padding)
+            bottomright=CONFIG.window.size - CONFIG.window.padding
         )
 
     def _initialize_font(self) -> None:
@@ -104,6 +104,6 @@ class Score(BaseScreen, SceenElement, TextScreen):
         """Initialize the increment height for positioning text elements."""
         self.increment_height = self.surface.get_height() / 3
 
-    def _update_diplaysurface(self) -> None:
+    def _update_display_surface(self) -> None:
         """Update the display surface."""
-        self.dispaly_surface.blit(self.surface, self.rect)
+        self.display_surface.blit(self.surface, self.rect)

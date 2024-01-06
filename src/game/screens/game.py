@@ -4,12 +4,12 @@ import pygame
 from utils import CONFIG, Figure, GameMode
 
 from game.log import log
+from game.sprites.tetromino import Tetromino
 
 from .base import BaseScreen
 from .preview import Preview
 from .score import Score
 from .tetris import Tetris
-from .tetromino import Tetromino
 
 
 class Game(BaseScreen):
@@ -27,26 +27,20 @@ class Game(BaseScreen):
         music: Pygame music that plays in the background.
     """
 
-    def __init__(self, mode: GameMode) -> None:
-        log.info("Initializing the game")
-        self.game_mode = mode
-        self._initialize_pygeme()
+    def __init__(self) -> None:
         self._initialize_game_components()
         self._start_background_music()
 
     def draw(self) -> None:
         """Update the display."""
-        pygame.display.update()
+
+    def update(self) -> None:
+        pass
 
     def run(self) -> None:
-        """Run the main game loop."""
-        while True:
-            self.run_game_loop()
-
-    def run_game_loop(self) -> None:
         """Run a single iteration of the game loop."""
         self.draw()
-        self.handle_events()
+        self.handle_events()  # FIX:
 
         self.tetris.run()
         self.score.run()
@@ -56,32 +50,19 @@ class Game(BaseScreen):
         self.draw()
         self.clock.tick(CONFIG.fps)
 
-    def handle_events(self) -> None:
-        """Handle Pygame events."""
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    self.exit()
-
-    def exit(self) -> None:
-        """Exit the game."""
-        pygame.quit()
-        sys.exit()
+    def mute(self) -> None:
+        """Mute the game."""
+        self.music.set_volume(0)
+        self.tetris.mute()
 
     def _initialize_game_components(self) -> None:
         """Initialize game-related components."""
+        self.clock = pygame.time.Clock()
         self.next_figure: Figure = self._generate_next_figure()
 
         self.tetris = Tetris(self._get_next_figure, self._update_score)
         self.score = Score()
         self.preview = Preview()
-
-    def mute(self) -> None:
-        """Mute the game."""
-        self.music.set_volume(0)
-        self.tetris.mute()
 
     def _update_score(self, lines: int, score: int, level: int) -> None:
         """
@@ -113,14 +94,6 @@ class Game(BaseScreen):
         next_figure: Figure = self.next_figure
         self.next_figure = self._generate_next_figure()
         return next_figure
-
-    def _initialize_pygeme(self) -> None:
-        """Initialize Pygame and set up the display."""
-        pygame.init()
-        pygame.display.set_caption(CONFIG.window.title)
-        self.display_surface = pygame.display.set_mode(CONFIG.window.size)
-        self.display_surface.fill(CONFIG.colors.bg)
-        self.clock = pygame.time.Clock()
 
     def _start_background_music(self) -> None:
         """Start playing background music."""
