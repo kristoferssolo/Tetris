@@ -1,6 +1,7 @@
 import unittest
 
 import numpy as np
+from ai.moves.bumpiness import bumpiness
 from ai.moves.height import aggregate_height
 from ai.moves.holes import holes
 from ai.moves.lines import complete_lines
@@ -27,3 +28,6 @@ class TestFitness(unittest.TestCase):
 
     def test_holes(self) -> None:
         self.assertEqual(holes(self.field), 2)
+
+    def test_bumpiness(self) -> None:
+        self.assertEqual(bumpiness(self.field), 6)
