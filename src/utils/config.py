@@ -21,7 +21,7 @@ class Game:
     size: Size = Size(columns * cell.width, rows * cell.width)
     pos: Vec2 = Vec2(padding, padding)
     offset: Vec2 = Vec2(columns // 2, -1)
-    initial_speed: float | int = 50
+    initial_speed: float | int = 200
     movment_delay: int = 200
     rotation_delay: int = 200
     score: dict[int, int] = {1: 40, 2: 100, 3: 300, 4: 1200}
@@ -32,7 +32,7 @@ class SideBar:
     padding: int = PADDING
     size: Size = Size(200, Game().size.height)
     score: Size = Size(size.width, size.height * 0.3 - padding)
-    preview: Size = Size(size.width, size.height * 0.7)
+    preview: Size = Size(size.width, size.width)
 
 
 @define

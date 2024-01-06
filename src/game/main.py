@@ -26,7 +26,7 @@ class Main:
     """
 
     def __init__(self) -> None:
-        # log.info("Initializing the game")
+        log.info("Initializing the game")
         self._initialize_pygeme()
         self._initialize_game_components()
         self._start_background_music()
@@ -47,7 +47,7 @@ class Main:
 
         self.game.run()
         self.score.run()
-        self.preview.run(self.next_figures)
+        self.preview.run(self.next_figure)
 
         pygame.display.update()
         self.clock.tick(CONFIG.fps)
@@ -66,6 +66,14 @@ class Main:
         pygame.quit()
         sys.exit()
 
+    def _initialize_game_components(self) -> None:
+        """Initialize game-related components."""
+        self.next_figure: Figure = self._generate_next_figure()
+
+        self.game = Game(self._get_next_figure, self._update_score)
+        self.score = Score()
+        self.preview = Preview()
+
     def mute(self) -> None:
         """Mute the game."""
         self.music.set_volume(0)
@@ -82,17 +90,14 @@ class Main:
         """
         self.score.update(lines, score, level)
 
-    def _generate_next_figures(self, amount: int = 3) -> list[Figure]:
+    def _generate_next_figure(self) -> Figure:
         """
         Generate the next set of random figures.
 
-        Args:
-            amount: Number of figures to generate (default is 3).
-
         Returns:
-            List of randomly generated figures.
+            Randomly generated figure.
         """
-        return [Figure.random() for _ in range(amount)]
+        return Figure.random()
 
     def _get_next_figure(self) -> Figure:
         """
@@ -101,8 +106,8 @@ class Main:
         Returns:
             The next figure in the sequence.
         """
-        next_figure = self.next_figures.pop(0)
-        self.next_figures.append(Figure.random())
+        next_figure: Figure = self.next_figure
+        self.next_figure = self._generate_next_figure()
         return next_figure
 
     def _initialize_pygeme(self) -> None:
@@ -112,14 +117,6 @@ class Main:
         self.display_surface = pygame.display.set_mode(CONFIG.window.size)
         self.display_surface.fill(CONFIG.colors.bg)
         self.clock = pygame.time.Clock()
-
-    def _initialize_game_components(self) -> None:
-        """Initialize game-related components."""
-        self.next_figures: list[Figure] = self._generate_next_figures()
-
-        self.game = Game(self._get_next_figure, self._update_score)
-        self.score = Score()
-        self.preview = Preview()
 
     def _start_background_music(self) -> None:
         """Start playing background music."""

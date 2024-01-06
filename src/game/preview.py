@@ -16,9 +16,8 @@ class Preview:
     def __init__(self) -> None:
         self._initialize_surface()
         self._initialize_rect()
-        self._initialize_increment_height()
 
-    def run(self, next_figures: list[Figure]) -> None:
+    def run(self, next_figure: Figure) -> None:
         """
         Run the preview by updating the display and drawing next figures.
 
@@ -26,7 +25,7 @@ class Preview:
             next_figures (list[Figure]): List of upcoming figures.
         """
         self.dispaly_surface.blit(self.surface, self.rect)
-        self._draw_preview(next_figures)
+        self._draw_preview(next_figure)
 
     def _draw_border(self) -> None:
         """Draw the border around the preview surface."""
@@ -38,17 +37,7 @@ class Preview:
             CONFIG.game.border_radius,
         )
 
-    def _draw_figures(self, figures: list[Figure]) -> None:
-        """
-        Draw the upcoming figures on the preview surface.
-
-        Args:
-            figures (list[Figure]): List of upcoming figures.
-        """
-        for idx, figure in enumerate(figures):
-            self._draw_figure(figure, idx)
-
-    def _draw_figure(self, figure: Figure, idx: int) -> None:
+    def _draw_figure(self, figure: Figure) -> None:
         """
         Draw a single upcoming figure on the preview surface.
 
@@ -58,20 +47,20 @@ class Preview:
         """
         figure_surface = figure.value.image
         x = self.surface.get_width() / 2
-        y = self.increment_height / 2 + idx * self.increment_height
+        y = self.surface.get_height() / 2
         rect = figure_surface.get_rect(center=(x, y))
         self.surface.blit(figure_surface, rect)
 
-    def _draw_preview(self, next_figures: list[Figure]) -> None:
+    def _draw_preview(self, next_figure: Figure) -> None:
         """
-        Draw the preview with the background, border, and next figures.
+        Draw the preview with the background, border, and next figure.
 
         Args:
             next_figures (list[Figure]): List of upcoming figures.
         """
         self._draw_background()
         self._draw_border()
-        self._draw_figures(next_figures)
+        self._draw_figure(next_figure)
 
     def _draw_background(self) -> None:
         """Draw the background of the preview."""
@@ -90,7 +79,3 @@ class Preview:
                 CONFIG.window.padding,
             )
         )
-
-    def _initialize_increment_height(self) -> None:
-        """Initialize the increment height for positioning text elements."""
-        self.increment_height = self.surface.get_height() / 3
