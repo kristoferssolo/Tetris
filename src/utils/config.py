@@ -21,9 +21,10 @@ class Game:
     size: Size = Size(columns * cell.width, rows * cell.width)
     pos: Vec2 = Vec2(padding, padding)
     offset: Vec2 = Vec2(columns // 2, -1)
-    initial_speed: float | int = 200
-    movment_delay: int = 200
+    initial_speed: float | int = 300
+    movment_delay: int = 100
     rotation_delay: int = 200
+    drop_delay: int = 200
     score: dict[int, int] = {1: 40, 2: 100, 3: 300, 4: 1200}
 
 

@@ -63,8 +63,10 @@ class Timers(NamedTuple):
         vertical: Timer for vertical movement.
         horizontal: Timer for horizontal movement.
         rotation: Timer for rotation.
+        drop: Timer for dropping.
     """
 
     vertical: Timer
     horizontal: Timer
     rotation: Timer
+    drop: Timer

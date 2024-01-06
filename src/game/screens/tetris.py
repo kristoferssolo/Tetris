@@ -285,6 +285,7 @@ class Tetris(BaseScreen):
             Timer(self.initial_block_speed, True, self.move_down),
             Timer(CONFIG.game.movment_delay),
             Timer(CONFIG.game.rotation_delay),
+            Timer(CONFIG.game.drop_delay),
         )
         self.timers.vertical.activate()
 
@@ -293,6 +294,7 @@ class Tetris(BaseScreen):
         self.initial_block_speed = CONFIG.game.initial_speed
         self.increased_block_speed = self.initial_block_speed * 0.4
         self.down_pressed = False
+        self.drop_pressed = False
         self.level: int = 1
         self.score: int = 0
         self.lines: int = 0
@@ -351,6 +353,7 @@ class Tetris(BaseScreen):
         counter_clockwise_keys = (
             keys[pygame.K_e] or keys[pygame.K_i] or keys[pygame.K_LEFT]
         )
+
         if not self.timers.rotation.active:
             if clockwise_keys:
                 self.rotate()
@@ -375,8 +378,9 @@ class Tetris(BaseScreen):
         """Handle the drop key [K_SPACE]."""
         drop_keys = keys[pygame.K_SPACE]
 
-        if drop_keys:
+        if not self.timers.drop.active and drop_keys:
             self.drop()
+            self.timers.drop.activate()
 
     def _reset_game_state(self) -> None:
         """Reset the game state."""
