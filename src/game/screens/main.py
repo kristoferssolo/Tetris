@@ -6,8 +6,8 @@ from utils import CONFIG, GameMode
 from game.log import log
 
 from .base import BaseScreen, SceenElement, TextScreen
+from .button import Button
 from .game import Game
-from .menu_button import MenuButton
 
 
 class Main(BaseScreen, SceenElement, TextScreen):
@@ -43,12 +43,8 @@ class Main(BaseScreen, SceenElement, TextScreen):
                     if button.rect.collidepoint(mouse_pos):
                         button.on_click()
             elif event.type == pygame.MOUSEMOTION:
-                mouse_pos = pygame.mouse.get_pos()
                 for button in self.buttons:
-                    if button.rect.collidepoint(mouse_pos):
-                        button.update(True)
-                    else:
-                        button.update(False)
+                    button.on_hover(event)
 
     def run(self) -> None:
         while True:
@@ -57,15 +53,19 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def exit(self) -> None:
         """Exit the game."""
+        log.info("Exiting the game")
         pygame.quit()
         sys.exit()
 
+    def play(self) -> None:
+        pass
+
     def _set_buttons(self) -> None:
-        self.buttons: list[MenuButton] = [
-            MenuButton("Play", None),
-            MenuButton("AI", None),
-            MenuButton("Settings", None),
-            MenuButton("Quit", self.exit),
+        self.buttons: list[Button] = [
+            Button("Play", self.play),
+            Button("AI", None),
+            Button("Settings", None),
+            Button("Quit", self.exit),
         ]
 
     def _initialize_pygame(self) -> None:
