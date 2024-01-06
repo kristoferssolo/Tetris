@@ -4,7 +4,8 @@ import time
 import neat
 import numpy as np
 import pygame
-from game import Block, Main
+from game import Main
+from game.sprites import Block
 from utils import CONFIG
 
 from .fitness import calculate_fitness

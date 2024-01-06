@@ -2,8 +2,6 @@ from typing import Optional
 
 import numpy as np
 
-from ai.log import log
-
 from .peaks import get_peaks
 
 
