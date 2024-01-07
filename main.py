@@ -4,14 +4,6 @@ import argparse
 from loguru import logger
 from utils import BASE_PATH, CONFIG, GameMode
 
-
-def pos_int(string: str) -> int:
-    ivalue = int(string)
-    if ivalue <= 0:
-        raise argparse.ArgumentTypeError(f"{ivalue} is not a positive integer")
-    return ivalue
-
-
 parser = argparse.ArgumentParser(description="Tetris game with AI")
 group = parser.add_mutually_exclusive_group()
 group.add_argument(
@@ -26,16 +18,6 @@ group.add_argument(
     "--verbose",
     action="store_true",
     help="Verbose",
-)
-
-
-parser.add_argument(
-    "-t",
-    "--train",
-    type=pos_int,
-    nargs=2,
-    metavar=("n generations", "n parallels"),
-    help="Trains the AI",
 )
 
 parser.add_argument(
@@ -61,16 +43,10 @@ def main(args: argparse.ArgumentParser) -> None:
     elif args.verbose:
         CONFIG.log_level = "info"
 
-    import ai
     import game
 
-    if args.train is not None:
-        ai.log.debug("Training the AI")
-        ai.train(*args.train)
-        # game.Menu(GameMode.AI_TRAINING).run()
-    else:
-        game.log.debug("Running the game")
-        game.Main(GameMode.PLAYER).run()
+    game.log.debug("Running the game")
+    game.Main(GameMode.PLAYER).run()
 
 
 if __name__ == "__main__":
