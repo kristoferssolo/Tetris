@@ -69,7 +69,7 @@ class Tetris(BaseScreen):
         """Run a single iteration of the game loop."""
         self.draw()
         self._timer_update()
-        self.handle_event()
+        self.handle_events()
 
     def draw(self) -> None:
         """Draw the game surface and its components."""
@@ -83,7 +83,7 @@ class Tetris(BaseScreen):
         self._update_display_surface()
         self.sprites.update()
 
-    def handle_event(self) -> None:
+    def handle_events(self) -> None:
         """Handle player input events."""
         keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
 
@@ -366,12 +366,12 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        right_keys = [
+        right_keys: list[int] = [
             pygame.key.key_code(key) for key in self.settings["Movement"]["right"]
         ]
         right_key_pressed = any(keys[key] for key in right_keys)
 
-        left_keys = [
+        left_keys: list[int] = [
             pygame.key.key_code(key) for key in self.settings["Movement"]["left"]
         ]
         left_key_pressed = any(keys[key] for key in left_keys)
@@ -390,10 +390,12 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        cw_keys = [pygame.key.key_code(key) for key in self.settings["Rotation"]["cw"]]
+        cw_keys: list[int] = [
+            pygame.key.key_code(key) for key in self.settings["Rotation"]["cw"]
+        ]
         cw_key_pressed = any(keys[key] for key in cw_keys)
 
-        ccw_keys = [
+        ccw_keys: list[int] = [
             pygame.key.key_code(key) for key in self.settings["Rotation"]["ccw"]
         ]
         ccw_key_pressed = any(keys[key] for key in ccw_keys)
@@ -413,7 +415,7 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        down_keys = [
+        down_keys: list[int] = [
             pygame.key.key_code(key) for key in self.settings["Movement"]["down"]
         ]
         down_key_pressed = any(keys[key] for key in down_keys)

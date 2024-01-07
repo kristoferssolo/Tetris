@@ -30,6 +30,7 @@ class Game(BaseScreen):
     def __init__(self, game_mode: GameMode, settings: dict[str, Any]) -> None:
         self.game_mode = game_mode
         self.settings = settings
+        self.paused = False
         self._initialize_game_components()
         self._start_background_music()
 

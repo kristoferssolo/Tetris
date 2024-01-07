@@ -1,5 +1,5 @@
 [General]
-pause = ["esc", "F1"]
+pause = ["escape", "F1"] # WIP
 quit = ["q"]
 
 [Movement]
@@ -18,7 +18,7 @@ ccw = [
 ] # counter-clockwise
 
 [Action]
-hold = ["shift", "c", "keypad 0"]
+hold = ["left shift", "right shift", "c", "keypad 0"] # WIP
 drop = ["space", "keypad 5"]
 
 [Volume.Music]
