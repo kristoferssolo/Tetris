@@ -100,7 +100,10 @@ class Game(BaseScreen):
 
     def _start_background_music(self) -> None:
         """Start playing background music."""
-        if self.game_mode is GameMode.PLAYER:
+        if (
+            self.game_mode is GameMode.PLAYER
+            and self.settings["Volume"]["Music"]["enabled"]
+        ):
             self.music = pygame.mixer.Sound(CONFIG.music.background)
-            self.music.set_volume(CONFIG.music.volume)
+            self.music.set_volume(self.settings["Volume"]["Music"]["level"])
             self.music.play(-1)

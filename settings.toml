@@ -15,6 +15,10 @@ ccw = ["ctrl", "z", "kp3", "kp7"]     # counter-clockwise
 hold = ["shift", "c", "kp0"]
 drop = ["space", "kp5"]
 
-[Sound]
-music = true
-volume = 0.5
+[Volume.Music]
+enabled = true
+level = 0.01
+
+[Volume.SFX]
+enabled = true
+level = 0.02

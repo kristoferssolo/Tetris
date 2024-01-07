@@ -337,13 +337,19 @@ class Tetris(BaseScreen):
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
-        if self.game_mode is GameMode.PLAYER:
+        if (
+            self.game_mode is GameMode.PLAYER
+            and self.settings["Volume"]["SFX"]["enabled"]
+        ):
             self.landing_sound = pygame.mixer.Sound(CONFIG.music.landing)
-            self.landing_sound.set_volume(CONFIG.music.volume * 2)
+            self.landing_sound.set_volume(self.settings["Volume"]["SFX"]["level"])
 
     def _play_landing_sound(self) -> None:
         """Play the landing sound effect."""
-        if self.game_mode is GameMode.PLAYER:
+        if (
+            self.game_mode is GameMode.PLAYER
+            and self.settings["Volume"]["SFX"]["enabled"]
+        ):
             self.landing_sound.play()
 
     def _update_display_surface(self) -> None:
