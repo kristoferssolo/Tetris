@@ -1,6 +1,6 @@
-attrs>=23.1.0
-loguru>=0.7.2
-neat-python>=0.92
-numpy>=1.26.3
-pygame-ce>=2.4.0
+attrs==23.1.0
+loguru==0.7.2
+numpy==1.26.3
+pygame-ce==2.4.0
+toml==0.10.2
 .
