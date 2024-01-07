@@ -119,7 +119,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
             self.surface.blit(value_surface, value_rect)
         else:
             text_surface = self.font.render(
-                f"{text}:{value}", True, CONFIG.colors.fg_sidebar
+                f"{text}: {value}", True, CONFIG.colors.fg_sidebar
             )
             text_rect = text_surface.get_rect(center=pos)
             self.surface.blit(text_surface, text_rect)
