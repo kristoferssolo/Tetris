@@ -1,7 +1,5 @@
 from typing import NamedTuple, Union
 
-from .enum import Direction
-
 
 class Size(NamedTuple):
     width: int | float

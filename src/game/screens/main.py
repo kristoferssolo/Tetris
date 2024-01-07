@@ -11,6 +11,13 @@ from .game import Game
 
 
 class Main(BaseScreen, SceenElement, TextScreen):
+    """
+    Main class.
+
+    Args:
+        mode: The game mode to start with.
+    """
+
     def __init__(self, mode: GameMode) -> None:
         logger.info("Initializing the game")
         self._initialize_pygame()
@@ -29,9 +36,11 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self._draw_text()
 
     def update(self) -> None:
+        """Update the display."""
         pygame.display.update()
 
     def handle_events(self) -> None:
+        """Handle pygame events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit()
@@ -47,10 +56,12 @@ class Main(BaseScreen, SceenElement, TextScreen):
                     button.on_hover(event)
 
     def run(self) -> None:
+        """Run the game loop continuously."""
         while True:
             self.run_game_loop()
 
     def run_game_loop(self) -> None:
+        """Run a single iteration of the game loop."""
         if not self.game:
             self.draw()
 
@@ -62,17 +73,19 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self.update()
 
     def exit(self) -> None:
-        """Exit the game."""
+        """Exit."""
         logger.info("Exiting the game")
         pygame.quit()
         sys.exit()
 
     def play(self) -> "Main":
+        """Start a the game."""
         self._draw_background()
         self.game = Game(self.game_mode, self.settings)
         return self
 
     def _set_buttons(self) -> None:
+        """Initialize and set up buttons."""
         self.buttons: list[Button] = [
             Button("Play", self.play),
             Button("AI", None),
@@ -86,12 +99,14 @@ class Main(BaseScreen, SceenElement, TextScreen):
         pygame.display.set_caption(CONFIG.window.title)
 
     def _draw_background(self) -> None:
+        """Draw the background on the display surface."""
         self.display_surface.fill(CONFIG.colors.bg)
 
     def _draw_border(self) -> None:
-        pass
+        """Draw a border (not implemented)."""
 
     def _initialize_surface(self) -> None:
+        """Initialize the display surface."""
         self.display_surface = pygame.display.set_mode(CONFIG.window.size)
 
     def _initialize_rect(self) -> None:
@@ -99,7 +114,7 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self.rect = self.display_surface.get_rect(topright=(0, 0))
 
     def _update_display_surface(self) -> None:
-        """Do nothing. Not needed in this class."""
+        """Update display surface (not implemented)."""
 
     def _initialize_increment_height(self) -> None:
         """Initialize the increment height for positioning text elements/buttons."""

@@ -8,7 +8,7 @@ from utils import CONFIG, Direction, Figure, GameMode, Rotation
 from game.sprites import Block, Tetromino
 from game.timer import Timer, Timers
 
-from .base import BaseScreen, SceenElement
+from .base import BaseScreen
 
 
 class Tetris(BaseScreen):
@@ -18,12 +18,15 @@ class Tetris(BaseScreen):
     Args:
         get_next_figure: A function to get the next figure.
         update_score: A function to update the score.
+        mode: The game mode to start with.
 
     Attributes:
         surface: Surface representing the game.
         dispaly_surface: Surface representing the display.
         rect: Rect representing the game surface.
         sprites: Sprite group for managing blocks.
+        settings: The game settings.
+        game_mode: The game mode.
         get_next_figure: A function to get the next figure.
         update_score: A function to update the score.
         grid_surface: Surface representing the grid.

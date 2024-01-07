@@ -1,7 +1,5 @@
 from abc import ABC, ABCMeta
 
-from attrs import define
-
 
 class Color(ABC, metaclass=ABCMeta):
     bg: str

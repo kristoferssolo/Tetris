@@ -1,10 +1,8 @@
 import random
 from enum import Enum
-from pathlib import Path
 from typing import NamedTuple
 
 import pygame
-from attr import define
 from pygame import Vector2 as Vec2
 
 from .colors import TokyoNightNight

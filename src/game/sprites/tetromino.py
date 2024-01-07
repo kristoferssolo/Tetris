@@ -2,8 +2,7 @@ from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
-from loguru import logger
-from utils import CONFIG, Direction, Figure, Rotation, Size
+from utils import CONFIG, Direction, Figure, Rotation
 
 from .block import Block
 

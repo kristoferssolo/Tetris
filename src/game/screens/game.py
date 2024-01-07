@@ -1,10 +1,7 @@
 from typing import Any
 
 import pygame
-from loguru import logger
 from utils import CONFIG, Figure, GameMode
-
-from game.sprites import Tetromino
 
 from .base import BaseScreen
 from .preview import Preview
@@ -16,7 +13,12 @@ class Game(BaseScreen):
     """
     Game class.
 
+    Args:
+        mode: The game mode to start with.
+
     Attributes:
+        game_mode: The game mode.
+        settings: The game settings.
         display_surface: Pygame display surface.
         clock: Pygame clock.
         music: Pygame music.
@@ -30,7 +32,6 @@ class Game(BaseScreen):
     def __init__(self, game_mode: GameMode, settings: dict[str, Any]) -> None:
         self.game_mode = game_mode
         self.settings = settings
-        self.paused = False
         self._initialize_game_components()
         self._start_background_music()
 

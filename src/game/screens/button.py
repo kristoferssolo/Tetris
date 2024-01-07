@@ -37,7 +37,7 @@ class Button(BaseButton, BaseScreen, SceenElement, TextScreen):
         pass
 
     def update(self) -> None:
-        """Update the button."""
+        pass
 
     def draw(self, surface: pygame.Surface, pos: tuple[float, float]) -> None:
         """Draw the button on the button surface."""
