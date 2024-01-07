@@ -13,7 +13,7 @@ from .game import Game
 
 class Main(BaseScreen, SceenElement, TextScreen):
     def __init__(self, mode: GameMode) -> None:
-        log.info("Initializing the game")
+        # log.info("Initializing the game")
         self._initialize_pygame()
         self._initialize_surface()
         self._initialize_rect()
@@ -61,7 +61,7 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def exit(self) -> None:
         """Exit the game."""
-        log.info("Exiting the game")
+        # log.info("Exiting the game")
         pygame.quit()
         sys.exit()
 

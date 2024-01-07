@@ -23,7 +23,7 @@ class Game(BaseScreen):
         game: Game object.
         score: Score object.
         preview: Preview object.
-        next_figures: List of upcoming figures.
+        next_figure: List of upcoming figures.
         music: Music that plays in the background.
     """
 

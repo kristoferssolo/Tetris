@@ -150,8 +150,8 @@ class Tetris(BaseScreen):
         self._check_finished_rows()
 
         self.game_over: bool = self._check_game_over()
-        if self.game_over:
-            self.restart()
+        # if self.game_over:
+        #     self.restart()
 
         self.tetromino = Tetromino(
             self.sprites,
@@ -171,13 +171,13 @@ class Tetris(BaseScreen):
         """
         for block in self.tetromino.blocks:
             if block.pos.y <= 0:
-                log.info("Game over!")
+                # log.info("Game over!")
                 return True
         return False
 
     def restart(self) -> None:
         """Restart the game."""
-        log.info("Restarting the game")
+        # log.info("Restarting the game")
         self._reset_game_state()
         self._initialize_field_and_tetromino()
         self.game_over = False
