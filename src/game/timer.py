@@ -1,4 +1,4 @@
-from typing import Callable, NamedTuple, Optional
+from typing import Any, Callable, NamedTuple, Optional
 
 import pygame
 from attrs import define, field
@@ -24,7 +24,7 @@ class Timer:
 
     duration: float = field(converter=float)
     repeated: bool = field(default=False)
-    func: Optional[Callable[[], None]] = field(default=None)
+    func: Optional[Callable[[], Any]] = field(default=None)
     start_time: int = 0
     active: bool = False
 
