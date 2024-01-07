@@ -4,6 +4,8 @@ import numpy as np
 import pygame
 from utils import CONFIG, Rotation, Size
 
+from game.log import log
+
 
 class Block(pygame.sprite.Sprite):
     """
@@ -27,8 +29,10 @@ class Block(pygame.sprite.Sprite):
         group: pygame.sprite.Group,
         pos: pygame.Vector2,
         color: str,
+        phantom: bool = False,
     ) -> None:
         super().__init__(group)
+        self.phantom = phantom
         self._initialize_image(color)
         self._initialize_positions(pos)
 
@@ -91,6 +95,8 @@ class Block(pygame.sprite.Sprite):
             color: Color of the block.
         """
         self.image = pygame.Surface(CONFIG.game.cell)
+        if self.phantom:
+            self.image.set_alpha(75)
         self.image.fill(color)
 
     def _initialize_positions(self, pos: pygame.Vector2) -> None:

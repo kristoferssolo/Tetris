@@ -22,8 +22,8 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self._set_buttons()
         self._initialize_increment_height()
         self.settings = read_settings()
-        self.game_mode = mode
         self.game: Optional[Game] = None
+        self.game_mode = mode
         self.settings_screen: Optional[Settings] = None
 
     def draw(self) -> None:

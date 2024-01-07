@@ -31,15 +31,17 @@ class Tetromino:
     def __init__(
         self,
         group: pygame.sprite.Group,
-        create_new: Callable[[Optional[Figure]], "Tetromino"],
+        create_new: Optional[Callable[[Optional[Figure]], "Tetromino"]],
         field: np.ndarray[Optional[Block], Any],
         shape: Optional[Figure] = None,
+        phantom: bool = False,
     ) -> None:
         self.figure: Figure = self._generate_figure(shape)
         self.block_positions: list[pygame.Vector2] = self.figure.value.shape
         self.color: str = self.figure.value.color
         self.create_new = create_new
         self.field = field
+        self.phantom = phantom
         self.blocks = self._initialize_blocks(group)
 
     def move_down(self) -> bool:
@@ -59,7 +61,8 @@ class Tetromino:
         for block in self.blocks:
             self.field[int(block.pos.y), int(block.pos.x)] = block
 
-        self.create_new(None)
+        if self.create_new:
+            self.create_new(None)
 
         return False
 
@@ -102,7 +105,7 @@ class Tetromino:
             ]
 
             if self._are_new_positions_valid(new_positions):
-                self._update_block_positions(new_positions)
+                self.update_block_positions(new_positions)
                 return True
 
             if any(pos.x < 0 for pos in new_positions):
@@ -111,10 +114,6 @@ class Tetromino:
                 self.move_horizontal(Direction.LEFT)
 
         return False
-
-    def next_rotation(self) -> "Tetromino":
-        self.rotate()
-        return self
 
     def drop(self) -> bool:
         """
@@ -129,6 +128,10 @@ class Tetromino:
                 block.pos.y += 1
 
         return True
+
+    def kill(self) -> None:
+        for block in self.blocks:
+            block.kill()
 
     def check_collision(self, direction: Direction) -> bool:
         """
@@ -181,7 +184,7 @@ class Tetromino:
             for block in self.blocks
         )
 
-    def _update_block_positions(self, new_positions: list[pygame.Vector2]) -> None:
+    def update_block_positions(self, new_positions: list[pygame.Vector2]) -> None:
         """
         Updates the positions of Tetromino blocks.
 
@@ -219,7 +222,7 @@ class Tetromino:
             List of initialized blocks.
         """
         return [
-            Block(group=group, pos=pos, color=self.color)
+            Block(group=group, pos=pos, color=self.color, phantom=self.phantom)
             for pos in self.block_positions
         ]
 

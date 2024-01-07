@@ -59,6 +59,7 @@ class Tetris(BaseScreen):
         self._initialize_grid_surface()
         self._initialize_field_and_tetromino()
         self.tetromino: Tetromino
+        self.phantom_tetromino: Tetromino
 
         self._initialize_game_state()
         self._initialize_timers()
@@ -76,12 +77,14 @@ class Tetris(BaseScreen):
         self.update()
         self._draw_background()
         self.sprites.draw(self.surface)
+        self.phantom_sprites.draw(self.surface)
         self._draw_border()
         self._draw_grid()
 
     def update(self) -> None:
         self._update_display_surface()
         self.sprites.update()
+        self.phantom_sprites.update()
 
     def handle_events(self) -> None:
         """Handle player input events."""
@@ -108,7 +111,9 @@ class Tetris(BaseScreen):
         Returns:
             True if the movement was successful, False otherwise.
         """
-        return self.tetromino.move_horizontal(Direction.LEFT)
+        moved = self.tetromino.move_horizontal(Direction.LEFT)
+        self._update_phantom_position()
+        return moved
 
     def move_right(self) -> bool:
         """
@@ -117,7 +122,10 @@ class Tetris(BaseScreen):
         Returns:
             True if the movement was successful, False otherwise.
         """
-        return self.tetromino.move_horizontal(Direction.RIGHT)
+
+        moved = self.tetromino.move_horizontal(Direction.RIGHT)
+        self._update_phantom_position()
+        return moved
 
     def rotate(self) -> bool:
         """
@@ -126,7 +134,9 @@ class Tetris(BaseScreen):
         Returns:
             True if the rotation was successful, False otherwise.
         """
-        return self.tetromino.rotate()
+        rotated = self.tetromino.rotate()
+        self._update_phantom_position()
+        return rotated
 
     def rotate_reverse(self) -> bool:
         """
@@ -135,7 +145,9 @@ class Tetris(BaseScreen):
         Returns:
             True if the rotation was successful, False otherwise.
         """
-        return self.tetromino.rotate(Rotation.COUNTER_CLOCKWISE)
+        rotated = self.tetromino.rotate(Rotation.COUNTER_CLOCKWISE)
+        self._update_phantom_position()
+        return rotated
 
     def drop(self) -> bool:
         """
@@ -150,6 +162,7 @@ class Tetris(BaseScreen):
         """Create a new tetromino and perform necessary actions."""
         self._play_landing_sound()
         self._check_finished_rows()
+        self.phantom_tetromino.kill()
 
         self.game_over: bool = self._check_game_over()
         if self.game_over:
@@ -161,6 +174,15 @@ class Tetris(BaseScreen):
             self.field,
             shape or self.get_next_figure(),
         )
+
+        self.phantom_tetromino = Tetromino(
+            self.phantom_sprites,
+            None,
+            self.field,
+            self.tetromino.figure,
+            True,
+        )
+        self.phantom_tetromino.drop()
 
         return self.tetromino
 
@@ -281,6 +303,7 @@ class Tetris(BaseScreen):
     def _draw_components(self) -> None:
         """Draw additional components like borders and grid."""
         self.sprites.draw(self.surface)
+        self.phantom_sprites.draw(self.surface)
         self._draw_border()
         self._draw_grid()
 
@@ -296,6 +319,7 @@ class Tetris(BaseScreen):
     def _initialize_sprites(self) -> None:
         """Initialize the game sprites."""
         self.sprites: pygame.sprite.Group[Block] = pygame.sprite.Group()
+        self.phantom_sprites: pygame.sprite.Group[Block] = pygame.sprite.Group()
 
     def _initialize_grid_surface(self) -> None:
         """Initialize the grid surface."""
@@ -313,6 +337,15 @@ class Tetris(BaseScreen):
             self.create_new_tetromino,
             self.field,
         )
+
+        self.phantom_tetromino = Tetromino(
+            self.phantom_sprites,
+            None,
+            self.field,
+            self.tetromino.figure,
+            True,
+        )
+        self.phantom_tetromino.drop()
 
     def _initialize_timers(self) -> None:
         """Initialize game timers."""
@@ -355,6 +388,11 @@ class Tetris(BaseScreen):
     def _update_display_surface(self) -> None:
         """Update the display surface."""
         self.dispaly_surface.blit(self.surface, CONFIG.game.pos)
+
+    def _update_phantom_position(self) -> None:
+        new_positions = [block.pos.copy() for block in self.tetromino.blocks]
+        self.phantom_tetromino.update_block_positions(new_positions)
+        self.phantom_tetromino.drop()
 
     def _draw_background(self) -> None:
         """Fill the game surface with background color."""
@@ -445,6 +483,7 @@ class Tetris(BaseScreen):
     def _reset_game_state(self) -> None:
         """Reset the game state."""
         self.sprites.empty()
+        self.phantom_sprites.empty()
         self._initialize_field_and_tetromino()
         self._initialize_game_state()
         self.update_score(self.lines, self.score, self.level)
