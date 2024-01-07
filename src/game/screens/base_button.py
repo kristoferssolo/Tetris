@@ -14,7 +14,7 @@ class BaseButton(ABC, metaclass=ABCMeta):
         self.text = text
 
     @abstractmethod
-    def on_click(self) -> None:
+    def on_click(self, event: pygame.Event) -> None:
         """Handle click event."""
 
     @abstractmethod
