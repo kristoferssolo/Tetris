@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import argparse
+import sys
 
 from loguru import logger
 from utils import BASE_PATH, CONFIG, GameMode
@@ -27,26 +28,44 @@ parser.add_argument(
     help="Run app with GUI [Default]",
 )
 
-logger.add(
-    BASE_PATH / ".logs" / "teris.log",
-    format="{time} | {level} | {message}",
-    level="WARNING",
-    rotation="10 MB",
-    compression="zip",
-)
+
+def setup_logger(level: str = "warning") -> None:
+    logger.remove()
+    logger.add(
+        sink=sys.stdout,
+        format="<green>{time}</green> | <level>{level}</level> | <level>{message}</level>",
+        level=level.upper(),
+        colorize=True,
+    )
+
+    logger.add(
+        BASE_PATH / ".logs" / "teris.log",
+        format="{time} | {level} | {message}",
+        level="DEBUG" if level.upper() == "DEBUG" else "INFO",
+        rotation="10 MB",
+        compression="zip",
+    )
 
 
 @logger.catch
-def main(args: argparse.ArgumentParser) -> None:
-    if args.debug:
-        CONFIG.log_level = "debug"
-    elif args.verbose:
-        CONFIG.log_level = "info"
-
+def run() -> None:
     import game
 
-    game.log.debug("Running the game")
+    logger.debug("Launching the game")
     game.Main(GameMode.PLAYER).run()
+
+
+def main(args: argparse.ArgumentParser) -> None:
+    if args.debug:
+        level = "debug"
+    elif args.verbose:
+        level = "info"
+    else:
+        level = "warning"
+
+    setup_logger(level)
+
+    run()
 
 
 if __name__ == "__main__":

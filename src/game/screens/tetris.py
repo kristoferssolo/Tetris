@@ -2,9 +2,9 @@ from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
+from loguru import logger
 from utils import CONFIG, Direction, Figure, GameMode, Rotation
 
-from game.log import log
 from game.sprites import Block, Tetromino
 from game.timer import Timer, Timers
 
@@ -195,13 +195,13 @@ class Tetris(BaseScreen):
         """
         for block in self.tetromino.blocks:
             if block.pos.y <= 0:
-                log.info("Game over!")
+                logger.info("Game over!")
                 return True
         return False
 
     def restart(self) -> None:
         """Restart the game."""
-        log.info("Restarting the game")
+        logger.info("Restarting the game")
         self._reset_game_state()
         self._initialize_field_and_tetromino()
         self.game_over = False

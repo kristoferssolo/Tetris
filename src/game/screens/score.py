@@ -1,7 +1,6 @@
 import pygame
+from loguru import logger
 from utils import CONFIG, GameMode, Size
-
-from game.log import log
 
 from .base import BaseScreen, SceenElement, TextScreen
 

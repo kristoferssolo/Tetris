@@ -1,8 +1,10 @@
 from attr import define
 
+from .base import Color
+
 
 @define
-class TokyoNightMoon:
+class TokyoNightMoon(Color):
     bg = "#222436"
     bg_dark = "#1e2030"
     bg_float = "#1e2030"

@@ -2,9 +2,8 @@ from typing import Any, Optional
 
 import numpy as np
 import pygame
+from loguru import logger
 from utils import CONFIG, Rotation, Size
-
-from game.log import log
 
 
 class Block(pygame.sprite.Sprite):

@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 import toml
+from loguru import logger
 
 from .path import BASE_PATH
 
@@ -25,10 +26,10 @@ def read_settings(
     """
     try:
         with open(file_path, "r") as file:
-            return toml.load(file)
+            return dict(toml.load(file))
     except FileNotFoundError:
-        log.error(f"Error: The file '{file_path}' does not exist.")
+        logger.error(f"Error: The file '{file_path}' does not exist.")
         return {}
     except toml.TomlDecodeError as e:
-        log.error(f"rror decoding TOML file: {e}")
+        logger.error(f"rror decoding TOML file: {e}")
         return {}

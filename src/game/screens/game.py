@@ -1,9 +1,9 @@
 from typing import Any
 
 import pygame
+from loguru import logger
 from utils import CONFIG, Figure, GameMode
 
-from game.log import log
 from game.sprites import Tetromino
 
 from .base import BaseScreen
