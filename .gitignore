@@ -161,4 +161,4 @@ cython_debug/
 debug
 .logs/
 checkpoints
-./assets/highscore
+assets/highscore
