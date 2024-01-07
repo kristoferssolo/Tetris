@@ -1,15 +1,46 @@
 import pygame
-from loguru import logger
-from utils import CONFIG, GameMode, Size
+from utils import CONFIG, GameMode
 
 from .base import BaseScreen, SceenElement, TextScreen
+
+
+def save_score(score: int) -> None:
+    """
+    Save the score to the highscore file.
+
+    Args:
+        score: The score to be saved.
+    """
+    with open(CONFIG.game.highscore, "w") as file:
+        file.write(str(score))
+
+
+def read_score() -> int:
+    """
+    Read the score from the highscore file.
+
+    Returns:
+        The score read from the file.
+    """
+    try:
+        with open(CONFIG.game.highscore, "r") as file:
+            return int(file.read())
+    except FileNotFoundError:
+        return 0
+    except ValueError:
+        return 0
 
 
 class Score(BaseScreen, SceenElement, TextScreen):
     """
     Class representing the score on the sidebar.
 
+    Args:
+        game_mode: The game mode.
+
     Attributes:
+        game_mode: The game mode.
+        highscore: The highscore.
         surface: Pygame surface representing the score.
         display_surface: Pygame display surface.
         rect: Pygame rectangle representing the score.
@@ -20,6 +51,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
 
     def __init__(self, game_mode: GameMode) -> None:
         self.game_mode = game_mode
+        self.highscore: int = read_score()
         self._initialize_surface()
         self._initialize_rect()
         self._initialize_font()
@@ -39,11 +71,16 @@ class Score(BaseScreen, SceenElement, TextScreen):
             score (int): Current game score.
             level (int): Current game level.
         """
+
+        if score > self.highscore:
+            self.highscore = score
+            save_score(score)
+
         self.text: list[tuple[str, int]] = [
             ("Score", score),
             ("Level", level),
             ("Lines", lines),
-            ("High Score", CONFIG.game.highscore),
+            ("High Score", self.highscore),
         ]
         if self.game_mode in (GameMode.AI_PLAYING, GameMode.AI_TRAINING):
             self.text.append(("Generations", 0))

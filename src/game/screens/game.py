@@ -51,7 +51,7 @@ class Game(BaseScreen):
         self.preview.run()
 
         self.draw()
-        self.clock.tick(CONFIG.fps)
+        self.clock.tick(CONFIG.game.fps)
 
     def mute(self) -> None:
         """Mute the game."""

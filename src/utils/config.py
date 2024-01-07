@@ -28,7 +28,8 @@ class Game:
     rotation_delay: int = 200
     drop_delay: int = 200
     score: dict[int, int] = {1: 40, 2: 100, 3: 300, 4: 1200}
-    highscore: int = 1_000_000  # TODO: read from file
+    highscore: Path = BASE_PATH / "assets" / "highscore"
+    fps: int = 60
 
 
 @define
@@ -68,23 +69,6 @@ class Music:
 
 
 @define
-class Checkpoint:
-    generation_interval: int = 10
-    time_interval: float = 900
-    filename_prefix: str = str(BASE_PATH / "checkpoints" / "neat-checkpoint-")
-
-
-@define
-class AI:
-    generations: int = 200
-    parallels: int = 1
-    winner_path: Path = BASE_PATH / "winner"
-    plot_path: Path = BASE_PATH / "plots"
-    config_path: Path = BASE_PATH / "config"
-    checkpoint: Checkpoint = Checkpoint()
-
-
-@define
 class Config:
     game: Game = Game()
     sidebar: SideBar = SideBar()
@@ -94,9 +78,6 @@ class Config:
     colors: Color = COLOR_DICT.get(
         read_settings()["General"]["colorscheme"], TokyoNightNight
     )()
-
-    ai = AI()
-    fps: int = 60
 
 
 CONFIG = Config()
