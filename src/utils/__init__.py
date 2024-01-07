@@ -3,6 +3,7 @@ from .enum import Direction, GameMode, Rotation
 from .figure import Figure, FigureConfig
 from .log import log
 from .path import BASE_PATH
+from .settings import read_settings, save_settings
 from .tuples import BestMove, Size
 from .weights import Weights
 
@@ -18,4 +19,6 @@ __all__ = [
     "GameMode",
     "Weights",
     "BestMove",
+    "read_settings",
+    "save_settings",
 ]

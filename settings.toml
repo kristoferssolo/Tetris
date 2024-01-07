@@ -1,0 +1,21 @@
+[keybinds]
+rotate_colockwise = "up arrow"
+hard_drop = "space"
+hold = "shift+c"
+rotate_counter_colockwise = "ctrl+z"
+pause = "esc+F1"
+move_left = "left arrow"
+move_right = "right arrow"
+move_down = "down arrow"
+
+[numpad]
+hold = "numpad 0"
+hard_drop = "numpad 5"
+move_left = "numpad 4"
+move_right = "numpad 6"
+soft_drop = "numpad 2"
+rotate_colockwise_1 = "numpad 1"
+rotate_colockwise_2 = "numpad 5"
+rotate_colockwise_3 = "numpad 9"
+rotate_counter_colockwise_1 = "numpad 3"
+rotate_counter_colockwise_2 = "numpad 7"

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from attr import define, field
+from attr import define
 from pygame import Vector2 as Vec2
 
 from .colors import TokyoNightNight
