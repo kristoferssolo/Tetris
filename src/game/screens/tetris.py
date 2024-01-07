@@ -2,7 +2,7 @@ from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
-from utils import CONFIG, PYGAME_EVENT, Direction, Figure, GameMode, Rotation
+from utils import CONFIG, Direction, Figure, GameMode, Rotation
 
 from game.log import log
 from game.sprites import Block, Tetromino
@@ -366,10 +366,14 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        right_keys = [PYGAME_EVENT[key] for key in self.settings["Movement"]["right"]]
+        right_keys = [
+            pygame.key.key_code(key) for key in self.settings["Movement"]["right"]
+        ]
         right_key_pressed = any(keys[key] for key in right_keys)
 
-        left_keys = [PYGAME_EVENT[key] for key in self.settings["Movement"]["left"]]
+        left_keys = [
+            pygame.key.key_code(key) for key in self.settings["Movement"]["left"]
+        ]
         left_key_pressed = any(keys[key] for key in left_keys)
 
         if not self.timers.horizontal.active:
@@ -386,10 +390,12 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        cw_keys = [PYGAME_EVENT[key] for key in self.settings["Rotation"]["cw"]]
+        cw_keys = [pygame.key.key_code(key) for key in self.settings["Rotation"]["cw"]]
         cw_key_pressed = any(keys[key] for key in cw_keys)
 
-        ccw_keys = [PYGAME_EVENT[key] for key in self.settings["Rotation"]["ccw"]]
+        ccw_keys = [
+            pygame.key.key_code(key) for key in self.settings["Rotation"]["ccw"]
+        ]
         ccw_key_pressed = any(keys[key] for key in ccw_keys)
 
         if not self.timers.rotation.active:
@@ -407,7 +413,9 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        down_keys = [PYGAME_EVENT[key] for key in self.settings["Movement"]["down"]]
+        down_keys = [
+            pygame.key.key_code(key) for key in self.settings["Movement"]["down"]
+        ]
         down_key_pressed = any(keys[key] for key in down_keys)
         if not self.down_pressed and down_key_pressed:
             self.down_pressed = True
@@ -423,7 +431,9 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        drop_keys = [PYGAME_EVENT[key] for key in self.settings["Action"]["drop"]]
+        drop_keys = [
+            pygame.key.key_code(key) for key in self.settings["Action"]["drop"]
+        ]
         drop_key_pressed = any(keys[key] for key in drop_keys)
 
         if not self.timers.drop.active and drop_key_pressed:

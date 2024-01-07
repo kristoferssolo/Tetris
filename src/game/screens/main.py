@@ -2,13 +2,14 @@ import sys
 from typing import Optional
 
 import pygame
-from utils import CONFIG, PYGAME_EVENT, GameMode, read_settings
+from utils import CONFIG, GameMode, read_settings
 
 from game.log import log
 
 from .base import BaseScreen, SceenElement, TextScreen
 from .button import Button
 from .game import Game
+from .settings import Settings
 
 
 class Main(BaseScreen, SceenElement, TextScreen):
@@ -23,6 +24,7 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self.settings = read_settings()
         self.game_mode = mode
         self.game: Optional[Game] = None
+        self.settings_screen: Optional[Settings] = None
 
     def draw(self) -> None:
         """Update the display."""
@@ -38,7 +40,7 @@ class Main(BaseScreen, SceenElement, TextScreen):
                 self.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key in [
-                    PYGAME_EVENT[key] for key in self.settings["General"]["quit"]
+                    pygame.key.key_code(key) for key in self.settings["General"]["quit"]
                 ]:
                     self.exit()
 
@@ -73,11 +75,16 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self.game = Game(self.game_mode, self.settings)
         return self
 
+    def open_settings(self) -> "Main":
+        self._draw_background()
+        self.settings_screen = Settings()
+        return self
+
     def _set_buttons(self) -> None:
         self.buttons: list[Button] = [
             Button("Play", self.play),
             Button("AI", None),
-            Button("Settings", None),
+            Button("Settings", self.open_settings),
             Button("Quit", self.exit),
         ]
 

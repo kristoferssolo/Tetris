@@ -3,17 +3,23 @@ pause = ["esc", "F1"]
 quit = ["q"]
 
 [Movement]
-left = ["left", "kp4"]
-right = ["right", "kp6"]
-down = ["down", "kp2"]
+left = ["left", "keypad 4"]
+right = ["right", "keypad 6"]
+down = ["down", "keypad 2"]
 
 [Rotation]
-cw = ["x", "up", "kp1", "kp5", "kp9"] # clockwise
-ccw = ["ctrl", "z", "kp3", "kp7"]     # counter-clockwise
+cw = ["x", "up", "keypad 1", "keypad 5", "keypad 9"] # clockwise
+ccw = [
+  "left ctrl",
+  "right ctrl",
+  "z",
+  "keypad 3",
+  "keypad 7",
+] # counter-clockwise
 
 [Action]
-hold = ["shift", "c", "kp0"]
-drop = ["space", "kp5"]
+hold = ["shift", "c", "keypad 0"]
+drop = ["space", "keypad 5"]
 
 [Volume.Music]
 enabled = true

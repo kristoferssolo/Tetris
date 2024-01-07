@@ -1,6 +1,5 @@
 from .config import CONFIG
 from .enum import Direction, GameMode, Rotation
-from .events import PYGAME_EVENT
 from .figure import Figure, FigureConfig
 from .log import log
 from .path import BASE_PATH
@@ -19,5 +18,4 @@ __all__ = [
     "GameMode",
     "read_settings",
     "save_settings",
-    "PYGAME_EVENT",
 ]

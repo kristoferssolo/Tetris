@@ -40,7 +40,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
             score (int): Current game score.
             level (int): Current game level.
         """
-        self.text: list[tuple[str, int], ...] = [
+        self.text: list[tuple[str, int]] = [
             ("Score", score),
             ("Level", level),
             ("Lines", lines),
