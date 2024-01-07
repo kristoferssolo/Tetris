@@ -3,12 +3,10 @@ from typing import Any, Optional
 
 import toml
 
-from .config import CONFIG, Config
-from .log import log
 from .path import BASE_PATH
 
 
-def save_settings(settings: Config, file_path: Path) -> None:
+def save_settings(settings: dict[str, Any], file_path: Path) -> None:
     with open(file_path, "w") as file:
         toml.dump(settings, file)
 

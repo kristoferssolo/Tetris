@@ -3,8 +3,9 @@ from pathlib import Path
 from attr import define
 from pygame import Vector2 as Vec2
 
-from .colors import TokyoNightNight
+from .colors import COLOR_DICT
 from .path import BASE_PATH
+from .settings import read_settings
 from .tuples import Size
 
 PADDING = 20
@@ -91,7 +92,8 @@ class Config:
     window: Window = Window()
     font: Font = Font()
     music: Music = Music()
-    colors = TokyoNightNight()
+    colors = COLOR_DICT[read_settings()["General"]["colorscheme"]]()
+
     ai = AI()
     fps: int = 60
 
