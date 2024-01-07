@@ -1,4 +1,4 @@
-import sys
+from typing import Any
 
 import pygame
 from utils import CONFIG, Figure, GameMode
@@ -27,8 +27,9 @@ class Game(BaseScreen):
         music: Music that plays in the background.
     """
 
-    def __init__(self, game_mode: GameMode) -> None:
+    def __init__(self, game_mode: GameMode, settings: dict[str, Any]) -> None:
         self.game_mode = game_mode
+        self.settings = settings
         self._initialize_game_components()
         self._start_background_music()
 
@@ -60,7 +61,9 @@ class Game(BaseScreen):
         self.clock = pygame.time.Clock()
         self.next_figure: Figure = self._generate_next_figure()
 
-        self.tetris = Tetris(self._get_next_figure, self._update_score, self.game_mode)
+        self.tetris = Tetris(
+            self._get_next_figure, self._update_score, self.game_mode, self.settings
+        )
         self.score = Score(self.game_mode)
         self.preview = Preview()
 

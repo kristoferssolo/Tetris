@@ -2,7 +2,7 @@ from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
-from utils import CONFIG, Direction, Figure, GameMode, Rotation
+from utils import CONFIG, PYGAME_EVENT, Direction, Figure, GameMode, Rotation
 
 from game.log import log
 from game.sprites import Block, Tetromino
@@ -45,10 +45,12 @@ class Tetris(BaseScreen):
         get_next_figure: Callable[[], Figure],
         update_score: Callable[[int, int, int], None],
         game_mode: GameMode,
+        settings: dict[str, Any],
     ) -> None:
         self._initialize_surface()
         self._initialize_rect()
         self._initialize_sprites()
+        self.settings = settings
 
         self.get_next_figure = get_next_figure
         self.update_score = update_score
@@ -150,8 +152,8 @@ class Tetris(BaseScreen):
         self._check_finished_rows()
 
         self.game_over: bool = self._check_game_over()
-        # if self.game_over:
-        #     self.restart()
+        if self.game_over:
+            self.restart()
 
         self.tetromino = Tetromino(
             self.sprites,
@@ -171,13 +173,13 @@ class Tetris(BaseScreen):
         """
         for block in self.tetromino.blocks:
             if block.pos.y <= 0:
-                # log.info("Game over!")
+                log.info("Game over!")
                 return True
         return False
 
     def restart(self) -> None:
         """Restart the game."""
-        # log.info("Restarting the game")
+        log.info("Restarting the game")
         self._reset_game_state()
         self._initialize_field_and_tetromino()
         self.game_over = False
@@ -356,17 +358,19 @@ class Tetris(BaseScreen):
         """
         Handle movement keys.
 
-        Move right [K_d, K_l].
-        Move left [K_a, K_h].
+        See `settings.toml` for the default key bindings.
         """
-        right_keys = keys[pygame.K_d] or keys[pygame.K_l]
-        left_keys = keys[pygame.K_a] or keys[pygame.K_h]
+        right_keys = [PYGAME_EVENT[key] for key in self.settings["Movement"]["right"]]
+        right_key_pressed = any(keys[key] for key in right_keys)
+
+        left_keys = [PYGAME_EVENT[key] for key in self.settings["Movement"]["left"]]
+        left_key_pressed = any(keys[key] for key in left_keys)
 
         if not self.timers.horizontal.active:
-            if left_keys:
+            if left_key_pressed:
                 self.move_left()
                 self.timers.horizontal.activate()
-            elif right_keys:
+            elif right_key_pressed:
                 self.move_right()
                 self.timers.horizontal.activate()
 
@@ -374,46 +378,49 @@ class Tetris(BaseScreen):
         """
         Handle rotation keys.
 
-        Rotation clockwise [K_RIGHT, K_UP, K_r, K_w, K_k].
-        Rotation counter-clockwise [K_LEFT, K_e, K_i].
+        See `settings.toml` for the default key bindings.
         """
-        clockwise_keys = (
-            keys[pygame.K_r]
-            or keys[pygame.K_UP]
-            or keys[pygame.K_w]
-            or keys[pygame.K_k]
-            or keys[pygame.K_RIGHT]
-        )
+        cw_keys = [PYGAME_EVENT[key] for key in self.settings["Rotation"]["cw"]]
+        cw_key_pressed = any(keys[key] for key in cw_keys)
 
-        counter_clockwise_keys = (
-            keys[pygame.K_e] or keys[pygame.K_i] or keys[pygame.K_LEFT]
-        )
+        ccw_keys = [PYGAME_EVENT[key] for key in self.settings["Rotation"]["ccw"]]
+        ccw_key_pressed = any(keys[key] for key in ccw_keys)
 
         if not self.timers.rotation.active:
-            if clockwise_keys:
+            if cw_key_pressed:
                 self.rotate()
                 self.timers.rotation.activate()
 
-            if counter_clockwise_keys:
+            if ccw_key_pressed:
                 self.rotate_reverse()
                 self.timers.rotation.activate()
 
     def _handle_down_key(self, keys: pygame.key.ScancodeWrapper) -> None:
-        """Handle the down key [K_DOWN, K_s, K_j]."""
-        down_keys = keys[pygame.K_DOWN] or keys[pygame.K_s] or keys[pygame.K_j]
-        if not self.down_pressed and down_keys:
+        """
+        Handle the down key.
+
+        See `settings.toml` for the default key bindings.
+        """
+        down_keys = [PYGAME_EVENT[key] for key in self.settings["Movement"]["down"]]
+        down_key_pressed = any(keys[key] for key in down_keys)
+        if not self.down_pressed and down_key_pressed:
             self.down_pressed = True
             self.timers.vertical.duration = self.increased_block_speed
 
-        if self.down_pressed and not down_keys:
+        if self.down_pressed and not down_key_pressed:
             self.down_pressed = False
             self.timers.vertical.duration = self.initial_block_speed
 
     def _handle_drop_key(self, keys: pygame.key.ScancodeWrapper) -> None:
-        """Handle the drop key [K_SPACE]."""
-        drop_keys = keys[pygame.K_SPACE]
+        """
+        Handle the drop key.
 
-        if not self.timers.drop.active and drop_keys:
+        See `settings.toml` for the default key bindings.
+        """
+        drop_keys = [PYGAME_EVENT[key] for key in self.settings["Action"]["drop"]]
+        drop_key_pressed = any(keys[key] for key in drop_keys)
+
+        if not self.timers.drop.active and drop_key_pressed:
             self.drop()
             self.timers.drop.activate()
 

@@ -203,7 +203,7 @@ class Tetromino:
         """
         return all(
             0 <= pos.x < CONFIG.game.columns
-            and 0 <= pos.y < CONFIG.game.rows
+            and -2 <= pos.y < CONFIG.game.rows
             and not self.field[int(pos.y), int(pos.x)]
             for pos in new_positions
         )

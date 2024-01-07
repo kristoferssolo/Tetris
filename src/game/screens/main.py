@@ -2,7 +2,7 @@ import sys
 from typing import Optional
 
 import pygame
-from utils import CONFIG, GameMode
+from utils import CONFIG, PYGAME_EVENT, GameMode, read_settings
 
 from game.log import log
 
@@ -13,13 +13,14 @@ from .game import Game
 
 class Main(BaseScreen, SceenElement, TextScreen):
     def __init__(self, mode: GameMode) -> None:
-        # log.info("Initializing the game")
+        log.info("Initializing the game")
         self._initialize_pygame()
         self._initialize_surface()
         self._initialize_rect()
         self._initialize_font()
         self._set_buttons()
         self._initialize_increment_height()
+        self.settings = read_settings()
         self.game_mode = mode
         self.game: Optional[Game] = None
 
@@ -36,7 +37,9 @@ class Main(BaseScreen, SceenElement, TextScreen):
             if event.type == pygame.QUIT:
                 self.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
+                if event.key in [
+                    PYGAME_EVENT[key] for key in self.settings["General"]["quit"]
+                ]:
                     self.exit()
 
             if not self.game:
@@ -61,13 +64,13 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def exit(self) -> None:
         """Exit the game."""
-        # log.info("Exiting the game")
+        log.info("Exiting the game")
         pygame.quit()
         sys.exit()
 
     def play(self) -> "Main":
         self._draw_background()
-        self.game = Game(self.game_mode)
+        self.game = Game(self.game_mode, self.settings)
         return self
 
     def _set_buttons(self) -> None:

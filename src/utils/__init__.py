@@ -1,11 +1,11 @@
 from .config import CONFIG
 from .enum import Direction, GameMode, Rotation
+from .events import PYGAME_EVENT
 from .figure import Figure, FigureConfig
 from .log import log
 from .path import BASE_PATH
 from .settings import read_settings, save_settings
-from .tuples import BestMove, Size
-from .weights import Weights
+from .tuples import Size
 
 __all__ = [
     "BASE_PATH",
@@ -17,8 +17,7 @@ __all__ = [
     "Direction",
     "Rotation",
     "GameMode",
-    "Weights",
-    "BestMove",
     "read_settings",
     "save_settings",
+    "PYGAME_EVENT",
 ]

@@ -11,8 +11,3 @@ class Size(NamedTuple):
         if isinstance(other, Size):
             return Size(self.width - other.width, self.height - other.height)
         return Size(self.width - other, self.height - other)
-
-
-class BestMove(NamedTuple):
-    rotation: int
-    x: int
