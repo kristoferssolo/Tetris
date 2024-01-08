@@ -1,6 +1,5 @@
 import pygame
-from loguru import logger
-from utils import CONFIG, Figure, Size
+from utils import CONFIG, Figure
 
 from .base import BaseScreen, SceenElement
 
