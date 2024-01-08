@@ -1,19 +1,23 @@
 from abc import ABC, ABCMeta, abstractmethod
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
 class BaseScreen(ABC, metaclass=ABCMeta):
     """Base screen class."""
 
     @abstractmethod
-    def update(self, *args, **kwargs) -> None:
+    def update(self, *args: Any, **kwargs: Any) -> None:
         """Update the screen."""
 
     @abstractmethod
-    def draw(self, *args, **kwargs) -> None:
+    def draw(self, *args: Any, **kwargs: Any) -> None:
         """Draw the screen."""
 
     @abstractmethod
-    def run(self, *args, **kwargs) -> None:
+    def run(self, *args: Any, **kwargs: Any) -> None:
         """Run the screen."""
 
 
@@ -31,7 +35,7 @@ class SceenElement(ABC, metaclass=ABCMeta):
         """Initialize the surface."""
 
     @abstractmethod
-    def _initialize_rect(self, *args, **kwargs) -> None:
+    def _initialize_rect(self, *args: Any, **kwargs: Any) -> None:
         """Initialize the rectangle."""
 
     @abstractmethod
@@ -51,5 +55,5 @@ class TextScreen(ABC, metaclass=ABCMeta):
         """Draw the text on the surface."""
 
     @abstractmethod
-    def _display_text(self, *args, **kwargs) -> None:
+    def _display_text(self, *args: Any, **kwargs: Any) -> None:
         """Display the text."""

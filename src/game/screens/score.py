@@ -118,9 +118,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
 
             self.surface.blit(value_surface, value_rect)
         else:
-            text_surface = self.font.render(
-                f"{text}: {value}", True, CONFIG.colors.fg_sidebar
-            )
+            text_surface = self.font.render(f"{text}: {value}", True, CONFIG.colors.fg_sidebar)
             text_rect = text_surface.get_rect(center=pos)
             self.surface.blit(text_surface, text_rect)
 
@@ -148,9 +146,7 @@ class Score(BaseScreen, SceenElement, TextScreen):
 
     def _initialize_rect(self) -> None:
         """Initialize the score rectangle."""
-        self.rect = self.surface.get_rect(
-            bottomright=CONFIG.window.size - CONFIG.window.padding
-        )
+        self.rect = self.surface.get_rect(bottomright=CONFIG.window.size - CONFIG.window.padding)
 
     def _initialize_font(self) -> None:
         """Initialize the font used to display the score."""

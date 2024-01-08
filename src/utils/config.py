@@ -1,13 +1,18 @@
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from attr import define
-from pygame import Vector2 as Vec2
 
 from .colors import COLOR_DICT, TokyoNightNight
 from .colors.tokyonight.base import Color
 from .path import BASE_PATH
 from .settings import read_settings
 from .tuples import Size
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from pygame import Vector2 as Vec2
+
 
 PADDING = 20
 
@@ -139,9 +144,7 @@ class Config:
     window: Window = Window()
     font: Font = Font()
     music: Music = Music()
-    colors: Color = COLOR_DICT.get(
-        read_settings()["General"]["colorscheme"], TokyoNightNight
-    )()
+    colors: Color = COLOR_DICT.get(read_settings()["General"]["colorscheme"], TokyoNightNight)()
 
 
 CONFIG = Config()

@@ -1,12 +1,17 @@
-from typing import Any
+from typing import TYPE_CHECKING
 
 import pygame
-from utils import CONFIG, Figure, GameMode
+from utils import CONFIG, GameMode
 
 from .base import BaseScreen
 from .preview import Preview
 from .score import Score
 from .tetris import Tetris
+
+if TYPE_CHECKING:
+    from typing import Any
+
+    from utils import Figure
 
 
 class Game(BaseScreen):
@@ -71,9 +76,7 @@ class Game(BaseScreen):
         self.clock = pygame.time.Clock()
         self.next_figure: Figure = self._generate_next_figure()
 
-        self.tetris = Tetris(
-            self._get_next_figure, self._update_score, self.game_mode, self.settings
-        )
+        self.tetris = Tetris(self._get_next_figure, self._update_score, self.game_mode, self.settings)
         self.score = Score(self.game_mode)
         self.preview = Preview()
 
@@ -110,10 +113,7 @@ class Game(BaseScreen):
 
     def _start_background_music(self) -> None:
         """Start playing background music."""
-        if (
-            self.game_mode is GameMode.PLAYER
-            and self.settings["Volume"]["Music"]["enabled"]
-        ):
+        if self.game_mode is GameMode.PLAYER and self.settings["Volume"]["Music"]["enabled"]:
             self.music = pygame.mixer.Sound(CONFIG.music.background)
             self.music.set_volume(self.settings["Volume"]["Music"]["level"])
             self.music.play(-1)

@@ -1,13 +1,18 @@
 import sys
-from typing import Optional
+from typing import TYPE_CHECKING
 
 import pygame
 from loguru import logger
-from utils import CONFIG, GameMode, read_settings
+from utils import CONFIG, read_settings
 
 from .base import BaseScreen, SceenElement, TextScreen
 from .button import Button
 from .game import Game
+
+if TYPE_CHECKING:
+    from typing import Optional
+
+    from utils import GameMode
 
 
 class Main(BaseScreen, SceenElement, TextScreen):
@@ -45,9 +50,7 @@ class Main(BaseScreen, SceenElement, TextScreen):
             if event.type == pygame.QUIT:
                 self.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key in [
-                    pygame.key.key_code(key) for key in self.settings["General"]["quit"]
-                ]:
+                if event.key in [pygame.key.key_code(key) for key in self.settings["General"]["quit"]]:
                     self.exit()
 
             if not self.game:
@@ -126,9 +129,9 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def _initialize_increment_height(self) -> None:
         """Initialize the increment height for positioning text elements/buttons."""
-        self.increment_height: float = (
-            self.display_surface.get_height() - CONFIG.window.size.height / 2
-        ) / len(self.buttons)
+        self.increment_height: float = (self.display_surface.get_height() - CONFIG.window.size.height / 2) / len(
+            self.buttons
+        )
 
     def _display_text(self, text: str, pos: tuple[float, float]) -> None:
         """
@@ -156,8 +159,6 @@ class Main(BaseScreen, SceenElement, TextScreen):
         for idx, button in enumerate(self.buttons):
             x = self.display_surface.get_width() / 2
             y = (
-                self.increment_height / 4
-                + idx * self.increment_height
-                + CONFIG.window.size.height / 4
+                self.increment_height / 4 + idx * self.increment_height + CONFIG.window.size.height / 4
             )  # TODO: tweak a bit more
             button.draw(self.display_surface, (x, y))

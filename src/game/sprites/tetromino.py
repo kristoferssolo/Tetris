@@ -1,10 +1,14 @@
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING
 
-import numpy as np
 import pygame
 from utils import CONFIG, Direction, Figure, Rotation
 
-from .block import Block
+if TYPE_CHECKING:
+    from typing import Any, Callable, Optional
+
+    import numpy as np
+
+    from .block import Block
 
 
 class Tetromino:
@@ -28,7 +32,7 @@ class Tetromino:
 
     def __init__(
         self,
-        group: pygame.sprite.Group,
+        group: pygame.sprite.Group,  # type: ignore
         create_new: Optional[Callable[[Optional[Figure]], Optional["Tetromino"]]],
         field: np.ndarray[Optional[Block], Any],
         shape: Optional[Figure] = None,
@@ -98,9 +102,7 @@ class Tetromino:
         pivot: pygame.Vector2 = self.blocks[0].pos
 
         for _ in range(3):
-            new_positions: list[pygame.Vector2] = [
-                block.rotate(pivot, rotation) for block in self.blocks
-            ]
+            new_positions: list[pygame.Vector2] = [block.rotate(pivot, rotation) for block in self.blocks]
 
             if self._are_new_positions_valid(new_positions):
                 self.update_block_positions(new_positions)
@@ -142,13 +144,11 @@ class Tetromino:
             True if there is a collision, False otherwise.
         """
 
-        return self._check_horizontal_collision(
+        return self._check_horizontal_collision(self.blocks, direction) or self._check_vertical_collision(
             self.blocks, direction
-        ) or self._check_vertical_collision(self.blocks, direction)
+        )
 
-    def _check_vertical_collision(
-        self, blocks: list[Block], direction: Direction
-    ) -> bool:
+    def _check_vertical_collision(self, blocks: list[Block], direction: Direction) -> bool:
         """
         Checks for vertical collision.
 
@@ -159,14 +159,9 @@ class Tetromino:
         Returns:
             True if there is a vertical collision, False otherwise.
         """
-        return any(
-            block.vertical_collision(int(block.pos.x + direction.value), self.field)
-            for block in self.blocks
-        )
+        return any(block.vertical_collision(int(block.pos.x + direction.value), self.field) for block in self.blocks)
 
-    def _check_horizontal_collision(
-        self, blocks: list[Block], direction: Direction
-    ) -> bool:
+    def _check_horizontal_collision(self, blocks: list[Block], direction: Direction) -> bool:
         """
         Checks for horizontal collision.
 
@@ -177,10 +172,7 @@ class Tetromino:
         Returns:
             True if there is a horizontal collision, False otherwise.
         """
-        return any(
-            block.horizontal_collision(int(block.pos.y + direction.value), self.field)
-            for block in self.blocks
-        )
+        return any(block.horizontal_collision(int(block.pos.y + direction.value), self.field) for block in self.blocks)
 
     def update_block_positions(self, new_positions: list[pygame.Vector2]) -> None:
         """
@@ -209,7 +201,10 @@ class Tetromino:
             for pos in new_positions
         )
 
-    def _initialize_blocks(self, group: pygame.sprite.Group) -> list[Block]:
+    def _initialize_blocks(
+        self,
+        group: pygame.sprite.Group,  # type: ignore
+    ) -> list[Block]:
         """
         Initializes Tetromino blocks.
 
@@ -219,10 +214,7 @@ class Tetromino:
         Returns:
             List of initialized blocks.
         """
-        return [
-            Block(group=group, pos=pos, color=self.color, phantom=self.phantom)
-            for pos in self.block_positions
-        ]
+        return [Block(group=group, pos=pos, color=self.color, phantom=self.phantom) for pos in self.block_positions]
 
     def _generate_figure(self, shape: Optional[Figure]) -> Figure:
         """

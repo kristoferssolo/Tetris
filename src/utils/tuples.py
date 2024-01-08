@@ -1,4 +1,7 @@
-from typing import NamedTuple, Union
+from typing import TYPE_CHECKING, NamedTuple
+
+if TYPE_CHECKING:
+    from typing import Union
 
 
 class Size(NamedTuple):

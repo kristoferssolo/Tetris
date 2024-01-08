@@ -1,12 +1,14 @@
 import random
 from enum import Enum
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
 
 import pygame
-from pygame import Vector2 as Vec2
 
 from .colors import TokyoNightNight
 from .path import BASE_PATH
+
+if TYPE_CHECKING:
+    from pygame import Vector2 as Vec2
 
 
 class FigureConfig(NamedTuple):
@@ -23,9 +25,7 @@ class FigureConfig(NamedTuple):
 
 
 def _load_image(filename: str) -> pygame.Surface:
-    return pygame.image.load(
-        BASE_PATH / "assets" / "figures" / filename
-    )  # TODO: add `.convert_alpha()``
+    return pygame.image.load(BASE_PATH / "assets" / "figures" / filename)  # TODO: add `.convert_alpha()``
     # TODO: change colors of images
 
 

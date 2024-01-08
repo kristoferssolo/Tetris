@@ -1,4 +1,4 @@
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING
 
 import pygame
 from utils import CONFIG
@@ -6,11 +6,12 @@ from utils import CONFIG
 from .base import BaseScreen, SceenElement, TextScreen
 from .base_button import BaseButton
 
+if TYPE_CHECKING:
+    from typing import Any, Callable, Optional
+
 
 class Button(BaseButton, BaseScreen, SceenElement, TextScreen):
-    def __init__(
-        self, text: str, action: Optional[Callable[[], Optional[Any]]]
-    ) -> None:
+    def __init__(self, text: str, action: Optional[Callable[[], Optional[Any]]]) -> None:
         super().__init__(text, action)
         self._initialize_surface()
         self._initialize_font()
@@ -19,11 +20,7 @@ class Button(BaseButton, BaseScreen, SceenElement, TextScreen):
 
     def on_click(self, event: pygame.Event) -> None:
         """Handle click event."""
-        if (
-            event.type == pygame.MOUSEBUTTONDOWN
-            and self.rect.collidepoint(event.pos)
-            and self.action
-        ):
+        if event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and self.action:
             self.action()
 
     def on_hover(self, event: pygame.Event) -> None:

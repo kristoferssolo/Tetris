@@ -1,5 +1,8 @@
 from abc import ABC, ABCMeta, abstractmethod
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import Any, Callable, Optional
 
 import pygame
 
@@ -7,9 +10,7 @@ import pygame
 class BaseButton(ABC, metaclass=ABCMeta):
     """Base button class."""
 
-    def __init__(
-        self, text: str, action: Optional[Callable[[], Optional[Any]]]
-    ) -> None:
+    def __init__(self, text: str, action: Optional[Callable[[], Optional[Any]]]) -> None:
         self.action = action
         self.text = text
 

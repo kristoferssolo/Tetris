@@ -1,14 +1,19 @@
-from typing import Any, Callable, Optional
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pygame
 from loguru import logger
 from utils import CONFIG, Direction, Figure, GameMode, Rotation
 
-from game.sprites import Block, Tetromino
+from game.sprites import Tetromino
 from game.timer import Timer, Timers
 
 from .base import BaseScreen
+
+if TYPE_CHECKING:
+    from typing import Any, Callable, Optional
+
+    from game.sprites import Block
 
 
 class Tetris(BaseScreen):
@@ -161,9 +166,7 @@ class Tetris(BaseScreen):
         """
         return self.tetromino.drop()
 
-    def create_new_tetromino(
-        self, shape: Optional[Figure] = None
-    ) -> Optional[Tetromino]:
+    def create_new_tetromino(self, shape: Optional[Figure] = None) -> Optional[Tetromino]:
         """Create a new tetromino and perform necessary actions."""
         self._play_landing_sound()
         self._check_finished_rows()
@@ -377,19 +380,13 @@ class Tetris(BaseScreen):
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
-        if (
-            self.game_mode is GameMode.PLAYER
-            and self.settings["Volume"]["SFX"]["enabled"]
-        ):
+        if self.game_mode is GameMode.PLAYER and self.settings["Volume"]["SFX"]["enabled"]:
             self.landing_sound = pygame.mixer.Sound(CONFIG.music.landing)
             self.landing_sound.set_volume(self.settings["Volume"]["SFX"]["level"])
 
     def _play_landing_sound(self) -> None:
         """Play the landing sound effect."""
-        if (
-            self.game_mode is GameMode.PLAYER
-            and self.settings["Volume"]["SFX"]["enabled"]
-        ):
+        if self.game_mode is GameMode.PLAYER and self.settings["Volume"]["SFX"]["enabled"]:
             self.landing_sound.play()
 
     def _update_display_surface(self) -> None:
@@ -411,14 +408,10 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        right_keys: list[int] = [
-            pygame.key.key_code(key) for key in self.settings["Movement"]["right"]
-        ]
+        right_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Movement"]["right"]]
         right_key_pressed = any(keys[key] for key in right_keys)
 
-        left_keys: list[int] = [
-            pygame.key.key_code(key) for key in self.settings["Movement"]["left"]
-        ]
+        left_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Movement"]["left"]]
         left_key_pressed = any(keys[key] for key in left_keys)
 
         if not self.timers.horizontal.active:
@@ -435,14 +428,10 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        cw_keys: list[int] = [
-            pygame.key.key_code(key) for key in self.settings["Rotation"]["cw"]
-        ]
+        cw_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Rotation"]["cw"]]
         cw_key_pressed = any(keys[key] for key in cw_keys)
 
-        ccw_keys: list[int] = [
-            pygame.key.key_code(key) for key in self.settings["Rotation"]["ccw"]
-        ]
+        ccw_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Rotation"]["ccw"]]
         ccw_key_pressed = any(keys[key] for key in ccw_keys)
 
         if not self.timers.rotation.active:
@@ -460,9 +449,7 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        down_keys: list[int] = [
-            pygame.key.key_code(key) for key in self.settings["Movement"]["down"]
-        ]
+        down_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Movement"]["down"]]
         down_key_pressed = any(keys[key] for key in down_keys)
         if not self.down_pressed and down_key_pressed:
             self.down_pressed = True
@@ -478,9 +465,7 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        drop_keys = [
-            pygame.key.key_code(key) for key in self.settings["Action"]["drop"]
-        ]
+        drop_keys = [pygame.key.key_code(key) for key in self.settings["Action"]["drop"]]
         drop_key_pressed = any(keys[key] for key in drop_keys)
 
         if not self.timers.drop.active and drop_key_pressed:
