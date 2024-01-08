@@ -1,14 +1,10 @@
-from typing import TYPE_CHECKING
+from typing import Any, Callable, Optional
 
+import numpy as np
 import pygame
 from utils import CONFIG, Direction, Figure, Rotation
 
-if TYPE_CHECKING:
-    from typing import Any, Callable, Optional
-
-    import numpy as np
-
-    from .block import Block
+from .block import Block
 
 
 class Tetromino:

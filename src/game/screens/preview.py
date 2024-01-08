@@ -1,12 +1,7 @@
-from typing import TYPE_CHECKING
-
 import pygame
-from utils import CONFIG
+from utils import CONFIG, Figure
 
 from .base import BaseScreen, SceenElement
-
-if TYPE_CHECKING:
-    from utils import Figure
 
 
 class Preview(BaseScreen, SceenElement):

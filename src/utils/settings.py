@@ -1,13 +1,10 @@
-from typing import TYPE_CHECKING
+from pathlib import Path
+from typing import Any
 
 import toml
 from loguru import logger
 
 from .path import BASE_PATH
-
-if TYPE_CHECKING:
-    from pathlib import Path
-    from typing import Any
 
 
 def save_settings(settings: dict[str, Any], file_path: Path) -> None:

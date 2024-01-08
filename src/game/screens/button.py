@@ -1,13 +1,10 @@
-from typing import TYPE_CHECKING
+from typing import Any, Callable, Optional
 
 import pygame
 from utils import CONFIG
 
 from .base import BaseScreen, SceenElement, TextScreen
 from .base_button import BaseButton
-
-if TYPE_CHECKING:
-    from typing import Any, Callable, Optional
 
 
 class Button(BaseButton, BaseScreen, SceenElement, TextScreen):

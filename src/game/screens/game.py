@@ -1,17 +1,12 @@
-from typing import TYPE_CHECKING
+from typing import Any
 
 import pygame
-from utils import CONFIG, GameMode
+from utils import CONFIG, Figure, GameMode
 
 from .base import BaseScreen
 from .preview import Preview
 from .score import Score
 from .tetris import Tetris
-
-if TYPE_CHECKING:
-    from typing import Any
-
-    from utils import Figure
 
 
 class Game(BaseScreen):
@@ -56,14 +51,12 @@ class Game(BaseScreen):
 
     def run(self) -> None:
         """Run a single iteration of the game loop."""
-        self.draw()
 
         self.tetris.run()
         self.score.run()
         self.preview.update(self.next_figure)
         self.preview.run()
 
-        self.draw()
         self.clock.tick(CONFIG.game.fps)
 
     def mute(self) -> None:

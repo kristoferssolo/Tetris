@@ -1,18 +1,13 @@
 import sys
-from typing import TYPE_CHECKING
+from typing import Optional
 
 import pygame
 from loguru import logger
-from utils import CONFIG, read_settings
+from utils import CONFIG, GameMode, read_settings
 
 from .base import BaseScreen, SceenElement, TextScreen
 from .button import Button
 from .game import Game
-
-if TYPE_CHECKING:
-    from typing import Optional
-
-    from utils import GameMode
 
 
 class Main(BaseScreen, SceenElement, TextScreen):

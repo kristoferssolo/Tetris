@@ -1,14 +1,12 @@
 import random
 from enum import Enum
-from typing import TYPE_CHECKING, NamedTuple
+from typing import NamedTuple
 
 import pygame
+from pygame import Vector2 as Vec2
 
 from .colors import TokyoNightNight
 from .path import BASE_PATH
-
-if TYPE_CHECKING:
-    from pygame import Vector2 as Vec2
 
 
 class FigureConfig(NamedTuple):

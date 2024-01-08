@@ -1,10 +1,7 @@
-from typing import TYPE_CHECKING
+from typing import Any, Callable, NamedTuple, Optional
 
 import pygame
 from attrs import define, field
-
-if TYPE_CHECKING:
-    from typing import Any, Callable, NamedTuple, Optional
 
 
 @define

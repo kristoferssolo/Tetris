@@ -1,19 +1,14 @@
-from typing import TYPE_CHECKING
+from typing import Any, Callable, Optional
 
 import numpy as np
 import pygame
 from loguru import logger
 from utils import CONFIG, Direction, Figure, GameMode, Rotation
 
-from game.sprites import Tetromino
+from game.sprites import Block, Tetromino
 from game.timer import Timer, Timers
 
 from .base import BaseScreen
-
-if TYPE_CHECKING:
-    from typing import Any, Callable, Optional
-
-    from game.sprites import Block
 
 
 class Tetris(BaseScreen):

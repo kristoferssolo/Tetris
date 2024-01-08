@@ -1,12 +1,8 @@
-from typing import TYPE_CHECKING
+from typing import Any, Optional
 
+import numpy as np
 import pygame
 from utils import CONFIG, Rotation
-
-if TYPE_CHECKING:
-    from typing import Any, Optional
-
-    import numpy as np
 
 
 class Block(pygame.sprite.Sprite):

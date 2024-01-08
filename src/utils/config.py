@@ -1,18 +1,13 @@
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 from attr import define
+from pygame import Vector2 as Vec2
 
 from .colors import COLOR_DICT, TokyoNightNight
 from .colors.tokyonight.base import Color
 from .path import BASE_PATH
 from .settings import read_settings
 from .tuples import Size
-
-if TYPE_CHECKING:
-    from pathlib import Path
-
-    from pygame import Vector2 as Vec2
-
 
 PADDING = 20
 
