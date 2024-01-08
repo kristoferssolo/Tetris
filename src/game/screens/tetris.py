@@ -299,8 +299,8 @@ class Tetris(BaseScreen):
     def _level_up(self) -> None:
         """Level up."""
         self.level += 1
-        self.initial_block_speed *= 0.75
-        self.increased_block_speed *= 0.75
+        self.initial_block_speed *= 0.5
+        self.increased_block_speed *= 0.5
         self.timers.vertical.duration = self.initial_block_speed
 
     def _draw_components(self) -> None:
