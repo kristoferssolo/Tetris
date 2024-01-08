@@ -161,15 +161,18 @@ class Tetris(BaseScreen):
         """
         return self.tetromino.drop()
 
-    def create_new_tetromino(self, shape: Optional[Figure] = None) -> Tetromino:
+    def create_new_tetromino(
+        self, shape: Optional[Figure] = None
+    ) -> Optional[Tetromino]:
         """Create a new tetromino and perform necessary actions."""
         self._play_landing_sound()
         self._check_finished_rows()
-        self.phantom_tetromino.kill()
+        self.phantom_sprites.empty()
 
         self.game_over: bool = self._check_game_over()
         if self.game_over:
             self.restart()
+            return None
 
         self.tetromino = Tetromino(
             self.sprites,
@@ -186,6 +189,7 @@ class Tetris(BaseScreen):
             True,
         )
         self.phantom_tetromino.drop()
+        logger.debug(f"Created: {self.tetromino.figure.name}")
 
         return self.tetromino
 
@@ -204,10 +208,8 @@ class Tetris(BaseScreen):
 
     def restart(self) -> None:
         """Restart the game."""
-        logger.info("Restarting the game")
+        logger.info(f"Restarting the game. Score was {self.score}")
         self._reset_game_state()
-        self._initialize_field_and_tetromino()
-        self.game_over = False
 
     def mute(self) -> None:
         """Mute the game."""
@@ -348,6 +350,8 @@ class Tetris(BaseScreen):
             self.tetromino.figure,
             True,
         )
+
+        logger.debug(f"Created: {self.tetromino.figure.name}")
         self.phantom_tetromino.drop()
 
     def _initialize_timers(self) -> None:

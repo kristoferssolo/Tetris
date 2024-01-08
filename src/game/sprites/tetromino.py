@@ -29,7 +29,7 @@ class Tetromino:
     def __init__(
         self,
         group: pygame.sprite.Group,
-        create_new: Optional[Callable[[Optional[Figure]], "Tetromino"]],
+        create_new: Optional[Callable[[Optional[Figure]], Optional["Tetromino"]]],
         field: np.ndarray[Optional[Block], Any],
         shape: Optional[Figure] = None,
         phantom: bool = False,
