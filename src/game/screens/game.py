@@ -36,10 +36,18 @@ class Game(BaseScreen):
         self._start_background_music()
 
     def draw(self) -> None:
-        """Update the display."""
+        """
+        Raises:
+            NotImplementedError: Not implemented yet.
+        """
+        raise NotImplementedError
 
     def update(self) -> None:
-        pass
+        """
+        Raises:
+            NotImplementedError: Not implemented yet.
+        """
+        raise NotImplementedError
 
     def run(self) -> None:
         """Run a single iteration of the game loop."""

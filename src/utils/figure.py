@@ -10,6 +10,13 @@ from .path import BASE_PATH
 
 
 class FigureConfig(NamedTuple):
+    """
+    Attributes:
+        shape: The shape of the figure.
+        color: The color of the figure.
+        image: The image of the figure.
+    """
+
     shape: list[Vec2]
     color: str
     image: pygame.Surface
@@ -23,6 +30,17 @@ def _load_image(filename: str) -> pygame.Surface:
 
 
 class Figure(Enum):
+    """
+    Attributes:
+        I: The I figure.
+        O: The O figure.
+        T: The T figure.
+        S: The S figure.
+        Z: The Z figure.
+        J: The J figure.
+        L: The L figure.
+    """
+
     I = FigureConfig(
         [
             Vec2(0, 0),

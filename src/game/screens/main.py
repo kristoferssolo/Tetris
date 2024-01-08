@@ -103,7 +103,11 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self.display_surface.fill(CONFIG.colors.bg)
 
     def _draw_border(self) -> None:
-        """Draw a border (not implemented)."""
+        """
+        Raises:
+            NotImplementedError: Not implemented yet.
+        """
+        raise NotImplementedError
 
     def _initialize_surface(self) -> None:
         """Initialize the display surface."""
@@ -114,7 +118,11 @@ class Main(BaseScreen, SceenElement, TextScreen):
         self.rect = self.display_surface.get_rect(topright=(0, 0))
 
     def _update_display_surface(self) -> None:
-        """Update display surface (not implemented)."""
+        """
+        Raises:
+            NotImplementedError: Not implemented yet.
+        """
+        raise NotImplementedError
 
     def _initialize_increment_height(self) -> None:
         """Initialize the increment height for positioning text elements/buttons."""

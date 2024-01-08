@@ -50,13 +50,7 @@ class Preview(BaseScreen, SceenElement):
         )
 
     def _draw_figure(self) -> None:
-        """
-        Draw a single upcoming figure on the preview surface.
-
-        Args:
-            figure (Figure): The upcoming figure to draw.
-            idx (int): Index of the figure in the list.
-        """
+        """Draw a single upcoming figure on the preview surface."""
         figure_surface = self.next_figure.value.image
         x = self.surface.get_width() / 2
         y = self.surface.get_height() / 2

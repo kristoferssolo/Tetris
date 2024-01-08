@@ -14,6 +14,27 @@ PADDING = 20
 
 @define
 class Game:
+    """
+    Attributes:
+        columns: The number of columns.
+        rows: The number of rows.
+        line_width: The width of the lines.
+        border_radius: The radius of the border.
+        padding: The padding.
+        cell: The size of a cell.
+        size: The size of the game.
+        pos: The position of the game.
+        offset: The offset of the game.
+        initial_speed: The initial speed of the game.
+        movment_delay: The delay of the movment.
+        rotation_delay: The delay of the rotation.
+        drop_delay: The delay of the drop.
+        score: The score.
+        highscore: The path to the highscore file.
+        fps: The FPS.
+
+    """
+
     columns: int = 10
     rows: int = 20
     line_width: int = 1
@@ -34,6 +55,14 @@ class Game:
 
 @define
 class SideBar:
+    """
+    Attributes:
+        padding: The padding.
+        size: The size of the sidebar.
+        score: The size of the score.
+        preview: The size of the preview.
+    """
+
     padding: int = PADDING
     size: Size = Size(200, Game().size.height)
     score: Size = Size(size.width, size.height - size.width - padding)
@@ -42,17 +71,36 @@ class SideBar:
 
 @define
 class Font:
+    """
+    Attributes:
+        family: The font family.
+        size: The font size.
+    """
+
     family: Path = BASE_PATH / "assets" / "fonts" / "ChakraPetch" / "Regular.ttf"
     size: int = 32
 
 
 @define
 class Button:
+    """
+    Attributes:
+        size: The size of the button.
+    """
+
     size: Size = Size(200, 50)
 
 
 @define
 class Window:
+    """
+    Attributes:
+        title: The title of the window.
+        padding: The padding.
+        size: The size of the window.
+        button: The button.
+    """
+
     title: str = "Tetris"
     padding: int = PADDING
     size: Size = Size(
@@ -64,12 +112,28 @@ class Window:
 
 @define
 class Music:
+    """
+    Attributes:
+        background: The background music.
+        landing: The landing music.
+    """
+
     background: Path = BASE_PATH / "assets" / "music" / "background.mp3"
     landing: Path = BASE_PATH / "assets" / "music" / "landing.wav"
 
 
 @define
 class Config:
+    """
+    Attributes:
+        game: The game.
+        sidebar: The sidebar.
+        window: The window.
+        font: The font.
+        music: The music.
+        colors: The colors.
+    """
+
     game: Game = Game()
     sidebar: SideBar = SideBar()
     window: Window = Window()

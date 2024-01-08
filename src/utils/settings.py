@@ -8,6 +8,13 @@ from .path import BASE_PATH
 
 
 def save_settings(settings: dict[str, Any], file_path: Path) -> None:
+    """
+    Save the settings to a TOML file.
+
+    Args:
+        settings: The settings to save.
+        file_path: The path to the TOML file.
+    """
     with open(file_path, "w") as file:
         toml.dump(settings, file)
 

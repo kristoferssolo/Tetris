@@ -2,6 +2,14 @@ from typing import NamedTuple, Union
 
 
 class Size(NamedTuple):
+    """
+    A size object.
+
+    Attributes:
+        width: The width of the object.
+        height: The height of the object.
+    """
+
     width: int | float
     height: int | float
 

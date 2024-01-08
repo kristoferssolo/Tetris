@@ -67,9 +67,9 @@ class Score(BaseScreen, SceenElement, TextScreen):
         Update the score information.
 
         Args:
-            lines (int): Number of lines cleared.
-            score (int): Current game score.
-            level (int): Current game level.
+            lines: Number of lines cleared.
+            score: Current game score.
+            level: Current game level.
         """
 
         if score > self.highscore:
