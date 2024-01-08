@@ -44,8 +44,36 @@ warn_unreachable = true
 warn_unused_configs = true
 
 [tool.ruff]
+extend-select = [
+  "B",
+  "BLE",
+  "C4",
+  "ERA",
+  "I",
+  "ICN",
+  "INP",
+  "ISC",
+  "N",
+  "NPY",
+  "PGH",
+  "PIE",
+  # "PTH",
+  "Q",
+  "RET",
+  "RSE",
+  "RUF",
+  "S",
+  "SIM",
+  "T20",
+  "TCH",
+  "TID",
+  "YTT",
+]
+show-fixes = true
 line-length = 120
 indent-width = 4
+target-version = "py38"
+
 
 [tool.ruff.lint]
 extend-select = ["I"]
