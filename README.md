@@ -53,38 +53,39 @@ python -m tetris
 The `settings.toml` file is a configuration file for customizing various aspects of the game.
 
 ### General Settings
-- `Pause`: Defines the keys to pause the game. Currently a work in progress (WIP).
-- `Quit`: Defines the key(s) to quit the game.
-- `Colorscheme`: Specifies the color scheme for the game interface. Options include:
+- `pause`: Defines the keys to pause the game. Currently a work in progress (WIP[^WIP]).
+- `quit`: Defines the key(s) to quit the game.
+- `colorscheme`: Specifies the color scheme for the game interface. Options include:
   - `tokyonight-night`
   - `tokyonight-storm`
   - `tokyonight-day`
   - `tokyonight-moon`
 
 ### Movement Settings
-- `Left`: Defines the keys to move the tetromino[^tetromino] left.
-- `Right`: Defines the keys to move the tetromino right.
-- `Down`: Defines the keys to accelerate the tetromino's fall.
+- `left`: Defines the keys to move the tetromino[^tetromino] left.
+- `right`: Defines the keys to move the tetromino right.
+- `down`: Defines the keys to accelerate the tetromino's fall.
 
 ### Rotation Settings
-- `Clockwise (cw)`: Defines the keys to rotate the tetromino in a clockwise direction.
-- `Counter-Clockwise (ccw)`: Defines the keys to rotate the tetromino in a counter-clockwise direction.
+- `cw (clockwise )`: Defines the keys to rotate the tetromino in a clockwise direction.
+- `ccw (counter-clockwise)`: Defines the keys to rotate the tetromino in a counter-clockwise direction.
 
 ### Action Settings
-- `Hold`: Defines the keys to hold the tetromino (WIP).
-- `Drop`: Defines the keys to instantly drop the tetromino.
+- `hold`: Defines the keys to hold the tetromino (WIP).
+- `drop`: Defines the keys to instantly drop the tetromino.
 
 ### Volume Settings
 #### Music
-- `Enabled`: Indicates whether music is enabled.
-- `Level`: Specifies the volume level for the music.
+- `enabled`: Indicates whether music is enabled.
+- `level`: Specifies the volume level for the music.
 
 #### Sound Effects (SFX)
-- `Enabled`: Indicates whether sound effects are enabled.
-- `Level`: Specifies the volume level for the sound effects.
+- `enabled`: Indicates whether sound effects are enabled.
+- `level`: Specifies the volume level for the sound effects.
 
 
 ## Acknowledgments
 Thanks to [Folke](https://github.com/folke), the creator of [TokyoNight](https://github.com/folke/tokyonight.nvim) color theme.
 
+[^WIP]: Work In Progress.
 [^tetromino]: A tetromino is a geometric shape composed of four squares, connected orthogonally (i.e. at the edges and not the corners).
