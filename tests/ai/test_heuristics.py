@@ -1,7 +1,7 @@
 import unittest
 
 import numpy as np
-from ai.heuristics import aggregate_height, bumpiness, complete_lines, holes
+from ai.heuristics import aggregate_height, bumpiness, complete_lines, count_holes
 
 
 class TestHeuristics(unittest.TestCase):
@@ -24,7 +24,7 @@ class TestHeuristics(unittest.TestCase):
         self.assertEqual(complete_lines(self.field), 2)
 
     def test_holes(self) -> None:
-        self.assertEqual(holes(self.field), 2)
+        self.assertEqual(count_holes(self.field), 2)
 
     def test_bumpiness(self) -> None:
         self.assertEqual(bumpiness(self.field), 6)
