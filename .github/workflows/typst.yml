@@ -1,9 +1,7 @@
 name: Build Typst document
 on:
-  push:
-    - main
-  pull_request:
-    - main
+  push: main
+  pull_request: main
 jobs:
   typst-build:
     runs-on: ubuntu-latest
