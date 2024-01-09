@@ -1,33 +1,24 @@
 name: Build Typst document
 on:
   push:
-    branches: ["main"]
+    - main
   pull_request:
-    branches: ["main"]
-permissions:
-  contents: write
+    - main
 jobs:
   typst-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Typst
+      - name: Build Typst
         uses: lvignoli/typst-action@main
         with:
           source_file: |
             typst/main.typ
-      - name: Uplaoding PDF file
-        uses: actions/upload-artifact@v3
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          name: PDF
-          path: |
-            typst/main.pdf
-      - name: Get current date
-        id: date
-        run: echo "DATE=$(date +%Y-%m-%d-%H:%M)" >> $GITHUB_ENV
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: github.ref_type == 'tag'
-        with:
-          name: "${{ github.ref_name }} — ${{ env.DATE }}"
-          files: typst/main.pdf
+          file_pattern: "typst/*.pdf"
+          commit_message: "chore(build): auto-build pdf"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
