@@ -355,10 +355,10 @@ class Tetris(BaseScreen):
     def _initialize_timers(self) -> None:
         """Initialize game timers."""
         self.timers = Timers(
-            Timer(self.initial_block_speed, True, self.move_down),
-            Timer(CONFIG.game.movment_delay),
-            Timer(CONFIG.game.rotation_delay),
-            Timer(CONFIG.game.drop_delay),
+            Timer(self.initial_block_speed, True, self.move_down),  # type: ignore
+            Timer(CONFIG.game.movment_delay),  # type: ignore
+            Timer(CONFIG.game.rotation_delay),  # type: ignore
+            Timer(CONFIG.game.drop_delay),  # type: ignore
         )
         self.timers.vertical.activate()
 

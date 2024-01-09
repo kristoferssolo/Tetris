@@ -57,10 +57,10 @@ def run() -> None:
     game.Main(GameMode.PLAYER).run()
 
 
-def main(args: argparse.ArgumentParser) -> None:
-    if args.debug:
+def main(args) -> None:
+    if args.debug:  # type: ignore
         level = "debug"
-    elif args.verbose:
+    elif args.verbose:  # type: ignore
         level = "info"
     else:
         level = "warning"
@@ -72,4 +72,4 @@ def main(args: argparse.ArgumentParser) -> None:
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    main(args)
+    main(args)  # type: ignore
