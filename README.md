@@ -1,4 +1,5 @@
 # Tetris
+![Tests](https://github.com/kristoferssolo/Tetris/actions/workflows/tests.yml/badge.svg) ![Lint](https://github.com/kristoferssolo/Tetris/actions/workflows/lint.yml/badge.svg)
 
 <!-- toc -->
 
