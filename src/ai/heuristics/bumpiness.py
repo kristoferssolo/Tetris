@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def bumpiness(
+def get_bumpiness(
     field: np.ndarray[int, np.dtype[np.uint8]],
 ) -> int:
     """
