@@ -17,14 +17,31 @@ class TestHeuristics(unittest.TestCase):
             ]
         )
 
+        self.field2 = np.array(
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+                [1, 1, 0, 1, 1, 0, 0, 0, 0, 1],
+            ]
+        )
+
     def test_aggregate_height(self) -> None:
         self.assertEqual(aggregate_height(self.field), 48)
+        self.assertEqual(aggregate_height(self.field2), 12)
 
     def test_complete_lines(self) -> None:
         self.assertEqual(complete_lines(self.field), 2)
+        self.assertEqual(complete_lines(self.field2), 0)
 
     def test_holes(self) -> None:
         self.assertEqual(count_holes(self.field), 2)
+        self.assertEqual(count_holes(self.field2), 0)
 
     def test_bumpiness(self) -> None:
         self.assertEqual(get_bumpiness(self.field), 6)
+        self.assertEqual(get_bumpiness(self.field2), 11)
