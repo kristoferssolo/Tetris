@@ -27,6 +27,13 @@ parser.add_argument(
     help="Run app with GUI [Default]",
 )
 
+parser.add_argument(
+    "-t",
+    "--train",
+    action="store_true",
+    help="Train AI",
+)
+
 
 def setup_logger(level: str = "warning") -> None:
     from utils import BASE_PATH
@@ -64,10 +71,14 @@ def main(args) -> None:
         level = "info"
     else:
         level = "warning"
-
     setup_logger(level)
 
-    run()
+    if args.train:  # type: ignore
+        import ai
+
+        ai.train()
+    else:
+        run()
 
 
 if __name__ == "__main__":
