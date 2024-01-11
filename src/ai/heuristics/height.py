@@ -11,4 +11,10 @@ def aggregate_height(field: np.ndarray[int, np.dtype[np.uint8]]) -> int:
     Returns:
         The aggregate height of the field.
     """
-    return int(np.sum(field.shape[0] - np.argmax(field, axis=0)))
+    heights = np.zeros(field.shape[1], dtype=np.uint8)
+    for col in range(field.shape[1]):
+        for row in range(field.shape[0]):
+            if field[row, col] != 0:
+                heights[col] = field.shape[0] - row
+                break
+    return int(np.sum(heights))
