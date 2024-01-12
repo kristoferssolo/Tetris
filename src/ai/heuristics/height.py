@@ -1,5 +1,7 @@
 import numpy as np
 
+from .peaks import get_peaks
+
 
 def aggregate_height(field: np.ndarray[int, np.dtype[np.uint8]]) -> int:
     """
@@ -11,10 +13,5 @@ def aggregate_height(field: np.ndarray[int, np.dtype[np.uint8]]) -> int:
     Returns:
         The aggregate height of the field.
     """
-    heights = np.zeros(field.shape[1], dtype=np.uint8)
-    for col in range(field.shape[1]):
-        for row in range(field.shape[0]):
-            if field[row, col] != 0:
-                heights[col] = field.shape[0] - row
-                break
+    heights = get_peaks(field)
     return int(np.sum(heights))
