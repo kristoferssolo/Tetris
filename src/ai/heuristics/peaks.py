@@ -11,7 +11,7 @@ def get_peaks(field: np.ndarray[int, np.dtype[np.uint8]]) -> np.ndarray[int, np.
     Returns:
         2D array representing the peaks of the field.
     """
-    result = np.zeros(field.shape[1], dtype=np.uint8)
+    result = np.zeros(field.shape[1], dtype=int)
     for col in range(field.shape[1]):
         for row in range(field.shape[0]):
             if field[row, col] != 0:
