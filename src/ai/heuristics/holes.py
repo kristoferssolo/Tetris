@@ -15,8 +15,15 @@ def count_holes(
         The total number of holes in the field.
     """
 
-    first_nonzero_indices = np.argmax(field != 0, axis=0)
+    num_rows, num_cols = field.shape
+    holes_count = 0
 
-    mask = (field == 0) & (np.arange(field.shape[0])[:, np.newaxis] > first_nonzero_indices)
+    for col in range(num_cols):
+        has_tile_above = False
 
-    return int(np.sum(mask))
+        for row in range(num_rows):
+            if field[row, col] == 1:
+                has_tile_above = True
+            elif field[row, col] == 0 and has_tile_above:
+                holes_count += 1
+    return holes_count
