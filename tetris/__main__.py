@@ -76,7 +76,7 @@ def main(args) -> None:
     if args.train:  # type: ignore
         import ai
 
-        ai.train()
+        ai.run()
     else:
         run()
 
