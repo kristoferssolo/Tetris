@@ -1,6 +1,5 @@
 from typing import Optional
 
-import numpy as np
 import pygame
 from game import Tetris
 from game.sprites import Tetromino
@@ -52,16 +51,13 @@ def get_best_move(game: Tetris, figure: Figure) -> BestMove:
             if not tetermino._are_new_positions_valid(
                 [pygame.Vector2(block.pos.x + 1, block.pos.y) for block in tetermino.blocks]
             ):
-                break
+                continue
 
-            field: np.ndarray[int, np.dtype[np.uint8]] = np.where(game.field != None, 1, 0)
-            for block in game.tetromino.blocks:
-                field[int(block.pos.y), int(block.pos.x)] = 1
-
-            logger.debug(f"{field=}")
+            # logger.debug(f"{field=}")
             tetermino.kill()
 
     if not best_move:
         best_move = BestMove(0, 0)
+    tetermino.kill()
     phantom_sprites.empty()
     return best_move
