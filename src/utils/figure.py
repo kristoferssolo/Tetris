@@ -14,17 +14,18 @@ class FigureConfig(NamedTuple):
     Attributes:
         shape: The shape of the figure.
         color: The color of the figure.
+        filename: The filename of the image of the figure.
         image: The image of the figure.
     """
 
     shape: list[Vec2]
     color: str
-    image: pygame.Surface
+    filename: str
 
-
-def _load_image(filename: str) -> pygame.Surface:
-    return pygame.image.load(BASE_PATH / "assets" / "figures" / filename)  # TODO: add `.convert_alpha()``
-    # TODO: change colors of images
+    @property
+    def image(self) -> pygame.Surface:
+        # TODO: change colors of images
+        return pygame.image.load(BASE_PATH / "assets" / "figures" / self.filename).convert_alpha()
 
 
 class Figure(Enum):
@@ -47,7 +48,7 @@ class Figure(Enum):
             Vec2(0, 1),
         ],
         TokyoNightNight().cyan,
-        _load_image("I.png"),
+        "I.png",
     )
     O = FigureConfig(
         [
@@ -57,7 +58,7 @@ class Figure(Enum):
             Vec2(1, -1),
         ],
         TokyoNightNight().yellow,
-        _load_image("O.png"),
+        "O.png",
     )
     T = FigureConfig(
         [
@@ -67,7 +68,7 @@ class Figure(Enum):
             Vec2(0, -1),
         ],
         TokyoNightNight().purple,
-        _load_image("T.png"),
+        "T.png",
     )
 
     S = FigureConfig(
@@ -78,7 +79,7 @@ class Figure(Enum):
             Vec2(1, -1),
         ],
         TokyoNightNight().green,
-        _load_image("S.png"),
+        "S.png",
     )
     Z = FigureConfig(
         [
@@ -88,7 +89,7 @@ class Figure(Enum):
             Vec2(-1, -1),
         ],
         TokyoNightNight().red,
-        _load_image("Z.png"),
+        "Z.png",
     )
     J = FigureConfig(
         [
@@ -98,7 +99,7 @@ class Figure(Enum):
             Vec2(-1, 1),
         ],
         TokyoNightNight().blue,
-        _load_image("J.png"),
+        "J.png",
     )
     L = FigureConfig(
         [
@@ -108,7 +109,7 @@ class Figure(Enum):
             Vec2(1, 1),
         ],
         TokyoNightNight().orange,
-        _load_image("L.png"),
+        "L.png",
     )
 
     @classmethod
