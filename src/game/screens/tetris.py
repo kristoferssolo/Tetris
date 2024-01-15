@@ -299,8 +299,8 @@ class Tetris(BaseScreen):
     def _level_up(self) -> None:
         """Level up."""
         self.level += 1
-        self.initial_block_speed *= 0.5
-        self.increased_block_speed *= 0.5
+        self.initial_block_speed *= 0.3
+        self.increased_block_speed *= 0.3
         self.timers.vertical.duration = self.initial_block_speed
 
     def _draw_components(self) -> None:
@@ -365,7 +365,7 @@ class Tetris(BaseScreen):
     def _initialize_game_state(self) -> None:
         """Initialize the game state."""
         self.initial_block_speed = CONFIG.game.initial_speed
-        self.increased_block_speed = self.initial_block_speed * 0.4
+        self.increased_block_speed = self.initial_block_speed * 0.5
         self.down_pressed = False
         self.drop_pressed = False
         self.level: int = 1
