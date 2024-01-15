@@ -9,13 +9,12 @@ from .config import CONFIG
 from .path import BASE_PATH
 
 
-class FigureConfig(NamedTuple):
+class FigureParams(NamedTuple):
     """
     Attributes:
         shape: The shape of the figure.
         color: The color of the figure.
         filename: The filename of the image of the figure.
-        image: The image of the figure.
     """
 
     shape: list[Vec2]
@@ -42,7 +41,7 @@ class Figure(Enum):
         L: The L figure.
     """
 
-    I = FigureConfig(
+    I = FigureParams(
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -52,7 +51,7 @@ class Figure(Enum):
         CONFIG.colors.cyan,
         "I.png",
     )
-    O = FigureConfig(
+    O = FigureParams(
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -62,7 +61,7 @@ class Figure(Enum):
         CONFIG.colors.yellow,
         "O.png",
     )
-    T = FigureConfig(
+    T = FigureParams(
         [
             Vec2(0, 0),
             Vec2(-1, 0),
@@ -73,7 +72,7 @@ class Figure(Enum):
         "T.png",
     )
 
-    S = FigureConfig(
+    S = FigureParams(
         [
             Vec2(0, 0),
             Vec2(-1, 0),
@@ -83,7 +82,7 @@ class Figure(Enum):
         CONFIG.colors.green,
         "S.png",
     )
-    Z = FigureConfig(
+    Z = FigureParams(
         [
             Vec2(0, 0),
             Vec2(1, 0),
@@ -93,7 +92,7 @@ class Figure(Enum):
         CONFIG.colors.red,
         "Z.png",
     )
-    J = FigureConfig(
+    J = FigureParams(
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -103,7 +102,7 @@ class Figure(Enum):
         CONFIG.colors.blue,
         "J.png",
     )
-    L = FigureConfig(
+    L = FigureParams(
         [
             Vec2(0, 0),
             Vec2(0, -1),
