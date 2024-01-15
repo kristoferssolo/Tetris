@@ -5,7 +5,7 @@ from typing import NamedTuple
 import pygame
 from pygame import Vector2 as Vec2
 
-from .colors import TokyoNightNight
+from .config import CONFIG
 from .path import BASE_PATH
 
 
@@ -47,7 +47,7 @@ class Figure(Enum):
             Vec2(0, -2),
             Vec2(0, 1),
         ],
-        TokyoNightNight().cyan,
+        CONFIG.colors.cyan,
         "I.png",
     )
     O = FigureConfig(
@@ -57,7 +57,7 @@ class Figure(Enum):
             Vec2(1, 0),
             Vec2(1, -1),
         ],
-        TokyoNightNight().yellow,
+        CONFIG.colors.yellow,
         "O.png",
     )
     T = FigureConfig(
@@ -67,7 +67,7 @@ class Figure(Enum):
             Vec2(1, 0),
             Vec2(0, -1),
         ],
-        TokyoNightNight().purple,
+        CONFIG.colors.purple,
         "T.png",
     )
 
@@ -78,7 +78,7 @@ class Figure(Enum):
             Vec2(0, -1),
             Vec2(1, -1),
         ],
-        TokyoNightNight().green,
+        CONFIG.colors.green,
         "S.png",
     )
     Z = FigureConfig(
@@ -88,7 +88,7 @@ class Figure(Enum):
             Vec2(0, -1),
             Vec2(-1, -1),
         ],
-        TokyoNightNight().red,
+        CONFIG.colors.red,
         "Z.png",
     )
     J = FigureConfig(
@@ -98,7 +98,7 @@ class Figure(Enum):
             Vec2(0, 1),
             Vec2(-1, 1),
         ],
-        TokyoNightNight().blue,
+        CONFIG.colors.blue,
         "J.png",
     )
     L = FigureConfig(
@@ -108,7 +108,7 @@ class Figure(Enum):
             Vec2(0, 1),
             Vec2(1, 1),
         ],
-        TokyoNightNight().orange,
+        CONFIG.colors.orange,
         "L.png",
     )
 
