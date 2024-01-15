@@ -1,30 +1,32 @@
 import random
 from enum import Enum
-from typing import NamedTuple
 
 import pygame
+from attrs import define
 from pygame import Vector2 as Vec2
 
 from .config import CONFIG
 from .path import BASE_PATH
 
 
-class FigureConfig(NamedTuple):
+@define
+class FigureParams:
     """
     Attributes:
         shape: The shape of the figure.
         color: The color of the figure.
         filename: The filename of the image of the figure.
-        image: The image of the figure.
     """
 
     shape: list[Vec2]
     color: str
     filename: str
 
-    @property
     def image(self) -> pygame.Surface:
-        # TODO: change colors of images
+        """
+        Returns:
+            The image of the figure.
+        """
         return pygame.image.load(BASE_PATH / "assets" / "figures" / self.filename).convert_alpha()
 
 
@@ -40,7 +42,7 @@ class Figure(Enum):
         L: The L figure.
     """
 
-    I = FigureConfig(
+    I = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -50,7 +52,7 @@ class Figure(Enum):
         CONFIG.colors.cyan,
         "I.png",
     )
-    O = FigureConfig(
+    O = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -60,7 +62,7 @@ class Figure(Enum):
         CONFIG.colors.yellow,
         "O.png",
     )
-    T = FigureConfig(
+    T = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(-1, 0),
@@ -71,7 +73,7 @@ class Figure(Enum):
         "T.png",
     )
 
-    S = FigureConfig(
+    S = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(-1, 0),
@@ -81,7 +83,7 @@ class Figure(Enum):
         CONFIG.colors.green,
         "S.png",
     )
-    Z = FigureConfig(
+    Z = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(1, 0),
@@ -91,7 +93,7 @@ class Figure(Enum):
         CONFIG.colors.red,
         "Z.png",
     )
-    J = FigureConfig(
+    J = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -101,7 +103,7 @@ class Figure(Enum):
         CONFIG.colors.blue,
         "J.png",
     )
-    L = FigureConfig(
+    L = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
