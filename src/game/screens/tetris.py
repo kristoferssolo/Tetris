@@ -95,7 +95,6 @@ class Tetris(BaseScreen):
         self._handle_rotation_keys()
         self._handle_down_key()
         self._handle_drop_key()
-        self._handle_pause_key()
 
     def move_down(self) -> bool:
         """
@@ -415,11 +414,11 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        right_keys = _get_keys(self.settings["Movement"]["right"])
-        right_key_pressed = _is_key_pressed(right_keys)
+        right_keys = get_keys(self.settings["Movement"]["right"])
+        right_key_pressed = is_key_pressed(right_keys)
 
-        left_keys = _get_keys(self.settings["Movement"]["left"])
-        left_key_pressed = _is_key_pressed(left_keys)
+        left_keys = get_keys(self.settings["Movement"]["left"])
+        left_key_pressed = is_key_pressed(left_keys)
 
         if not self.timers.horizontal.active:
             if left_key_pressed:
@@ -436,11 +435,11 @@ class Tetris(BaseScreen):
         See `settings.toml` for the default key bindings.
         """
 
-        cw_keys = _get_keys(self.settings["Rotation"]["cw"])
-        cw_key_pressed = _is_key_pressed(cw_keys)
+        cw_keys = get_keys(self.settings["Rotation"]["cw"])
+        cw_key_pressed = is_key_pressed(cw_keys)
 
-        ccw_keys = _get_keys(self.settings["Rotation"]["ccw"])
-        ccw_key_pressed = _is_key_pressed(ccw_keys)
+        ccw_keys = get_keys(self.settings["Rotation"]["ccw"])
+        ccw_key_pressed = is_key_pressed(ccw_keys)
 
         if not self.timers.rotation.active:
             if cw_key_pressed:
@@ -457,8 +456,8 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        down_keys = _get_keys(self.settings["Movement"]["down"])
-        down_key_pressed = _is_key_pressed(down_keys)
+        down_keys = get_keys(self.settings["Movement"]["down"])
+        down_key_pressed = is_key_pressed(down_keys)
         if not self.down_pressed and down_key_pressed:
             self.down_pressed = True
             self.timers.vertical.duration = self.increased_block_speed
@@ -473,25 +472,12 @@ class Tetris(BaseScreen):
 
         See `settings.toml` for the default key bindings.
         """
-        drop_keys = _get_keys(self.settings["Action"]["drop"])
-        drop_key_pressed = _is_key_pressed(drop_keys)
+        drop_keys = get_keys(self.settings["Action"]["drop"])
+        drop_key_pressed = is_key_pressed(drop_keys)
 
         if not self.timers.drop.active and drop_key_pressed:
             self.drop()
             self.timers.drop.activate()
-
-    def _handle_pause_key(self) -> None:
-        """
-        Handle the pause key.
-
-        See `settings.toml` for the default key bindings.
-        """
-        pause_keys = _get_keys(self.settings["General"]["pause"])
-        pause_key_pressed = _is_key_pressed(pause_keys)
-
-        if pause_key_pressed and not self.timers.horizontal.active:
-            self.pause()
-            self.timers.horizontal.activate()
 
     def _reset_game_state(self) -> None:
         """Reset the game state."""
@@ -522,12 +508,12 @@ class Tetris(BaseScreen):
         )
 
 
-def _get_keys(keys: dict[str, str]) -> list[int]:
+def get_keys(keys: dict[str, str]) -> list[int]:
     """Get the key codes for the specified keys."""
     return [pygame.key.key_code(key) for key in keys]
 
 
-def _is_key_pressed(keys: list[int]) -> bool:
+def is_key_pressed(keys: list[int]) -> bool:
     """Check if any of the specified keys is pressed."""
     keys_pressed = pygame.key.get_pressed()
     return any(keys_pressed[key] for key in keys)

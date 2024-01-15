@@ -64,6 +64,10 @@ class Game(BaseScreen):
         self.music.set_volume(0)
         self.tetris.mute()
 
+    def pause(self) -> None:
+        """Pause the game."""
+        self.tetris.pause()
+
     def _initialize_game_components(self) -> None:
         """Initialize game-related components."""
         self.clock = pygame.time.Clock()
