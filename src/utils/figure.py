@@ -22,9 +22,11 @@ class FigureConfig(NamedTuple):
     color: str
     filename: str
 
-    @property
     def image(self) -> pygame.Surface:
-        # TODO: change colors of images
+        """
+        Returns:
+            The image of the figure.
+        """
         return pygame.image.load(BASE_PATH / "assets" / "figures" / self.filename).convert_alpha()
 
 

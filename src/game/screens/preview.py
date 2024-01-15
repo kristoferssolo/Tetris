@@ -30,7 +30,7 @@ class Preview(BaseScreen, SceenElement):
         Args:
             next_figures: Next figure.
         """
-        self.next_figure = next_figure
+        self.next_figure: Figure = next_figure
 
     def draw(self) -> None:
         """Draw the preview on the preview surface."""
@@ -51,9 +51,10 @@ class Preview(BaseScreen, SceenElement):
 
     def _draw_figure(self) -> None:
         """Draw a single upcoming figure on the preview surface."""
-        figure_surface = self.next_figure.value.image
+        figure_surface: pygame.Surface = self.next_figure.value.image()
         x = self.surface.get_width() / 2
         y = self.surface.get_height() / 2
+        figure_surface.fill(self.next_figure.value.color, special_flags=pygame.BLEND_RGB_MULT)
         rect = figure_surface.get_rect(center=(x, y))
         self.surface.blit(figure_surface, rect)
 
