@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tetris"
-version = "0.1.0"
+version = "0.1.1"
 description = "Tetris game"
 authors = [{ name = "Kristofers Solo", email = "dev@kristofers.xyz" }]
 readme = "README.md"
