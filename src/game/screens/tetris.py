@@ -91,13 +91,11 @@ class Tetris(BaseScreen):
 
     def handle_events(self) -> None:
         """Handle player input events."""
-        keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
-
-        self._handle_movement_keys(keys)
-        self._handle_rotation_keys(keys)
-        self._handle_down_key(keys)
-        self._handle_drop_key(keys)
-        self._handle_pause_key(keys)
+        self._handle_movement_keys()
+        self._handle_rotation_keys()
+        self._handle_down_key()
+        self._handle_drop_key()
+        self._handle_pause_key()
 
     def move_down(self) -> bool:
         """
@@ -411,17 +409,17 @@ class Tetris(BaseScreen):
         """Fill the game surface with background color."""
         self.surface.fill(CONFIG.colors.bg_float)
 
-    def _handle_movement_keys(self, keys: pygame.key.ScancodeWrapper) -> None:
+    def _handle_movement_keys(self) -> None:
         """
         Handle movement keys.
 
         See `settings.toml` for the default key bindings.
         """
-        right_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Movement"]["right"]]
-        right_key_pressed = any(keys[key] for key in right_keys)
+        right_keys = _get_keys(self.settings["Movement"]["right"])
+        right_key_pressed = _is_key_pressed(right_keys)
 
-        left_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Movement"]["left"]]
-        left_key_pressed = any(keys[key] for key in left_keys)
+        left_keys = _get_keys(self.settings["Movement"]["left"])
+        left_key_pressed = _is_key_pressed(left_keys)
 
         if not self.timers.horizontal.active:
             if left_key_pressed:
@@ -431,17 +429,18 @@ class Tetris(BaseScreen):
                 self.move_right()
                 self.timers.horizontal.activate()
 
-    def _handle_rotation_keys(self, keys: pygame.key.ScancodeWrapper) -> None:
+    def _handle_rotation_keys(self) -> None:
         """
         Handle rotation keys.
 
         See `settings.toml` for the default key bindings.
         """
-        cw_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Rotation"]["cw"]]
-        cw_key_pressed = any(keys[key] for key in cw_keys)
 
-        ccw_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Rotation"]["ccw"]]
-        ccw_key_pressed = any(keys[key] for key in ccw_keys)
+        cw_keys = _get_keys(self.settings["Rotation"]["cw"])
+        cw_key_pressed = _is_key_pressed(cw_keys)
+
+        ccw_keys = _get_keys(self.settings["Rotation"]["ccw"])
+        ccw_key_pressed = _is_key_pressed(ccw_keys)
 
         if not self.timers.rotation.active:
             if cw_key_pressed:
@@ -452,14 +451,14 @@ class Tetris(BaseScreen):
                 self.rotate_reverse()
                 self.timers.rotation.activate()
 
-    def _handle_down_key(self, keys: pygame.key.ScancodeWrapper) -> None:
+    def _handle_down_key(self) -> None:
         """
         Handle the down key.
 
         See `settings.toml` for the default key bindings.
         """
-        down_keys: list[int] = [pygame.key.key_code(key) for key in self.settings["Movement"]["down"]]
-        down_key_pressed = any(keys[key] for key in down_keys)
+        down_keys = _get_keys(self.settings["Movement"]["down"])
+        down_key_pressed = _is_key_pressed(down_keys)
         if not self.down_pressed and down_key_pressed:
             self.down_pressed = True
             self.timers.vertical.duration = self.increased_block_speed
@@ -468,27 +467,27 @@ class Tetris(BaseScreen):
             self.down_pressed = False
             self.timers.vertical.duration = self.initial_block_speed
 
-    def _handle_drop_key(self, keys: pygame.key.ScancodeWrapper) -> None:
+    def _handle_drop_key(self) -> None:
         """
         Handle the drop key.
 
         See `settings.toml` for the default key bindings.
         """
-        drop_keys = [pygame.key.key_code(key) for key in self.settings["Action"]["drop"]]
-        drop_key_pressed = any(keys[key] for key in drop_keys)
+        drop_keys = _get_keys(self.settings["Action"]["drop"])
+        drop_key_pressed = _is_key_pressed(drop_keys)
 
         if not self.timers.drop.active and drop_key_pressed:
             self.drop()
             self.timers.drop.activate()
 
-    def _handle_pause_key(self, keys: pygame.key.ScancodeWrapper) -> None:
+    def _handle_pause_key(self) -> None:
         """
         Handle the pause key.
 
         See `settings.toml` for the default key bindings.
         """
-        pause_keys = [pygame.key.key_code(key) for key in self.settings["General"]["pause"]]
-        pause_key_pressed = any(keys[key] for key in pause_keys)
+        pause_keys = _get_keys(self.settings["General"]["pause"])
+        pause_key_pressed = _is_key_pressed(pause_keys)
 
         if pause_key_pressed and not self.timers.horizontal.active:
             self.pause()
@@ -521,3 +520,14 @@ class Tetris(BaseScreen):
             (self.grid_surface.get_width(), y),
             CONFIG.game.line_width,
         )
+
+
+def _get_keys(keys: dict[str, str]) -> list[int]:
+    """Get the key codes for the specified keys."""
+    return [pygame.key.key_code(key) for key in keys]
+
+
+def _is_key_pressed(keys: list[int]) -> bool:
+    """Check if any of the specified keys is pressed."""
+    keys_pressed = pygame.key.get_pressed()
+    return any(keys_pressed[key] for key in keys)
