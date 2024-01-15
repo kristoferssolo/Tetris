@@ -1,15 +1,16 @@
 import random
 from enum import Enum
-from typing import NamedTuple
 
 import pygame
+from attrs import define
 from pygame import Vector2 as Vec2
 
 from .config import CONFIG
 from .path import BASE_PATH
 
 
-class FigureParams(NamedTuple):
+@define
+class FigureParams:
     """
     Attributes:
         shape: The shape of the figure.
@@ -41,7 +42,7 @@ class Figure(Enum):
         L: The L figure.
     """
 
-    I = FigureParams(
+    I = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -51,7 +52,7 @@ class Figure(Enum):
         CONFIG.colors.cyan,
         "I.png",
     )
-    O = FigureParams(
+    O = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -61,7 +62,7 @@ class Figure(Enum):
         CONFIG.colors.yellow,
         "O.png",
     )
-    T = FigureParams(
+    T = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(-1, 0),
@@ -72,7 +73,7 @@ class Figure(Enum):
         "T.png",
     )
 
-    S = FigureParams(
+    S = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(-1, 0),
@@ -82,7 +83,7 @@ class Figure(Enum):
         CONFIG.colors.green,
         "S.png",
     )
-    Z = FigureParams(
+    Z = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(1, 0),
@@ -92,7 +93,7 @@ class Figure(Enum):
         CONFIG.colors.red,
         "Z.png",
     )
-    J = FigureParams(
+    J = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
@@ -102,7 +103,7 @@ class Figure(Enum):
         CONFIG.colors.blue,
         "J.png",
     )
-    L = FigureParams(
+    L = FigureParams(  # type: ignore
         [
             Vec2(0, 0),
             Vec2(0, -1),
