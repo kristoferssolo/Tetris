@@ -97,6 +97,7 @@ class Tetris(BaseScreen):
         self._handle_rotation_keys(keys)
         self._handle_down_key(keys)
         self._handle_drop_key(keys)
+        self._handle_pause_key(keys)
 
     def move_down(self) -> bool:
         """
@@ -161,6 +162,27 @@ class Tetris(BaseScreen):
         """
         return self.tetromino.drop()
 
+    def restart(self) -> None:
+        """Restart the game."""
+        logger.info(f"Restarting the game. Score was {self.score}")
+        self._reset_game_state()
+
+    def pause(self) -> None:
+        """Pause the game."""
+        self.paused: bool
+        if self.paused:
+            logger.debug("Unpause")
+            self.paused = False
+            self.timers.unpause()
+        else:
+            logger.debug("Pause")
+            self.paused = True
+            self.timers.pause()
+
+    def mute(self) -> None:
+        """Mute the game."""
+        self.landing_sound.set_volume(0)
+
     def create_new_tetromino(self, shape: Optional[Figure] = None) -> Optional[Tetromino]:
         """Create a new tetromino and perform necessary actions."""
         self._play_landing_sound()
@@ -203,15 +225,6 @@ class Tetris(BaseScreen):
                 logger.info("Game over!")
                 return True
         return False
-
-    def restart(self) -> None:
-        """Restart the game."""
-        logger.info(f"Restarting the game. Score was {self.score}")
-        self._reset_game_state()
-
-    def mute(self) -> None:
-        """Mute the game."""
-        self.landing_sound.set_volume(0)
 
     def _draw_grid(self) -> None:
         """Draw the grid on the game surface."""
@@ -372,6 +385,7 @@ class Tetris(BaseScreen):
         self.score: int = 0
         self.lines: int = 0
         self.game_over = False
+        self.paused = False
 
     def _initialize_sound(self) -> None:
         """Initialize game sounds."""
@@ -466,6 +480,19 @@ class Tetris(BaseScreen):
         if not self.timers.drop.active and drop_key_pressed:
             self.drop()
             self.timers.drop.activate()
+
+    def _handle_pause_key(self, keys: pygame.key.ScancodeWrapper) -> None:
+        """
+        Handle the pause key.
+
+        See `settings.toml` for the default key bindings.
+        """
+        pause_keys = [pygame.key.key_code(key) for key in self.settings["General"]["pause"]]
+        pause_key_pressed = any(keys[key] for key in pause_keys)
+
+        if pause_key_pressed and not self.timers.horizontal.active:
+            self.pause()
+            self.timers.horizontal.activate()
 
     def _reset_game_state(self) -> None:
         """Reset the game state."""

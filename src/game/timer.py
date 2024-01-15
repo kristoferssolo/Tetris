@@ -1,4 +1,4 @@
-from typing import Any, Callable, NamedTuple, Optional
+from typing import Any, Callable, Iterator, Optional
 
 import pygame
 from attrs import define, field
@@ -55,7 +55,8 @@ class Timer:
                 self.activate()
 
 
-class Timers(NamedTuple):
+@define
+class Timers:
     """
     NamedTuple for grouping different timers.
 
@@ -70,3 +71,17 @@ class Timers(NamedTuple):
     horizontal: Timer
     rotation: Timer
     drop: Timer
+
+    def __iter__(self) -> Iterator[Timer]:
+        """Returns an iterator over the timers."""
+        return iter((self.vertical, self.horizontal, self.rotation, self.drop))
+
+    def pause(self) -> None:
+        """Pauses all timers."""
+        for timer in self:
+            timer.deactivate()
+
+    def unpause(self) -> None:
+        """Unpauses all timers."""
+        for timer in self:
+            timer.activate()
