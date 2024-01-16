@@ -3,7 +3,7 @@ from .enum import Direction, GameMode, Rotation
 from .figure import Figure
 from .path import BASE_PATH
 from .settings import read_settings, save_settings
-from .tuples import Size
+from .tuples import BestMove, Size
 
 __all__ = [
     "BASE_PATH",
@@ -15,4 +15,5 @@ __all__ = [
     "GameMode",
     "read_settings",
     "save_settings",
+    "BestMove",
 ]

@@ -17,3 +17,16 @@ class Size(NamedTuple):
         if isinstance(other, Size):
             return Size(self.width - other.width, self.height - other.height)
         return Size(self.width - other, self.height - other)
+
+
+class BestMove(NamedTuple):
+    """
+    A best move object.
+
+    Attributes:
+        rotation: The rotation of the best move.
+        x_axis_offset: The x-axis offset of the best move.
+    """
+
+    rotation: int
+    x_axis_offset: int
