@@ -4,13 +4,14 @@ import pygame
 from loguru import logger
 from utils import CONFIG, Figure, GameMode
 
-from .base import BaseScreen
+from .base import BaseScreen, SceenElement
+from .pause import Pause
 from .preview import Preview
 from .score import Score
 from .tetris import Tetris
 
 
-class Game(BaseScreen):
+class Game(BaseScreen, SceenElement):
     """
     Game class.
 
@@ -33,16 +34,16 @@ class Game(BaseScreen):
     def __init__(self, game_mode: GameMode, settings: dict[str, Any]) -> None:
         self.game_mode = game_mode
         self.settings = settings
+        self._initialize_surface()
+        self._initialize_rect()
         self._initialize_game_components()
         self._start_background_music()
         self.paused = False
 
     def draw(self) -> None:
-        """
-        Raises:
-            NotImplementedError: Not implemented yet.
-        """
-        raise NotImplementedError
+        """Draw the score on the score surface."""
+        self._update_display_surface()
+        self._draw_background()
 
     def update(self) -> None:
         """
@@ -53,11 +54,14 @@ class Game(BaseScreen):
 
     def run(self) -> None:
         """Run a single iteration of the game loop."""
-
+        self.draw()
         self.tetris.run()
         self.score.run()
         self.preview.update(self.next_figure)
         self.preview.run()
+
+        if self.paused:
+            self.pause_screen.draw()
 
         self.clock.tick(CONFIG.game.fps)
 
@@ -87,6 +91,7 @@ class Game(BaseScreen):
         self.tetris = Tetris(self._get_next_figure, self._update_score, self.game_mode, self.settings)
         self.score = Score(self.game_mode)
         self.preview = Preview()
+        self.pause_screen = Pause()
 
     def _update_score(self, lines: int, score: int, level: int) -> None:
         """
@@ -125,3 +130,28 @@ class Game(BaseScreen):
             self.music = pygame.mixer.Sound(CONFIG.music.background)
             self.music.set_volume(self.settings["Volume"]["Music"]["level"])
             self.music.play(-1)
+
+    def _initialize_surface(self) -> None:
+        """Initialize the pause screen surface."""
+        self.surface = pygame.Surface(CONFIG.window.size)
+        self.display_surface = pygame.display.get_surface()
+
+    def _initialize_rect(self) -> None:
+        """Initialize the score rectangle."""
+        self.rect = self.surface.get_rect(topleft=(0, 0))
+
+    def _draw_background(self) -> None:
+        """Draw the background."""
+        self.surface.fill(CONFIG.colors.bg)
+
+    def _update_display_surface(self) -> None:
+        """Update the display surface."""
+        self.display_surface.blit(self.surface, self.rect)
+
+    def _draw_border(self) -> None:
+        """Draw the border.
+
+        Raises:
+            NotImplementedError: Not implemented yet.
+        """
+        raise NotImplementedError

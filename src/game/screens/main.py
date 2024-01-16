@@ -63,13 +63,12 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def run_game_loop(self) -> None:
         """Run a single iteration of the game loop."""
-        if not self.game:
+        if self.game:
+            self.game.run()
+        else:
             self.draw()
 
         self.handle_events()
-
-        if self.game:
-            self.game.run()
 
         self.update()
 
