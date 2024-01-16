@@ -1,5 +1,5 @@
 [General]
-pause = ["escape", "F1"]         # WIP
+pause = ["escape", "F1"]
 quit = ["q"]
 colorscheme = "tokyonight-night" # tokyonight-night / tokyonight-storm / tokyonight-day / tokyonight-moon
 

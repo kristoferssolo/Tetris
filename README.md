@@ -1,4 +1,4 @@
-# Tetris
+# Tetri
 ![Tests](https://github.com/kristoferssolo/Tetris/actions/workflows/tests.yml/badge.svg) ![Lint](https://github.com/kristoferssolo/Tetris/actions/workflows/lint.yml/badge.svg)
 
 <!-- toc -->
@@ -54,7 +54,7 @@ python -m tetris
 The `settings.toml` file is a configuration file for customizing various aspects of the game.
 
 ### General Settings
-- `pause`: Defines the keys to pause the game. Currently a work in progress (WIP[^WIP]).
+- `pause`: Defines the keys to pause the game. Currently a work in progress.
 - `quit`: Defines the key(s) to quit the game.
 - `colorscheme`: Specifies the color scheme for the game interface. Options include:
   - `tokyonight-night`
@@ -72,7 +72,7 @@ The `settings.toml` file is a configuration file for customizing various aspects
 - `ccw (counter-clockwise)`: Defines the keys to rotate the tetromino in a counter-clockwise direction.
 
 ### Action Settings
-- `hold`: Defines the keys to hold the tetromino (WIP).
+- `hold`: Defines the keys to hold the tetromino (WIP[^WIP]).
 - `drop`: Defines the keys to instantly drop the tetromino.
 
 ### Volume Settings
