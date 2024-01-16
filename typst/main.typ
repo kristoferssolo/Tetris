@@ -116,7 +116,7 @@ python -m tetris
 
 === Vispārīgi iestatījumi
 #par(first-line-indent: 0cm, [
-  / `pause`: definē taustiņu(-s), lai apturētu spēli (WIP #footnote[WIP (Work In Progress) -- nepabeigts darbs: darbs vai produkts, kas ir sākts, bet nav pabeigts vai gatavs.]<WIP>).
+  / `pause`: definē taustiņu(-s), lai apturētu spēli.
   / `quit`: definē taustiņu(-s), lai izietu no spēles.
   / `colorscheme`: norāda spēles saskarnes krāsu shēmu. Iespējas ietver:
   - `tokyonight-day`
@@ -140,7 +140,7 @@ python -m tetris
 
 === Papildus darbību iestatījumi
 #par(first-line-indent: 0cm, [
-  / `hold`: definē taustiņu(-s), lai uzglabātu tetromino (WIP @WIP).
+  / `hold`: definē taustiņu(-s), lai uzglabātu tetromino (WIP #footnote[WIP (Work In Progress) -- nepabeigts darbs: darbs vai produkts, kas ir sākts, bet nav pabeigts vai gatavs.]<WIP>).
   / `drop`: definē taustiņ(-s), lai nekavējoties nomestu tetromino.
 ])
 
