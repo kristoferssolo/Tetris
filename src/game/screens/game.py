@@ -1,6 +1,7 @@
 from typing import Any
 
 import pygame
+from loguru import logger
 from utils import CONFIG, Figure, GameMode
 
 from .base import BaseScreen
@@ -34,6 +35,7 @@ class Game(BaseScreen):
         self.settings = settings
         self._initialize_game_components()
         self._start_background_music()
+        self.paused = False
 
     def draw(self) -> None:
         """
@@ -66,7 +68,16 @@ class Game(BaseScreen):
 
     def pause(self) -> None:
         """Pause the game."""
-        self.tetris.pause()
+        if self.paused:
+            logger.debug("Unpause")
+            self.paused = False
+            self.tetris.unfreeze()
+            self.music.play(-1, fade_ms=100)
+        else:
+            logger.debug("Pause")
+            self.paused = True
+            self.tetris.freeze()
+            self.music.fadeout(100)
 
     def _initialize_game_components(self) -> None:
         """Initialize game-related components."""

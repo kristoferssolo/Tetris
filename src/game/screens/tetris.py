@@ -91,10 +91,11 @@ class Tetris(BaseScreen):
 
     def handle_events(self) -> None:
         """Handle player input events."""
-        self._handle_movement_keys()
-        self._handle_rotation_keys()
-        self._handle_down_key()
-        self._handle_drop_key()
+        if not self.paused:
+            self._handle_movement_keys()
+            self._handle_rotation_keys()
+            self._handle_down_key()
+            self._handle_drop_key()
 
     def move_down(self) -> bool:
         """
@@ -164,17 +165,15 @@ class Tetris(BaseScreen):
         logger.info(f"Restarting the game. Score was {self.score}")
         self._reset_game_state()
 
-    def pause(self) -> None:
-        """Pause the game."""
-        self.paused: bool
-        if self.paused:
-            logger.debug("Unpause")
-            self.paused = False
-            self.timers.unpause()
-        else:
-            logger.debug("Pause")
-            self.paused = True
-            self.timers.pause()
+    def freeze(self) -> None:
+        """Freeze all timers."""
+        self.timers.freeze()
+        self.paused = True
+
+    def unfreeze(self) -> None:
+        """Unfreeze all timers."""
+        self.timers.unfreeze()
+        self.paused = False
 
     def mute(self) -> None:
         """Mute the game."""

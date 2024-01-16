@@ -76,12 +76,12 @@ class Timers:
         """Returns an iterator over the timers."""
         return iter((self.vertical, self.horizontal, self.rotation, self.drop))
 
-    def pause(self) -> None:
-        """Pauses all timers."""
+    def freeze(self) -> None:
+        """Freezes all timers."""
         for timer in self:
             timer.deactivate()
 
-    def unpause(self) -> None:
-        """Unpauses all timers."""
+    def unfreeze(self) -> None:
+        """Unfreezes all timers."""
         for timer in self:
             timer.activate()
