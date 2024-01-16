@@ -8,6 +8,7 @@ from utils import CONFIG, GameMode, read_settings
 from .base import BaseScreen, SceenElement, TextScreen
 from .button import Button
 from .game import Game
+from .tetris import get_keys
 
 
 class Main(BaseScreen, SceenElement, TextScreen):
@@ -45,8 +46,10 @@ class Main(BaseScreen, SceenElement, TextScreen):
             if event.type == pygame.QUIT:
                 self.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key in [pygame.key.key_code(key) for key in self.settings["General"]["quit"]]:
+                if event.key in get_keys(self.settings["General"]["quit"]):
                     self.exit()
+                elif event.key in get_keys(self.settings["General"]["pause"]) and self.game:
+                    self.game.pause()
 
             if not self.game:
                 for button in self.buttons:
@@ -60,13 +63,12 @@ class Main(BaseScreen, SceenElement, TextScreen):
 
     def run_game_loop(self) -> None:
         """Run a single iteration of the game loop."""
-        if not self.game:
+        if self.game:
+            self.game.run()
+        else:
             self.draw()
 
         self.handle_events()
-
-        if self.game:
-            self.game.run()
 
         self.update()
 
