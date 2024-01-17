@@ -40,7 +40,7 @@ cd Tetris
 
 3. Install the required dependencies:
 ```bash
-pip install .
+pip install -e .
 ```
 
 4. Run the game:

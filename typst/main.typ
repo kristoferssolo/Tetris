@@ -99,7 +99,7 @@ cd Tetris
 
 3. Instalējiet nepieciešamās atkarības:
 ```bash
-pip install .
+pip install -e .
 ```
 
 4. Palaidiet spēli:
